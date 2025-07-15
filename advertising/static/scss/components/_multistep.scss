@@ -1,106 +1,277 @@
-.multistep-content {
-  .standard-size-container {
-    background-color: $offwhite;
-    border-radius: 5px;
-    min-height: 400px;
-    border: 1px solid $black;
-    padding: 20px;
+.multi-step-form-container {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: $shadow;
+  position: relative;
+  //max-width: 900px;
+  min-height: 800px;
+  margin: 30px auto;
+  //overflow-y: scroll;
+  &:after {
+    position: absolute;
+    content: '';
+    background-image: url('../img/step-form-border.png');
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 247px;
+    top: 0;
+    left: 0;
+    background-position: center;
+    background-size: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
 
-    .heading-container {
-      text-align: center;
-      .heading {
-        font-size: 22px;
-        font-weight: 700;
-        color: $secondary;
-        line-height: 26.4px;
-      }
-    }
+  //content styles
+  .content {
+    position: relative;
+    z-index: 999;
 
-    .total-container {
-      .total {
-        font-size: 12px;
-        font-weight: 700;
-        color: $black;
-        line-height: 14.4px;
+    .content__inner {
+      .multisteps-form {
+        .progress-btns-container {
+          //position: absolute;
+          left: 0;
+          right: 0;
+          //top: 10%;
+          margin: auto;
+          width: 100%;
+          z-index: 2;
+          display: flex;
+          justify-content: center;
+          //multisteps progress styles
+          .multisteps-form__progress {
+            // display: grid;
+            // grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 
-        span {
-          color: $secondary;
-          font-size: 14px;
-          font-weight: 700;
-          line-height: 16.8px;
-          margin-left: 15px;
+            .multisteps-form__progress-btn {
+              @include transition-mix($duration: 0.15s);
+              position: relative;
+              font-size: 13px;
+              color: $black;
+              text-indent: -9999px;
+              border: none;
+              background-color: transparent;
+              outline: none !important;
+              margin: 0 2px;
+              border: none;
+              border-radius: 10px;
+
+              cursor: pointer;
+
+              @media (min-width: 500px) {
+                text-indent: 0;
+              }
+
+              //last child - without line decoration
+              &:first-child {
+                &:after {
+                  display: none;
+                }
+              }
+
+              //active styles
+              &.js-active {
+                background-color: $primary;
+                color: $white;
+                box-shadow: $shadow;
+                &:before {
+                  transform: translateX(-50%) scale(1.2);
+
+                  background-color: currentColor;
+                }
+              }
+            }
+          }
+        }
+
+        //multisteps form styles
+        .multisteps-form__form {
+          position: relative;
+          width: 100%;
+
+          //multisteps panels styles
+          .multisteps-form__panel {
+            margin: 0 auto;
+            left: 0;
+            width: 100%;
+            height: 0;
+            opacity: 0;
+            visibility: hidden;
+
+            .heading-arrows-container {
+              display: flex;
+              justify-content: space-between;
+
+              margin-top: 25px;
+              position: relative;
+              //top: -60px;
+              .multistep-form__arrow {
+                background: none;
+                border: none;
+              }
+            }
+
+            hr {
+              border: 1px solid $black;
+              margin-top: 0px;
+            }
+            @include position-absolute($top: 0, $left: 0);
+
+            width: 100%;
+            height: 0;
+
+            opacity: 0;
+            visibility: hidden;
+
+            //active panels
+            &.js-active {
+              height: auto;
+
+              opacity: 1;
+              visibility: visible;
+            }
+
+            //scaleOut animation
+            &[data-animation='scaleOut'] {
+              transform: scale(1.1);
+
+              &.js-active {
+                @include transition-mix;
+
+                transform: scale(1);
+              }
+            }
+
+            //slideHorz animation
+            &[data-animation='slideHorz'] {
+              left: 50px;
+
+              &.js-active {
+                @include transition-mix($duration: 0.25s, $timing: cubic-bezier(0.2, 1.13, 0.38, 1.43));
+
+                left: 0;
+              }
+            }
+
+            //slideVert animation
+            &[data-animation='slideVert'] {
+              top: 30px;
+
+              &.js-active {
+                @include transition-mix();
+
+                top: 0;
+              }
+            }
+
+            //fadeIn animation
+            &[data-animation='fadeIn'] {
+              &.js-active {
+                @include transition-mix($duration: 0.3s);
+              }
+            }
+
+            //scaleOut
+            &[data-animation='scaleIn'] {
+              transform: scale(0.9);
+
+              &.js-active {
+                @include transition-mix;
+
+                transform: scale(1);
+              }
+            }
+
+            .multisteps-form__content {
+              padding-top: 25px;
+
+              .campaign-name {
+                .heading {
+                  &.name {
+                    font-size: 20px;
+                  }
+                }
+              }
+
+              .start-date,
+              .end-date {
+                .heading {
+                  font-size: 18px;
+                }
+              }
+              // .content-container {
+              //   min-height: 220px;
+              // }
+            }
+          }
         }
       }
     }
   }
+}
 
-  .product-info,
-  .created-sizes-container {
-    .heading-container {
-      text-align: center;
-      .heading {
-        font-size: 22px;
-        font-weight: 700;
-        color: $secondary;
-        line-height: 26.4px;
-      }
-    }
+.save-container {
+  display: flex;
+  justify-content: end;
+
+  &:not(:last-of-type) {
+    margin-bottom: 20px;
   }
 
-  .product-info {
-    .info-container {
-      display: flex;
-      flex-direction: column;
-
-      &:not(:last-of-type) {
-        margin-bottom: 30px;
-      }
-    }
+  &:last-of-type {
+    margin-top: 20px;
   }
+}
 
-  .form-group {
-    &:not(:last-of-type) {
-      margin-bottom: 20px;
+.btn-search-container {
+  .filter-container {
+    display: flex;
+    align-items: center;
+
+    .btn {
+      margin-bottom: 5px;
     }
 
-    label {
-      font-size: 12px;
-      font-weight: 700;
-      color: $gray-3;
-      line-height: 14.4px;
-    }
-    .double {
+    .filters {
       display: flex;
       align-items: center;
-
-      span {
-        padding: 0 10px;
-        font-weight: 700;
-      }
+      margin-left: 10px;
     }
   }
 
-  .complete-product-container {
-    text-align: center;
-    .heading {
-      font-size: 30px;
-      font-weight: 700;
-      line-height: 36px;
-    }
+  .search-container {
+    display: flex;
+    justify-content: flex-end;
 
-    .big-check {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background-color: $green;
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.edit-info-container,
+.add-region-container {
+  .filter-container {
+    display: flex;
+    justify-content: space-between;
+    .filters {
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin: 30px auto;
-      .fa {
-        font-size: 100px;
-        color: $white;
-      }
+      padding-left: 15px;
     }
   }
+  .btn {
+    margin-bottom: 5px;
+  }
+}
+
+.ads-table-container {
+  margin: 30px 0;
+}
+
+.custom-search-container {
+  display: flex;
+  justify-content: end;
 }
