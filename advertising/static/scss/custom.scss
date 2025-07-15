@@ -12,19 +12,6 @@ body {
   overflow-x: hidden;
 }
 
-.main-content {
-  margin-left: 0;
-  padding: 20px;
-  transition: margin-left 0.3s;
-}
-
-.page-heading-container {
-  text-align: center;
-  padding: 60px 0;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
 .filter-container {
   .filters {
     a {
@@ -41,6 +28,8 @@ body {
 
 .heading-container {
   .heading {
+    font-size: 40px;
+    font-weight: 400;
     color: $gray-3;
     line-height: 48px;
   }

@@ -1,0 +1,213 @@
+{% extends 'base.html' %} {% block content %}
+<div class="heading-container text-center my-5">
+  <h3 class="heading">New Campaign</h3>
+</div>
+
+<div class="stepform">
+  <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+    <div class="step active">
+      <div class="text">
+        <span class="number">1</span>
+        <span class="title">Select an Advertiser</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">2</span>
+        <span class="title">Campaign Info</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">3</span>
+        <span class="title">Product Selection</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">4</span>
+        <span class="title">Review</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Steps container -->
+
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Search & select an advertiser to begin<br />creating a campaign</p>
+    </div>
+
+    <div class="w-75 mx-auto">
+      <div class="has-search">
+        <input class="form-control" type="text" name="" placeholder="Search by name, address, phone, ID.... " />
+      </div>
+      <div class="mb-5">
+        <span>Don't see your advertiser?</span>
+        <a class="color-secondary" href=""> Click here to create one! </a>
+      </div>
+    </div>
+
+    <div class="btn-container d-flex justify-content-end mt-5">
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Campaign Info -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Next, Enter some of the core information<br />regarding the campaign</p>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="campaign-name">*Campaign Name</label>
+      <input id="campaign-name" type="text" class="form-control" placeholder="Enter Campaign Name" />
+    </div>
+
+    <div class="row mb-3">
+      <div class="form-group col-lg-6">
+        <label for="sales-contact">*Sales Contact</label>
+        <select class="form-select" aria-label="Default select example">
+          <option selected>Open this select menu</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+
+      <div class="form-group col-lg-3">
+        <div class="form-group">
+          <label for="start-date">*Start Date:</label>
+          <input type="date" id="start-date" class="form-control" />
+        </div>
+      </div>
+
+      <div class="form-group col-lg-3">
+        <div class="form-group">
+          <label for="end-date">End Date(optional):</label>
+
+          <input type="date" id="end-date" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="brief">Brief Description(optional) <span class="color-secondary fw-bold">*This will be public for everyone to see</span></label>
+      <textarea class="form-control shadow" rows="5" id="brief"></textarea>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between mt-5">
+      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Product Selection -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Select the type of products you want to<br />include with campaign</p>
+    </div>
+
+    <div class="actions-container d-flex justify-content-between mb-3">
+      <div class="btn-container">
+        <button class="btn btn-secondary-light bg-primary c-filter" onclick="filterAdFormats()"><i class="fa fa-solid fa-filter"></i> Filter</button>
+      </div>
+
+      <div class="has-search">
+        <input class="form-control" type="text" name="" placeholder="Search.... " />
+      </div>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between mt-5">
+      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Review -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Review the campaign then<br />click create!</p>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-4">
+        <span>*Campaign Name:</span>
+        <p class="mb-0">Example Campaign Name</p>
+      </div>
+
+      <div class="col-lg-4">
+        <span>*Start Date:</span>
+        <p class="mb-0">00/00/0000</p>
+      </div>
+
+      <div class="col-lg-4">
+        <span>End Date (optional):</span>
+        <p class="mb-0">00/00/0000</p>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-4">
+        <span>*Sales Contact:</span>
+        <p class="mb-0">Ed Clark</p>
+      </div>
+
+      <div class="col-lg-8">
+        <span>Selected Advertisers:</span>
+        <ul class="list-group">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">A fourth item</li>
+          <li class="list-group-item">And a fifth one</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <span>Selected Products:</span>
+      <p class="mb-0">Digital, Newspaper</p>
+    </div>
+
+    <div class="mb-5">
+      <span>Brief Description (optional):</span>
+      <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque facilisis malesuada. Duis aliquam dui eget purus laoreet imperdiet. Vivamus cursus tortor pulvinar, sagittis turpis a, auctor metus. Duis feugiat, ante non sodales viverra, elit lorem feugiat velit, sit amet pulvinar felis lacus a nisl. Ut a ipsum sit amet nisi imperdiet sollicitudin nec feugiat mauris. In euismod auctor rutrum. In hac habitasse platea dictumst.</p>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between">
+      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-light border border-dark">Save as Draft</button>
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Create <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Success tab -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>
+        Congratulation!<br />
+        Your Campaign has been created.
+      </p>
+    </div>
+
+    <div class="success-circle rounded-circle mx-auto mb-5">
+      <i class="fa fa-solid fa-check"></i>
+    </div>
+
+    <div class="btn-container text-center">
+      <a href="" class="btn btn-secondary">Go to created campaign to book ads</a>
+      <a href="{% url 'createCampaign' %}" class="btn btn-light border border-dark">Start Another Campaign</a>
+    </div>
+  </div>
+</div>
+{% endblock%}
