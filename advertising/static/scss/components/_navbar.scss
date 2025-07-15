@@ -1,0 +1,112 @@
+.top-bar {
+  background-color: $secondary;
+  min-height: 60px;
+  #sidebarToggle {
+    position: fixed;
+    top: 13px;
+    left: 70px;
+    color: $white;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1100;
+    //padding: 5px 10px;
+    //border-radius: 4px;
+    transition: left 0.3s ease;
+  }
+}
+
+#sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: $gray-3;
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+  z-index: 1000;
+
+  a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #fff;
+    display: block;
+    transition: 0.2s;
+
+    &:hover {
+      background-color: #575757;
+    }
+
+    i {
+      margin-right: 10px;
+      min-width: 20px;
+      text-align: center;
+    }
+  }
+
+  .logo-container {
+    background-color: $secondary-light;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: 60px;
+
+    .logo-sm,
+    .logo-lg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      max-height: 40px;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .logo-sm {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+#layout {
+  transition: transform 0.3s ease;
+}
+
+body.open-sidebar #layout {
+  transform: translateX(250px);
+}
+
+body.open-sidebar #sidebar .sidebar-logo img {
+  opacity: 0; // hide when expanded
+}
+
+body.open-sidebar #sidebar .logo-sm {
+  opacity: 0;
+  visibility: hidden;
+}
+
+body.open-sidebar #sidebar .logo-lg {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.open-sidebar #sidebarToggle {
+  left: 15px; // 👈 shift with expanded menu
+}
+
+body:not(.open-sidebar) #sidebar {
+  width: 60px; /* collapsed state */
+}
+
+body:not(.open-sidebar) .link-text {
+  display: none;
+}
+
+body:not(.open-sidebar) .main-content {
+  padding-left: 80px; // 👈 shift with expanded menu
+}
