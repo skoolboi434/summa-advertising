@@ -1,0 +1,375 @@
+{% extends 'base.html' %} {% block content %}
+<div class="heading-container text-center my-5">
+  <h3 class="heading">Create a New Advertiser</h3>
+</div>
+
+<div class="stepform">
+  <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+    <div class="step active">
+      <div class="text">
+        <span class="number">1</span>
+        <span class="title">Advertiser Contact</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">2</span>
+        <span class="title">Advertiser Info</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">3</span>
+        <span class="title">Review</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Steps container -->
+
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Start by creating the primary contact for the<br />advertiser</p>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="advertiser_firstname"><span class="asterick">*</span>First Name</label>
+      <input type="text" id="advertiser_firstname" class="form-control" />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="advertiser_lastname"><span class="astericks">*</span>Last Name</label>
+      <input type="text" id="advertiser_lastname" class="form-control" />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="advertiser_email"><i class="fa fa-solid fa-envelope"></i> Email</label>
+      <input type="email" id="advertiser_email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="advertiser_phone"><i class="fa fa-solid fa-phone"></i> Phone</label>
+      <input type="text" id="advertiser_phone" class="form-control" />
+    </div>
+
+    <div class="btn-container d-flex justify-content-end mt-5">
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Advertiser Info -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Next, enter all the info for the new advertiser</p>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="form-group mb-3">
+          <label for="business-name">*Business Name:</label>
+          <input id="business-name" type="text" class="form-control" placeholder="Enter Business Name" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="account-type"><span class="asterick">*</span>Account Type:</label>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="advertiser-address"><span class="asterick">*Address:</span></label>
+          <input type="text" id="advertiser-address" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="advertiser-city"><span class="asterick">*</span>City:</label>
+          <input type="text" id="advertiser-city" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="advertiser-state"><span class="asterick">*</span>State:</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group mb-3">
+              <label for="advertiser-zipcode"><span class="asterick">*</span>Zipcode:</label>
+              <input type="text" id="advertiser-zipcode" class="form-control" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="agency">Agency (optional)</label>
+          <input type="text" id="agency" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="sales-person"><span class="asterick">*</span>Zipcode:</label>
+          <select id="sales-person" class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="advertiser-marketcode">Market Code:</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group mb-3">
+              <label for="advertiser-legacy-id">Legacy ID (optional):</label>
+              <input type="text" id="advertiser-legacy-id" class="form-control" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="form-group mb-3">
+          <label for="advertiser-website">Website:</label>
+          <input type="text" id="advertiser-website" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="advertiser-billing-email"><i class="fa fa-solid fa-envelope"></i> Billing Email:</label>
+          <input type="text" id="advertiser-billing-email" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="advertiser-billing-contact"><i class="fa fa-solid fa-envelope"></i> Billing Contact:</label>
+          <input type="text" id="advertiser-billing-contact" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <div class="notes-container">
+      <label for="notes">Notes (optional):</label>
+      <div class="border rounded row">
+        <div class="col-sm-6 border-end p-3">
+          <form
+            action="
+          "
+          >
+            <div class="form-group mb-3">
+              <label for="note-type">Note Type:</label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="note">Note</label>
+              <textarea class="form-control" id="note"></textarea>
+            </div>
+
+            <div class="btn-container text-center">
+              <button type="submit" class="btn btn-secondary">Add Note</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-sm-6 p-3">
+          <!-- Scrolling notes area -->
+          <span>*Notes:</span>
+          <div class="notes-list" style="max-height: 300px; overflow-y: auto">
+            <!-- Example note -->
+            <div class="note-item border rounded mb-3 p-2">
+              <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+              <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
+            </div>
+
+            <!-- Repeat .note-item border for each note -->
+            <div class="note-item border rounded mb-3 p-2">
+              <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+              <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between mt-5">
+      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Review -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Finally, review and if everything looks correct,<br />click the create button</p>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="border-bottom border-dark mb-3">
+          <h3 class="m-0">Advertiser Info</h3>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-lg-6">
+            <span>Account Type:</span>
+            <p class="mb-0">Business</p>
+          </div>
+
+          <div class="col-lg-6">
+            <span>Account Type:</span>
+            <p class="mb-0">Business Name Example</p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-lg-6">
+            <span>Address:</span>
+            <p class="mb-0">1122 Boogie Woogie Ave.<br />Hampstead, NC 28443</p>
+          </div>
+
+          <div class="col-lg-6">
+            <span>Agency:</span>
+            <p class="mb-0"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-lg-6">
+            <span>Salesperson:</span>
+            <p class="mb-0"></p>
+          </div>
+
+          <div class="col-lg-6">
+            <span>Market Code:</span>
+            <p class="mb-0"></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-lg-6">
+            <span>Biling Email:</span>
+            <p class="mb-0">exampleemail@email.com</p>
+          </div>
+
+          <div class="col-lg-6">
+            <span>Billing Contact:</span>
+            <p class="mb-0">John Henry</p>
+          </div>
+        </div>
+
+        <div class="mb-5">
+          <span>Billing Address</span>
+          <p class="mb-0">1122 Boogie Woogie Ave.<br />Hampstead, NC 28443</p>
+        </div>
+
+        <div class="border-bottom border-dark mb-3">
+          <h3 class="m-0">Advertiser Primary Contact</h3>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-lg-6">
+            <span>First Name:</span>
+            <p class="mb-0">Kyle</p>
+          </div>
+
+          <div class="col-lg-6">
+            <span>last Name:</span>
+            <p class="mb-0">Jernigan</p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-lg-6">
+            <span>Email:</span>
+            <p class="mb-0">exampleemail@email.com</p>
+          </div>
+
+          <div class="col-lg-6">
+            <span>Phone:</span>
+            <p class="mb-0">(111) 111-0101</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="notes-container">
+          <label for="notes">Notes:</label>
+          <div class="border rounded">
+            <div class="p-3">
+              <!-- Scrolling notes area -->
+              <div class="notes-list" style="max-height: 300px; overflow-y: auto">
+                <!-- Example note -->
+                <div class="note-item border rounded mb-3 p-2">
+                  <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+                  <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
+                </div>
+
+                <!-- Repeat .note-item border for each note -->
+                <div class="note-item border rounded mb-3 p-2">
+                  <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+                  <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between">
+      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-light border border-dark">Save as Draft</button>
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Create <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Success tab -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>
+        Congratulation!<br />
+        Your Campaign has been created.
+      </p>
+    </div>
+
+    <div class="success-circle rounded-circle mx-auto mb-5">
+      <i class="fa fa-solid fa-check"></i>
+    </div>
+
+    <div class="btn-container text-center">
+      <a href="{% url 'advertisers' %}" class="btn btn-secondary">Return to Advertisers</a>
+      <a href="" class="btn btn-secondary-light">View Advertiser</a>
+    </div>
+  </div>
+</div>
+{% endblock%}

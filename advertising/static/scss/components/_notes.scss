@@ -1,0 +1,14 @@
+.notes-list {
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+
+  .note-item {
+    padding: 10px;
+    font-size: 14px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

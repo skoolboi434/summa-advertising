@@ -1853,6 +1853,7 @@
 .top-bar {
   position: fixed;
   background-color: #21215f;
+  width: 100%;
   min-height: 60px;
 }
 .top-bar #sidebarToggle {
@@ -1971,6 +1972,19 @@ body:not(.open-sidebar) .link-text {
 
 body:not(.open-sidebar) .inner-nav {
   display: none;
+}
+
+.notes-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.notes-list .note-item {
+  background-color: #f8f9fa;
+  padding: 10px;
+  font-size: 14px;
+}
+.notes-list .note-item:last-child {
+  border-bottom: none;
 }
 
 body {
