@@ -12,3 +12,16 @@
     }
   }
 }
+
+.contact-list {
+  max-height: 300px;
+  overflow-y: auto;
+
+  .contact-item {
+    padding: 8px 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

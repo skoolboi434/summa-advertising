@@ -1,0 +1,125 @@
+<div class="multisteps-form__panel p-4 rounded" data-animation="scaleIn">
+  <div class="heading-arrows-container d-flex justify-content-between">
+    <button class="multistep-form__arrow"><i class="fa fa-solid fa-chevron-left"></i></button>
+    <h3 class="multisteps-form__title text-center">Activity</h3>
+    <button class="multistep-form__arrow"><i class="fa fa-solid fa-chevron-right"></i></button>
+  </div>
+
+  <div class="multisteps-form__content">
+    <div class="row"></div>
+  </div>
+</div>
+
+<script>
+  // document.addEventListener('DOMContentLoaded', function() {
+  //     fetchRecentActivities();
+  //     fetchToDos(); // Fetch To Do's
+  // });
+
+  function fetchRecentActivities() {
+    const accountId = '{{ newAccount.id }}'; // Ensure you have the account ID available
+    fetch(`/advertising/account/${accountId}/recent-activities/api/`) // Adjust the URL as needed
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        displayActivities(data.activities);
+      })
+      .catch(error => {
+        console.error('Error fetching activities:', error);
+      });
+  }
+
+  function fetchToDos() {
+    const accountId = '{{ newAccount.id }}'; // Ensure you have the account ID available
+    fetch(`/advertising/account/${accountId}/todos/api/`) // Adjust the URL as needed
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        displayToDos(data.todos);
+      })
+      .catch(error => {
+        console.error("Error fetching To Do's:", error);
+      });
+  }
+
+  function displayActivities(activities) {
+    const activityContainer = document.querySelector('.activity-container');
+    activityContainer.innerHTML = ''; // Clear existing activities
+
+    if (activities.length === 0) {
+      activityContainer.innerHTML = '<div class="no-activity">No Recent Activity Found</div>';
+      return;
+    }
+
+    activities.forEach(activity => {
+      const activityHtml = `
+            <div class="activity-item">
+                <div class="activity-date">${activity.date}</div>
+                <div class="activity-description">${activity.description}</div>
+            </div>
+        `;
+      activityContainer.insertAdjacentHTML('beforeend', activityHtml);
+    });
+  }
+
+  function displayToDos(todos) {
+    const todoContainer = document.querySelector('.todo-container');
+    todoContainer.innerHTML = ''; // Clear existing To Do's
+
+    if (todos.length === 0) {
+      todoContainer.innerHTML = '<div class="no-todo">No To Do\'s Found</div>';
+      return;
+    }
+
+    todos.forEach(todo => {
+      const todoHtml = `
+            <div class="todo-item">
+                <div class="todo-title">${todo.title}</div>
+                <div class="todo-due-date">Due: ${todo.due_date}</div>
+                <div class="todo-description">${todo.description}</div>
+                <div class="todo-actions">
+                    <button class="btn btn-secondary">✔️</button>
+                    <button class="btn btn-danger">🗑️</button>
+                </div>
+            </div>
+        `;
+      todoContainer.insertAdjacentHTML('beforeend', todoHtml);
+    });
+  }
+
+  function showSales(type, button) {
+    const rows = document.querySelectorAll('#salesTableBody tr');
+    rows.forEach(row => {
+      const printSales = parseFloat(row.getAttribute('data-print'));
+      const digitalSales = parseFloat(row.getAttribute('data-digital'));
+
+      if (type === 'all') {
+        row.style.display = '';
+      } else if (type === 'print' && printSales === 0) {
+        row.style.display = 'none';
+      } else if (type === 'digital' && digitalSales === 0) {
+        row.style.display = 'none';
+      } else {
+        row.style.display = '';
+      }
+    });
+
+    // Remove active class from all buttons
+    const buttons = document.querySelectorAll('.tab-container .btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+
+    // Add active class to the clicked button
+    button.classList.add('active');
+  }
+
+  // Initialize to show all sales by default
+  showSales('all', document.querySelector('.tab-container .btn.active'));
+</script>

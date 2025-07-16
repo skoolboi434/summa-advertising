@@ -8,3 +8,6 @@ def adCampaign(request, campaign_id):
 
 def createCampaign(request):
   return render(request, 'adCampaigns/createAdCampaign.html')
+
+def createAd(request):
+  return render(request, 'adCampaigns/createAd.html')

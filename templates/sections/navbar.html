@@ -19,9 +19,6 @@
           <a href="{% url 'adCampaigns' %}"><span class="link-text">Ad Campaigns</span></a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'advertisers' %}"><span class="link-text">Advertisers</span></a>
-        </li>
-        <li class="nav-item">
           <a href="#"><span class="link-text">Publications</span></a>
         </li>
       </ul>
@@ -31,7 +28,28 @@
 
       <ul class="navbar-nav inner-nav">
         <li class="nav-item">
+          <a href="{% url 'createAd' %}"><span class="link-text">New Ad</span></a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'createAdvertiser' %}"><span class="link-text">New Advertiser</span></a>
+        </li>
+
+        <li class="nav-item">
           <a href="{% url 'createCampaign' %}"><span class="link-text">New Campaign</span></a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a href=""><i class="fa fa-solid fa-user"></i> <span class="link-text">Accounts</span></a>
+
+      <ul class="navbar-nav inner-nav">
+        <li class="nav-item">
+          <a href="{% url 'advertisers' %}"><span class="link-text">Advertisers</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a href=""><span class="link-text">My Profile</span></a>
         </li>
       </ul>
     </li>

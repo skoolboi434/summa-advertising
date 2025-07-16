@@ -1,0 +1,341 @@
+{% extends 'base.html' %} {% block content %}
+<div class="heading-container text-center my-5">
+  <h3 class="heading">New Ad</h3>
+</div>
+
+<div class="stepform">
+  <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+    <div class="step active">
+      <div class="text">
+        <span class="number">1</span>
+        <span class="title">Pub &amp; Product</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">2</span>
+        <span class="title">Ad Criteria & Placement</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">3</span>
+        <span class="title">Ad Info &amp; Scheduling</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">4</span>
+        <span class="title">Notes</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">5</span>
+        <span class="title">Review Ad</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Steps container -->
+
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Select the publication, campaign and<br />product you'd like to make this ad for</p>
+    </div>
+
+    <div class="form-group mb-5">
+      <label for="pub-name">Publication:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-5">
+      <label for="ad-campaign">Ad Campaign:</label>
+      <input type="text" name="" id="ad-campaign" class="form-control" />
+    </div>
+
+    <div class="form-group mb-5">
+      <label for="product">Product:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+
+    <div class="btn-container d-flex justify-content-end">
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Campaign Info -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Next select the Ad Criteria (measurement type),<br />section and page of the publication you want the<br />ad to appear in</p>
+    </div>
+
+    <div class="form-group mb-5">
+      <label for="ad-criteria">Ad Criteria:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-5">
+      <label for="ad-type">Ad Type:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="section">Section:</label>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="page-number">Page #</label>
+          <input type="text" name="" id="page-number" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between mt-5">
+      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Product Selection -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Select the type of products you want to<br />include with campaign</p>
+    </div>
+
+    <div class="actions-container d-flex justify-content-between mb-3">
+      <div class="btn-container">
+        <button class="btn btn-secondary-light bg-primary c-filter" onclick="filterAdFormats()"><i class="fa fa-solid fa-filter"></i> Filter</button>
+      </div>
+
+      <div class="has-search">
+        <input class="form-control" type="text" name="" placeholder="Search.... " />
+      </div>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between mt-5">
+      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Review -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Review the campaign then<br />click create!</p>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-4">
+        <span>*Campaign Name:</span>
+        <p class="mb-0">Example Campaign Name</p>
+      </div>
+
+      <div class="col-lg-4">
+        <span>*Start Date:</span>
+        <p class="mb-0">00/00/0000</p>
+      </div>
+
+      <div class="col-lg-4">
+        <span>End Date (optional):</span>
+        <p class="mb-0">00/00/0000</p>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-4">
+        <span>*Sales Contact:</span>
+        <p class="mb-0">Ed Clark</p>
+      </div>
+
+      <div class="col-lg-8">
+        <span>Selected Advertisers:</span>
+        <ul class="list-group">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">A fourth item</li>
+          <li class="list-group-item">And a fifth one</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <span>Selected Products:</span>
+      <p class="mb-0">Digital, Newspaper</p>
+    </div>
+
+    <div class="mb-5">
+      <span>Brief Description (optional):</span>
+      <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque facilisis malesuada. Duis aliquam dui eget purus laoreet imperdiet. Vivamus cursus tortor pulvinar, sagittis turpis a, auctor metus. Duis feugiat, ante non sodales viverra, elit lorem feugiat velit, sit amet pulvinar felis lacus a nisl. Ut a ipsum sit amet nisi imperdiet sollicitudin nec feugiat mauris. In euismod auctor rutrum. In hac habitasse platea dictumst.</p>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between">
+      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-light border border-dark">Save as Draft</button>
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Create <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Success tab -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>
+        Congratulation!<br />
+        Your Campaign has been created.
+      </p>
+    </div>
+
+    <div class="success-circle rounded-circle mx-auto mb-5">
+      <i class="fa fa-solid fa-check"></i>
+    </div>
+
+    <div class="btn-container text-center">
+      <a href="" class="btn btn-secondary">Go to created campaign to book ads</a>
+      <a href="{% url 'createCampaign' %}" class="btn btn-light border border-dark">Start Another Campaign</a>
+    </div>
+  </div>
+</div>
+<script>
+  //Step Form
+  var currentTab = 0; // Current tab is set to be the first tab (0)
+  showTab(currentTab); // Display the current tab
+
+  function showTab(n) {
+    // This function will display the specified tab of the form...
+    var x = document.getElementsByClassName('tab');
+    x[n].style.display = 'block';
+    //... and fix the Previous/Next buttons:
+    if (n == 0) {
+      document.getElementById('prevBtn').style.display = 'none';
+    } else {
+      document.getElementById('prevBtn').style.display = 'inline';
+    }
+    if (n == x.length - 1) {
+      document.getElementById('nextBtn').innerHTML = 'Submit';
+    } else {
+      document.getElementById('nextBtn').innerHTML = 'Next';
+    }
+    //... and run a function that will display the correct step indicator:
+    fixStepIndicator(n);
+    //fixMobileStepIndicator(n);
+  }
+
+  function nextPrev(n) {
+    // This function will figure out which tab to display
+    var x = document.getElementsByClassName('tab');
+    // Going backwards? Remove 'finish' from current step
+    if (n === -1) {
+      var steps = document.getElementsByClassName('step');
+      steps[currentTab].classList.remove('finish');
+    }
+
+    // Exit the function if any field in the current tab is invalid:
+    //if (n == 1 && !validateForm()) return false;
+    // Hide the current tab:
+    x[currentTab].style.display = 'none';
+    // Skip field validation, but still mark step as finished
+    document.getElementsByClassName('step')[currentTab].classList.add('finish');
+
+    // Increase or decrease the current tab by 1:
+    currentTab = currentTab + n;
+    // if you have reached the end of the form...
+    if (currentTab >= x.length) {
+      // ... the form gets submitted:
+      document.getElementById('').submit();
+      return false;
+    }
+    // Otherwise, display the correct tab:
+    showTab(currentTab);
+  }
+
+  function validateForm() {
+    // This function deals with validation of the form fields
+    var x,
+      y,
+      i,
+      valid = true;
+    x = document.getElementsByClassName('tab');
+    y = x[currentTab].getElementsByTagName('input');
+    // A loop that checks every input field in the current tab:
+    for (i = 0; i < y.length; i++) {
+      // If a field is empty...
+      if (y[i].value == '') {
+        // add an "invalid" class to the field:
+        y[i].className += ' invalid';
+        // and set the current valid status to false
+        valid = false;
+      }
+    }
+    // If the valid status is true, mark the step as finished and valid:
+    if (valid) {
+      document.getElementsByClassName('step')[currentTab].className += ' finish';
+    }
+    return valid; // return the valid status
+  }
+
+  function fixStepIndicator(n) {
+    // This function removes the "active" class of all steps...
+    var i,
+      x = document.getElementsByClassName('step');
+    for (i = 0; i < x.length; i++) {
+      x[i].className = x[i].className.replace(' active', '');
+    }
+    //... and adds the "active" class on the current step:
+    x[n].className += ' active';
+  }
+
+  // function fixMobileStepIndicator(n) {
+  //   // This function removes the "active" class of all steps...
+  //   var i,
+  //     x = document.getElementsByClassName('mobile-step');
+  //   for (i = 0; i < x.length; i++) {
+  //     x[i].className = x[i].className.replace(' active', '');
+  //   }
+  //   //... and adds the "active" class on the current step:
+  //   x[n].className += ' active';
+  // }
+</script>
+{% endblock%}

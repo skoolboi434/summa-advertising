@@ -1645,6 +1645,11 @@
   min-height: 800px;
   margin: 30px auto;
 }
+
+.multi-step-form-container * {
+  position: relative;
+  z-index: 9999;
+}
 .multi-step-form-container:after {
   position: absolute;
   content: '';
@@ -1717,6 +1722,7 @@
   height: 0;
   opacity: 0;
   visibility: hidden;
+  position: absolute;
 }
 .multi-step-form-container .content .content__inner .multisteps-form .multisteps-form__form .multisteps-form__panel .heading-arrows-container {
   display: flex;
@@ -1855,6 +1861,7 @@
   background-color: #21215f;
   width: 100%;
   min-height: 60px;
+  z-index: 9999;
 }
 .top-bar #sidebarToggle {
   position: fixed;
@@ -1977,13 +1984,25 @@ body:not(.open-sidebar) .inner-nav {
 .notes-list {
   max-height: 300px;
   overflow-y: auto;
+  background-color: #f8f9fa;
 }
 .notes-list .note-item {
-  background-color: #f8f9fa;
+  background-color: rgba(#21215f, 0.5);
   padding: 10px;
   font-size: 14px;
 }
 .notes-list .note-item:last-child {
+  border-bottom: none;
+}
+
+.contact-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.contact-list .contact-item {
+  padding: 8px 0;
+}
+.contact-list .contact-item:last-child {
   border-bottom: none;
 }
 
