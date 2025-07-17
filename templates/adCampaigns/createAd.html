@@ -139,77 +139,415 @@
     </div>
   </div>
 
-  <!-- Product Selection -->
+  <!-- Ad Info & Scheduling -->
   <div class="tab">
     <div class="tab-description text-center mb-5">
-      <p>Select the type of products you want to<br />include with campaign</p>
+      <p>In this step, enter the ad info, set the<br />scheduling, and add any adjustments</p>
     </div>
 
-    <div class="actions-container d-flex justify-content-between mb-3">
-      <div class="btn-container">
-        <button class="btn btn-secondary-light bg-primary c-filter" onclick="filterAdFormats()"><i class="fa fa-solid fa-filter"></i> Filter</button>
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="form-group mb-4">
+          <label for="ad-name">Ad Name:</label>
+          <input type="text" name="" id="ad-name" class="form-control" />
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="default-ad-sizes">Default Ad Sizes:</label>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="available-rates">Available Rates:</label>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-lg-6">
+            <div class="form-group mb-4">
+              <label for="length">Length:</label>
+              <input type="text" name="" id="length" class="form-control" disabled />
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group mb-4">
+              <label for="columns">Columns:</label>
+              <input type="text" name="" id="columns" class="form-control" disabled />
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-lg-6">
+            <div class="form-group mb-4">
+              <label for="words">Words:</label>
+              <input type="text" name="" id="words" class="form-control" disabled />
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group mb-4">
+              <label for="lines">Lines:</label>
+              <input type="text" name="" id="lines" class="form-control" disabled />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mb-4 w-50">
+          <label for="units">Units:</label>
+          <input type="text" name="" id="units" class="form-control" disabled />
+        </div>
       </div>
 
-      <div class="has-search">
-        <input class="form-control" type="text" name="" placeholder="Search.... " />
+      <div class="col-lg-6">
+        <div class="mb-3">
+          <span
+            >Adjustments: <a href="#"><i class="fa fa-solid fa-plus"></i> Add Adjustment(s)</a></span
+          >
+        </div>
+        <div class="d-flex justify-content-between">
+          <p><strong>002_COLOR SECONDARY</strong></p>
+          <p><strong>$0.00</strong></p>
+        </div>
       </div>
     </div>
 
-    <div class="btn-container d-flex justify-content-between mt-5">
+    <div class="subtotal d-flex justify-content-around align-items-center mb-4 w-75 mx-auto">
+      <p class="mb-0"><strong>Subtotal Cost For this Ad:</strong></p>
+      <h3 class="mb-0">$0.00</h3>
+      <button class="btn btn-secondary-light">Update</button>
+    </div>
+
+    <div class="override-total w-50 mx-auto d-flex justify-content-around align-items-center">
+      <div class="form-check d-flex">
+        <input class="form-check-input" type="checkbox" value="" id="total-override" />
+        <label class="form-check-label" for="total-override">Override Total?</label>
+      </div>
+      <div class="custom-total">
+        <span>Custom Total <input type="text" name="" id="custom-total" disabled /></span>
+      </div>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between">
       <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
       <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
     </div>
   </div>
 
-  <!-- Review -->
+  <!-- Notes -->
   <div class="tab">
     <div class="tab-description text-center mb-5">
-      <p>Review the campaign then<br />click create!</p>
+      <p>Here you can add any notes relating to this<br />specific ad.</p>
+    </div>
+
+    <div class="accordion mb-4" id="notesAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#account-notes" aria-expanded="true" aria-controls="account-notes">Account Notes</button>
+        </h2>
+        <div id="account-notes" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#notesAccordion">
+          <div class="accordion-body"><strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion mb-4" id="designAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Design Notes</button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <form action="">
+                  <div class="form-group mb-3">
+                    <label for="note">Note</label>
+                    <textarea class="form-control" id="note" rows="5"></textarea>
+                  </div>
+
+                  <div class="btn-container text-center mb-5">
+                    <button type="submit" class="btn btn-secondary">Add Note</button>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="border-bottom d-flex justify-content-between pb-2">
+                      <h3 class="mb-0">File Attachments</h3>
+                      <button class="btn btn-secondary-light">Upload File</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="notes-container">
+                  <label for="notes">Added Notes</label>
+                  <div class="border rounded p-2">
+                    <div class="notes-list" style="max-height: 300px; overflow-y: auto">
+                      <!-- Example note -->
+                      <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
+                        <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+                        <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
+                      </div>
+
+                      <!-- Repeat .note-item bg-secondary-alpha border for each note -->
+                      <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
+                        <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+                        <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion mb-5" id="layout-notes">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">Layout Notes</button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container d-flex justify-content-between">
+      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-light border border-dark">Save as Draft</button>
+      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Review Ad -->
+  <div class="tab">
+    <div class="tab-description text-center mb-5">
+      <p>Review the information and if everything<br />looks good, click create</p>
     </div>
 
     <div class="row mb-5">
-      <div class="col-lg-4">
-        <span>*Campaign Name:</span>
-        <p class="mb-0">Example Campaign Name</p>
+      <div class="col-lg-6">
+        <div class="border-bottom border-dark mb-3">
+          <h3 class="mb-0">General Info</h3>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <span>Ad Name:</span>
+            <p>Thanksgiving ads 1</p>
+          </div>
+
+          <div class="col-md-12 col-lg-6">
+            <span>Campaign:</span>
+            <p>Thanksgiving Ads</p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <span>Ad Name:</span>
+            <p>Thanksgiving ads 1</p>
+          </div>
+
+          <div class="col-md-12 col-lg-6">
+            <span>Campaign:</span>
+            <p>Thanksgiving Ads</p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <span>Ad Criteria:</span>
+            <p></p>
+          </div>
+
+          <div class="col-md-12 col-lg-6">
+            <span>Ad Type:</span>
+            <p></p>
+          </div>
+        </div>
+
+        <div class="row mb-5">
+          <div class="col-md-12 col-lg-6">
+            <span>Section:</span>
+            <p></p>
+          </div>
+
+          <div class="col-md-12 col-lg-6">
+            <span>Page #:</span>
+            <p></p>
+          </div>
+        </div>
+
+        <!-- Ad Sizing -->
+
+        <div class="border-bottom border-dark mb-3">
+          <h3 class="mb-0">Ad Sizing</h3>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <span>Default Ad Sizes:</span>
+            <p></p>
+          </div>
+
+          <div class="col-md-12 col-lg-6">
+            <span>Available Rates:</span>
+            <p></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <span>Length:</span>
+            <p></p>
+          </div>
+
+          <div class="col-md-12 col-lg-6">
+            <span>Columns:</span>
+            <p></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <span>Words:</span>
+            <p></p>
+          </div>
+
+          <div class="col-md-12 col-lg-6">
+            <span>Lines:</span>
+            <p></p>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <span>Units:</span>
+            <p></p>
+          </div>
+        </div>
       </div>
 
-      <div class="col-lg-4">
-        <span>*Start Date:</span>
-        <p class="mb-0">00/00/0000</p>
+      <div class="col-lg-6">
+        <div class="border-bottom border-dark mb-3">
+          <h3 class="mb-0">Scheduling</h3>
+        </div>
+
+        <!-- Calendar -->
+
+        <!-- Notes -->
+        <div class="border-bottom border-dark mb-3">
+          <h3 class="mb-0">Notes</h3>
+        </div>
+
+        <div class="accordion mb-4" id="notesAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#account-notes" aria-expanded="true" aria-controls="account-notes">Account Notes</button>
+            </h2>
+            <div id="account-notes" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#notesAccordion">
+              <div class="accordion-body"><strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion mb-4" id="designAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Design Notes</button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <div class="notes-container">
+                  <label for="notes">Added Notes</label>
+                  <div class="border rounded p-2">
+                    <div class="notes-list" style="max-height: 300px; overflow-y: auto">
+                      <!-- Example note -->
+                      <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
+                        <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+                        <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
+                      </div>
+
+                      <!-- Repeat .note-item bg-secondary-alpha border for each note -->
+                      <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
+                        <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+                        <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion mb-5" id="layout-notes">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">Layout Notes</button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="col-lg-4">
-        <span>End Date (optional):</span>
-        <p class="mb-0">00/00/0000</p>
+      <!-- Pricing -->
+      <div class="w-75 mx-auto">
+        <div class="border-dark border-bottom mb-3 text-center">
+          <h3 class="mb-0">Pricing</h3>
+        </div>
+
+        <div class="pricing-container d-flex justify-content-between mb-2">
+          <p>Total</p>
+          <p>$0.00</p>
+        </div>
+
+        <div class="pricing-container d-flex justify-content-between mb-2">
+          <p>Adjustment 1</p>
+          <p>$0.00</p>
+        </div>
+
+        <div class="pricing-container d-flex justify-content-between mb-2">
+          <p>Adjustment 2</p>
+          <p>$0.00</p>
+        </div>
+
+        <div class="pricing-container d-flex justify-content-between mb-3">
+          <p><strong>Subtotal Cost For this Ad:</strong></p>
+          <p><strong>$0.00</strong></p>
+        </div>
+
+        <form action="">
+          <div class="override-total d-flex justify-content-between align-items-center">
+            <div class="form-check d-flex">
+              <input class="form-check-input" type="checkbox" value="" id="total-override" />
+              <label class="form-check-label" for="total-override">Override Total?</label>
+            </div>
+            <div class="custom-total">
+              <span>Custom Total <input type="text" name="" id="custom-total" disabled /></span>
+            </div>
+            <button class="btn btn-secondary">Update Price</button>
+          </div>
+        </form>
       </div>
-    </div>
-
-    <div class="row mb-5">
-      <div class="col-lg-4">
-        <span>*Sales Contact:</span>
-        <p class="mb-0">Ed Clark</p>
-      </div>
-
-      <div class="col-lg-8">
-        <span>Selected Advertisers:</span>
-        <ul class="list-group">
-          <li class="list-group-item">An item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="mb-5">
-      <span>Selected Products:</span>
-      <p class="mb-0">Digital, Newspaper</p>
-    </div>
-
-    <div class="mb-5">
-      <span>Brief Description (optional):</span>
-      <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque facilisis malesuada. Duis aliquam dui eget purus laoreet imperdiet. Vivamus cursus tortor pulvinar, sagittis turpis a, auctor metus. Duis feugiat, ante non sodales viverra, elit lorem feugiat velit, sit amet pulvinar felis lacus a nisl. Ut a ipsum sit amet nisi imperdiet sollicitudin nec feugiat mauris. In euismod auctor rutrum. In hac habitasse platea dictumst.</p>
     </div>
 
     <div class="btn-container d-flex justify-content-between">
@@ -223,8 +561,8 @@
   <div class="tab">
     <div class="tab-description text-center mb-5">
       <p>
-        Congratulation!<br />
-        Your Campaign has been created.
+        Ads booked!<br />
+        Your ad has been created and saved!
       </p>
     </div>
 
@@ -233,8 +571,9 @@
     </div>
 
     <div class="btn-container text-center">
-      <a href="" class="btn btn-secondary">Go to created campaign to book ads</a>
-      <a href="{% url 'createCampaign' %}" class="btn btn-light border border-dark">Start Another Campaign</a>
+      <a href="{% url 'createAd' %}" class="btn btn-light border-dark border">Create Another Ad</a>
+      <a href="{% url 'adCampaigns' %}" class="btn btn-light border border-dark">Go to Ad Campaign</a>
+      <a href="{% url 'adCampaigns' %}" class="btn btn-secondary">View Ad</a>
     </div>
   </div>
 </div>
