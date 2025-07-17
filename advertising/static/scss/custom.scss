@@ -12,6 +12,27 @@ body {
   overflow-x: hidden;
 }
 
+.asterisk {
+  color: #c10;
+}
+
+label {
+  .fa {
+    color: $primary;
+  }
+}
+
+.form-check-star i {
+  color: #ffc107; // gold star!
+  margin-right: 8px;
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+
+.form-check-star input:checked + label i {
+  transform: scale(1.2);
+}
+
 .filter-container {
   .filters {
     a {

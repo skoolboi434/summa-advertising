@@ -5,40 +5,180 @@
 
 <a href="{% url 'advertisers' %}">Back to Advertisers</a>
 
-<!-- Step Form -->
 <div class="multi-step-form-container">
-  <div class="content">
-    <!--content inner-->
-    <div class="content__inner">
-      <div class="container">
-        <!--multisteps-form-->
-        <div class="multisteps-form">
-          <div class="content">
-            <!--progress bar-->
-            <div class="justify-content-center progress-btns-container">
-              <div class="multisteps-form__progress">
-                <button class="multisteps-form__progress-btn js-active" type="button">Advertiser Overview</button>
-                <button class="multisteps-form__progress-btn" type="button">Ad Campaign History</button>
-                <button class="multisteps-form__progress-btn" type="button">Activity</button>
-              </div>
-            </div>
+  <div id="tab-heading" class="tab-heading mb-5 d-flex justify-content-between align-items-center">
+    <button class="step-arrow" id="prevTabBtn">
+      <i class="fa fa-solid fa-chevron-left"></i>
+    </button>
 
-            <!--form panels-->
+    <h3 class="multisteps-form__title text-center mb-0">Advertiser Overview</h3>
+
+    <button class="step-arrow" id="nextTabBtn">
+      <i class="fa fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <ul class="nav nav-pills mb-5 d-flex justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom active" id="pills-advertiser-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-advertiser-overview" type="button" role="tab" aria-controls="pills-advertiser-overview" aria-selected="true">Advertiser Overview</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-history-tab" data-bs-toggle="pill" data-bs-target="#pills-history" type="button" role="tab" aria-controls="pills-history" aria-selected="false">Ad Campaign History</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-history-tab" data-bs-toggle="pill" data-bs-target="#pills-history" type="button" role="tab" aria-controls="pills-history" aria-selected="false">Activity</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+    <!-- Advertiser Overview -->
+    <div class="tab-pane fade show active pt-5" id="pills-advertiser-overview" role="tabpanel" aria-labelledby="pills-advertiser-overview-tab" data-heading="Advertiser Overview">{% include 'advertisers/includes/advertiserOverview.html'%}</div>
+
+    <!-- History -->
+    <div class="tab-pane pt-5 fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab" data-heading="History">{% include 'advertisers/includes/adCampaignHistory.html'%}</div>
+
+    <!-- Activity -->
+    <div class="tab-pane pt-5 fade" id="pills-activity" role="tabpanel" aria-labelledby="pills-activity-tab" data-heading="Activity">{% include 'advertisers/includes/activity.html'%}</div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editAdvertiser" tabindex="-1" aria-labelledby="editAdvertiserLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="text-center w-100">
+          <h3 class="modal-title" id="editAdvertiserLabel">Edit Info</h3>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form action="">
             <div class="row">
-              <div class="col-12 m-auto">
-                <div class="multisteps-form__form">
-                  <!--single form panel-->
-                  {% include 'advertisers/includes/advertiserOverview.html'%}
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group mb-3">
+                  <label for="business-name"><span class="asterisk">*</span>Business Name:</label>
+                  <input type="text" name="" id="business-name" class="form-control" />
+                </div>
 
-                  <!--single form panel-->
-                  {% include 'advertisers/includes/adCampaignHistory.html'%}
+                <div class="form-group mb-3">
+                  <label for="business-status"><span class="asterisk">*</span>Status:</label>
+                  <select class="form-select" aria-label="Default select example" id="business-status">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
 
-                  <!--single form panel-->
-                  {% include 'advertisers/includes/activity.html'%}
+                <div class="form-group mb-3">
+                  <label for="business-name"><span class="asterisk">*</span>Account Type:</label>
+                  <select class="form-select" aria-label="Default select example" id="business-name">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="business-address"><span class="asterisk">*</span>Address:</label>
+                  <select class="form-select" aria-label="Default select example" id="business-address">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="business-city"><span class="asterisk">*</span>City:</label>
+                  <input type="text" name="" id="business-city" class="form-control" />
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="business-address"><span class="asterisk">*</span>Address:</label>
+                      <select class="form-select" aria-label="Default select example" id="business-address">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="business-zipcode"><span class="asterisk">*</span>Zip Code:</label>
+                      <input type="text" name="" id="business-zipcode" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="business-agency">Agency: (optional)</label>
+                  <input type="text" name="" id="business-agency" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                  <label for="sales-person"><span class="asterisk">*</span>Sales Person:</label>
+                  <select class="form-select" aria-label="Default select example" id="sales-person">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
                 </div>
               </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="row mb-3">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="market-code">Market Code:</label>
+                      <input type="text" name="" id="market-code" class="form-control" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="market-code">Legacy ID: (optional)</label>
+                      <input type="text" name="" id="market-code" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="website">Website:</label>
+                  <input type="text" name="" id="website" class="form-control" />
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="website">Website:</label>
+                  <input type="text" name="" id="website" class="form-control" />
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="website"><i class="fa fa-solid fa-envelope"></i> Billing Email:</label>
+                  <input type="text" name="" id="website" class="form-control" />
+                </div>
+
+                <div class="form-group mb-3">
+                  <label for="billing-contact"><span class="asterisk">*</span>Zip Code:</label>
+                  <input type="text" name="" id="billing-contact" class="form-control" />
+                </div>
+
+                <label for="billing-address"><span class="asterisk">*</span>Billing Addres:</label>
+              </div>
             </div>
-          </div>
+            <div class="btn-container my-4 d-flex justify-content-center">
+              <button type="button" class="btn btn-gray me-lg-3">Discard</button>
+              <button type="button" class="btn btn-secondary">Save changes</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -46,4 +186,42 @@
 </div>
 
 <!-- Contacts & Notes -->
-{% include 'advertisers/includes/contact-notes.html' %} {% endblock%}
+{% include 'advertisers/includes/contact-notes.html' %}
+
+<script>
+  const tabHeading = document.querySelector('#tab-heading h3');
+  const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
+  const tabTriggerList = Array.from(tabButtons);
+
+  function updateHeading(targetId) {
+    const targetPane = document.querySelector(targetId);
+    const newHeading = targetPane.dataset.heading;
+    tabHeading.textContent = newHeading;
+  }
+
+  // Add event listener to update heading when tab is changed
+  tabTriggerList.forEach(button => {
+    button.addEventListener('shown.bs.tab', e => {
+      updateHeading(e.target.dataset.bsTarget);
+    });
+  });
+
+  // Handle Next and Prev buttons
+  document.getElementById('nextTabBtn').addEventListener('click', () => {
+    const activeIndex = tabTriggerList.findIndex(btn => btn.classList.contains('active'));
+    if (activeIndex < tabTriggerList.length - 1) {
+      const nextButton = new bootstrap.Tab(tabTriggerList[activeIndex + 1]);
+      nextButton.show();
+    }
+  });
+
+  document.getElementById('prevTabBtn').addEventListener('click', () => {
+    const activeIndex = tabTriggerList.findIndex(btn => btn.classList.contains('active'));
+    if (activeIndex > 0) {
+      const prevButton = new bootstrap.Tab(tabTriggerList[activeIndex - 1]);
+      prevButton.show();
+    }
+  });
+</script>
+
+{% endblock%}

@@ -1,131 +1,104 @@
-<div class="multisteps-form__panel p-4 rounded js-active" data-animation="scaleIn">
-  <div class="heading-arrows-container d-flex justify-content-between mb-5">
-    <button class="multistep-form__arrow"><i class="fa fa-solid fa-chevron-left"></i></button>
-    <h3 class="multisteps-form__title text-center">Advertiser Overview</h3>
-    <button class="multistep-form__arrow"><i class="fa fa-solid fa-chevron-right"></i></button>
+<div class="container">
+  <div class="btn-container mb-5">
+    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editAdvertiser"><i class="fa fa-solid fa-pen"></i> Edit Info</button>
   </div>
 
-  <div class="multisteps-form__content">
-    <div class="container">
-      <div class="btn-container mb-5">
-        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editAdvertiser"><i class="fa fa-solid fa-pen"></i> Edit Info</button>
-      </div>
+  <div class="border-bottom border-dark w-50 mb-2">
+    <h3 class="mb-0">General Info</h3>
+  </div>
 
-      <div class="border-bottom border-dark w-50 mb-2">
-        <h3 class="mb-0">General Info</h3>
+  <div class="row mb-5">
+    <div class="col-lg-6">
+      <div class="heading-container mb-5">
+        <h3 class="color-secondary mb-0">111920 - Walmart</h3>
       </div>
 
       <div class="row mb-5">
         <div class="col-lg-6">
-          <div class="heading-container mb-5">
-            <h3 class="color-secondary mb-0">111920 - Walmart</h3>
-          </div>
-
-          <div class="row mb-5">
-            <div class="col-lg-6">
-              <span>Status:</span>
-              <p class="mb-0">Active</p>
-            </div>
-
-            <div class="col-lg-6">
-              <span>Account Type:</span>
-              <p class="mb-0">Business</p>
-            </div>
-          </div>
-
-          <div class="row mb-5">
-            <div class="col-lg-6">
-              <span>Address:</span>
-              <p class="mb-0">
-                120 North Market St.<br />
-                Wilmington, NC 28443
-              </p>
-            </div>
-
-            <div class="col-lg-6">
-              <span>Phone:</span>
-              <p class="mb-0">(111) 111-1111</p>
-            </div>
-          </div>
-
-          <div class="row mb-5">
-            <div class="col-lg-6">
-              <span>Website:</span>
-              <p class="mb-0">www.Walmart.com</p>
-            </div>
-
-            <div class="col-lg-6">
-              <span>Email:</span>
-              <p class="mb-0"><a href="mailto:">walmartservices@gmail.com</a></p>
-            </div>
-          </div>
-
-          <div class="row mb-5">
-            <div class="col-lg-6">
-              <span>Market Code:</span>
-              <p class="mb-0">844</p>
-            </div>
-
-            <div class="col-lg-6">
-              <span>Legacy ID:</span>
-              <p class="mb-0"></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- <div class="border-bottom border-dark mb-5">
-        <h3 class="mb-0">Billing Info</h3>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="row">
-            <div class="col-lg-6">
-              <span>Billing Address:</span>
-              <p class="mb-0">
-                <strong
-                  >120 North Market St.<br />
-                  Wilmington, NC 28443</strong
-                >
-              </p>
-            </div>
-
-            <div class="col-lg-6">
-              <span>Email:</span>
-              <a href="mailto:"><strong>walmartservices@gmail.com</strong></a>
-            </div>
-          </div>
+          <span>Status:</span>
+          <p class="mb-0">Active</p>
         </div>
 
         <div class="col-lg-6">
-          <div class="price-container text-center mb-5">
-            <h3 class="color-secondary mb-0">$230.50</h3>
-            <span>Current Balance</span>
-          </div>
-
-          <div class="btn-container d-flex justify-content-center">
-            <button class="btn btn-light border border-dark me-lg-3">Send Invoice Email</button>
-            <button class="btn btn-light border border-dark">Email Link to Pay</button>
-          </div>
+          <span>Account Type:</span>
+          <p class="mb-0">Business</p>
         </div>
-      </div> -->
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <span>Address:</span>
+          <p class="mb-0">
+            120 North Market St.<br />
+            Wilmington, NC 28443
+          </p>
+        </div>
+
+        <div class="col-lg-6">
+          <span>Phone:</span>
+          <p class="mb-0">(111) 111-1111</p>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <span>Website:</span>
+          <p class="mb-0">www.Walmart.com</p>
+        </div>
+
+        <div class="col-lg-6">
+          <span>Email:</span>
+          <p class="mb-0"><a href="mailto:">walmartservices@gmail.com</a></p>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <span>Market Code:</span>
+          <p class="mb-0">844</p>
+        </div>
+
+        <div class="col-lg-6">
+          <span>Legacy ID:</span>
+          <p class="mb-0"></p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="editAdvertiser" tabindex="-1" aria-labelledby="editAdvertiser" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editAdvertiser">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="border-bottom border-dark mb-5">
+    <h3 class="mb-0">Billing Info</h3>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-6">
+          <span>Billing Address:</span>
+          <p class="mb-0">
+            <strong
+              >120 North Market St.<br />
+              Wilmington, NC 28443</strong
+            >
+          </p>
+        </div>
+
+        <div class="col-lg-6">
+          <span>Email:</span>
+          <a href="mailto:"><strong>walmartservices@gmail.com</strong></a>
+        </div>
       </div>
-      <div class="modal-body">...</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="price-container text-center mb-5">
+        <h3 class="color-secondary mb-0">$230.50</h3>
+        <span>Current Balance</span>
+      </div>
+
+      <div class="btn-container d-flex justify-content-center">
+        <button class="btn btn-light border border-dark me-lg-3">Send Invoice Email</button>
+        <button class="btn btn-light border border-dark">Email Link to Pay</button>
       </div>
     </div>
   </div>

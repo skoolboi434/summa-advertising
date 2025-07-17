@@ -20,8 +20,19 @@
   .contact-item {
     padding: 8px 0;
 
+    .actions-container {
+      display: none;
+      transition: display 0.2s ease;
+    }
+
     &:last-child {
       border-bottom: none;
+    }
+
+    &:hover {
+      .actions-container {
+        display: block;
+      }
     }
   }
 }

@@ -4,8 +4,6 @@
   border-radius: 8px;
   box-shadow: $shadow;
   position: relative;
-  //max-width: 900px;
-  min-height: 800px;
   margin: 30px auto;
   //overflow-y: scroll;
   &:after {
@@ -23,188 +21,56 @@
     border-top-right-radius: 8px;
   }
 
-  //content styles
-  .content {
+  * {
     position: relative;
-    z-index: 999;
+    z-index: 222;
+  }
 
-    .content__inner {
-      .multisteps-form {
-        .progress-btns-container {
-          //position: absolute;
-          left: 0;
-          right: 0;
-          //top: 10%;
-          margin: auto;
-          width: 100%;
-          z-index: 2;
-          display: flex;
-          justify-content: center;
-          //multisteps progress styles
-          .multisteps-form__progress {
-            // display: grid;
-            // grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  .tab-heading {
+    .step-arrow {
+      background: transparent !important;
+      border: none !important;
+    }
+  }
 
-            .multisteps-form__progress-btn {
-              @include transition-mix($duration: 0.15s);
-              position: relative;
-              font-size: 13px;
-              color: $black;
-              text-indent: -9999px;
-              border: none;
-              background-color: transparent;
-              outline: none !important;
-              margin: 0 2px;
-              border: none;
-              border-radius: 10px;
+  .nav-pills {
+    .nav-item {
+      .nav-link-custom {
+        position: relative;
+        font-size: 13px;
+        color: $black !important;
+        text-indent: -9999px;
+        border: none;
+        background-color: transparent;
+        outline: none !important;
+        margin: 0 2px;
+        padding: 2px 20px;
+        border: none;
+        border-radius: 10px;
+        @include transition-mix($duration: 0.15s);
 
-              cursor: pointer;
+        cursor: pointer;
 
-              @media (min-width: 500px) {
-                text-indent: 0;
-              }
+        @media (min-width: 500px) {
+          text-indent: 0;
+        }
 
-              //last child - without line decoration
-              &:first-child {
-                &:after {
-                  display: none;
-                }
-              }
-
-              //active styles
-              &.js-active {
-                background-color: $primary;
-                color: $white;
-                box-shadow: $shadow;
-                &:before {
-                  transform: translateX(-50%) scale(1.2);
-
-                  background-color: currentColor;
-                }
-              }
-            }
+        //last child - without line decoration
+        &:first-child {
+          &:after {
+            display: none;
           }
         }
 
-        //multisteps form styles
-        .multisteps-form__form {
-          position: relative;
-          width: 100%;
+        //active styles
+        &.active {
+          background-color: $primary;
+          color: $white !important;
+          box-shadow: $shadow;
+          &:before {
+            transform: translateX(-50%) scale(1.2);
 
-          //multisteps panels styles
-          .multisteps-form__panel {
-            margin: 0 auto;
-            left: 0;
-            width: 100%;
-            height: 0;
-            opacity: 0;
-            visibility: hidden;
-
-            .heading-arrows-container {
-              display: flex;
-              justify-content: space-between;
-
-              margin-top: 25px;
-              position: relative;
-              //top: -60px;
-              .multistep-form__arrow {
-                background: none;
-                border: none;
-              }
-            }
-
-            hr {
-              border: 1px solid $black;
-              margin-top: 0px;
-            }
-            @include position-absolute($top: 0, $left: 0);
-
-            width: 100%;
-            height: 0;
-
-            opacity: 0;
-            visibility: hidden;
-
-            //active panels
-            &.js-active {
-              height: auto;
-
-              opacity: 1;
-              visibility: visible;
-            }
-
-            //scaleOut animation
-            &[data-animation='scaleOut'] {
-              transform: scale(1.1);
-
-              &.js-active {
-                @include transition-mix;
-
-                transform: scale(1);
-              }
-            }
-
-            //slideHorz animation
-            &[data-animation='slideHorz'] {
-              left: 50px;
-
-              &.js-active {
-                @include transition-mix($duration: 0.25s, $timing: cubic-bezier(0.2, 1.13, 0.38, 1.43));
-
-                left: 0;
-              }
-            }
-
-            //slideVert animation
-            &[data-animation='slideVert'] {
-              top: 30px;
-
-              &.js-active {
-                @include transition-mix();
-
-                top: 0;
-              }
-            }
-
-            //fadeIn animation
-            &[data-animation='fadeIn'] {
-              &.js-active {
-                @include transition-mix($duration: 0.3s);
-              }
-            }
-
-            //scaleOut
-            &[data-animation='scaleIn'] {
-              transform: scale(0.9);
-
-              &.js-active {
-                @include transition-mix;
-
-                transform: scale(1);
-              }
-            }
-
-            .multisteps-form__content {
-              padding-top: 25px;
-
-              .campaign-name {
-                .heading {
-                  &.name {
-                    font-size: 20px;
-                  }
-                }
-              }
-
-              .start-date,
-              .end-date {
-                .heading {
-                  font-size: 18px;
-                }
-              }
-              // .content-container {
-              //   min-height: 220px;
-              // }
-            }
+            background-color: currentColor;
           }
         }
       }
