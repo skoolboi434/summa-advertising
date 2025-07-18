@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'adCampaigns.apps.AdcampaignsConfig',
     'advertisers.apps.AdvertisersConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -258,6 +258,10 @@
   text-align: center;
 }
 
+.profile-container {
+  background-color: #fff;
+}
+
 #slideOut {
   background-color: #fff;
   position: fixed;
@@ -606,6 +610,11 @@
 }
 .btn-secondary-light:hover {
   color: #fff !important;
+}
+
+.btn-light {
+  border: 1px solid #21215f;
+  color: #21215f;
 }
 
 .btn-dl-template {

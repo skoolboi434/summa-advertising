@@ -1,0 +1,161 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="btn-container mb-3 my-5">
+  <a href="{% url 'index' %}" class="btn btn-secondary"><i class="fa fa-solid fa-arrow-left"></i> Back to Homepage</a>
+</div>
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading">My Profile</h3>
+</div>
+
+<div class="profile-container border border-dark rounded shadow-sm p-3">
+  <div class="actions-container d-flex align-items-center mb-5">
+    <button class="btn btn-secondary me-lg-3">Save Changes</button>
+    <button class="btn btn-light">Set New Password</button>
+    <div class="d-flex align-items-center"><button type="button" class="btn btn-light" disabled>Log Out Everywhere Else</button> <small class="mb-0">You are only logged in at this location</small></div>
+  </div>
+
+  <form action="">
+    <div class="row">
+      <div class="col-md-12 col-lg-6">
+        <div class="border-bottom border-dark mb-3">
+          <h3 class="mb-0">General Info</h3>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 col-lg-4"></div>
+
+          <div class="col-md-12 col-lg-8">
+            <div class="form-group mb-3">
+              <label for="firstname">First Name:</label>
+              <input type="text" name="" id="firstname" class="form-control" />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="lastname">Last Name:</label>
+              <input type="text" name="" id="lastname" class="form-control" />
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="username">User Name:</label>
+                  <input type="text" name="" id="username" class="form-control" />
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="nickname">Nickname:</label>
+                  <input type="text" name="" id="nickname" class="form-control" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="displayname">Display name Publicly as:</label>
+              <select id="displayname" class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="status">Display name Publicly as:</label>
+              <select id="status" class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="bio">Bio:</label>
+            <textarea class="form-control" name="" id="bio" rows="5"></textarea>
+          </div>
+
+          <div class="form-group w-50">
+            <label for="language">Language:</label>
+            <select class="form-select" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-6">
+        <div class="border-bottom border-dark mb-3">
+          <h3 class="mb-0">Contact</h3>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="email"><span class="asterisk">*</span>Email:</label>
+          <input type="text" name="" id="email" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="phone">Phone:</label>
+          <input type="text" name="" id="phone" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="website">Website:</label>
+          <input type="text" name="" id="website" class="form-control" />
+        </div>
+
+        <!-- Region & Role -->
+
+        <div class="border-bottom border-dark mb-3">
+          <h3 class="mb-0">Region & Role</h3>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="region">Region:</label>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="publications">Publications:</label>
+          <select id="publications" class="form-select" multiple aria-label="multiple select">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="role">Role:</label>
+          <select id="role" class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="commission">Commission %:</label>
+          <input type="text" name="" id="commission" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container my-5 d-flex justify-content-end">
+      <button class="btn btn-secondary">Save Changes</button>
+    </div>
+  </form>
+</div>
+{% endblock%}

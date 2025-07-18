@@ -56,6 +56,11 @@
   }
 }
 
+.btn-light {
+  border: 1px solid $secondary;
+  color: $secondary;
+}
+
 .btn-dl-template {
   display: block;
   background: rgba($secondary, 0.2) !important;
