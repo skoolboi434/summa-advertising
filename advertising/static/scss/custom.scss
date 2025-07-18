@@ -36,6 +36,15 @@ label {
   transform: scale(1.2);
 }
 
+.tab-content {
+  > .tab-pane {
+    display: none;
+  }
+  > .active {
+    display: block;
+  }
+}
+
 .filter-container {
   .filters {
     a {

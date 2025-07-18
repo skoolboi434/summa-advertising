@@ -1,0 +1,225 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading">Ad Dashboard</h3>
+</div>
+
+<a href="{% url 'allAds' %}">Back to Ads</a>
+
+<div class="multi-step-form-container">
+  <div id="tab-heading" class="tab-heading mb-5 d-flex justify-content-center align-items-center">
+    <!-- <button class="step-arrow" id="prevTabBtn">
+      <i class="fa fa-solid fa-chevron-left"></i>
+    </button> -->
+
+    <h3 class="text-center mb-0">Ad Overview</h3>
+
+    <!-- <button class="step-arrow" id="nextTabBtn">
+      <i class="fa fa-solid fa-chevron-right"></i>
+    </button> -->
+  </div>
+
+  <ul class="nav nav-pills mb-5 d-flex justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom active" id="pills-ad-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-ad-overview" type="button" role="tab" aria-controls="pills-ad-overview" aria-selected="true">Ad Overview</button>
+    </li>
+  </ul>
+
+  <div class="btn-container pt-5">
+    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editAdModal"><i class="fa fa-solid fa-pencil"></i> Edit Campaign Details</button>
+
+    <button class="btn btn-danger"><i class="fa fa-solid fa-ban"></i>&nbsp;Cancel</button>
+  </div>
+
+  <div class="tab-content" id="pills-tabContent">
+    <!-- Ad Overview -->
+    <div class="tab-pane fade show active pt-5" id="pills-ad-overview" role="tabpanel" aria-labelledby="pills-ad-overview-tab" data-heading="Ad Overview">{% include 'adCampaigns/includes/adOverview.html'%}</div>
+  </div>
+</div>
+
+<div class="modal fade" id="editAdModal" tabindex="-1" aria-labelledby="editAdModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content multi-step-form-container">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-pills mb-5 d-flex justify-content-center" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link-custom active" id="pills-gen-info-tab" data-bs-toggle="pill" data-bs-target="#pills-gen-info" type="button" role="tab" aria-controls="pills-gen-info" aria-selected="true">General Info</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link-custom" id="pills-ad-sizing-tab" data-bs-toggle="pill" data-bs-target="#pills-ad-sizing" type="button" role="tab" aria-controls="pills-ad-sizing" aria-selected="true">Ad Sizing</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link-custom" id="pills-scheduling-tab" data-bs-toggle="pill" data-bs-target="#pills-scheduling" type="button" role="tab" aria-controls="pills-scheduling" aria-selected="true">Scheduling</button>
+          </li>
+        </ul>
+      </div>
+
+      <form action="" class="tab-content" id="pills-tabContent">
+        <!-- Ad Overview -->
+        <div class="tab-pane fade mb-5 show active" id="pills-gen-info" role="tabpanel" aria-labelledby="pills-gen-info-tab" data-heading="Ad Overview">
+          <div class="row pt-5">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group mb-3">
+                <label for="adName">Ad Name:</label>
+                <input type="text" name="" id="adName" class="form-control" />
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="publication">Publication:</label>
+                <select id="publication" class="form-select" aria-label="Default select example">
+                  <option selected>Open this select menu</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="adCriteria">Ad Criteria:</label>
+                <select id="adCriteria" class="form-select" aria-label="Default select example">
+                  <option selected>Open this select menu</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="section">Section:</label>
+                <select id="section" class="form-select" aria-label="Default select example">
+                  <option selected>Open this select menu</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group mb-3">
+                <label for="campaign">Campaign:</label>
+                <select id="campaign" class="form-select" aria-label="Default select example">
+                  <option selected>Open this select menu</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="product">Product:</label>
+                <select id="product" class="form-select" aria-label="Default select example">
+                  <option selected>Open this select menu</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="adType">Ad Type:</label>
+                <select id="adType" class="form-select" aria-label="Default select example">
+                  <option selected>Open this select menu</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="pagenum">Page #:</label>
+                <select id="pagenum" class="form-select" aria-label="Default select example">
+                  <option selected>Open this select menu</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ad Sizing -->
+        <div class="tab-pane fade mb-5" id="pills-ad-sizing" role="tabpanel" aria-labelledby="pills-ad-sizing-tab">
+          <div class="row pt-5">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group mb-3">
+                <label for="defaultAdSize">Default Ad Size:</label>
+                <input type="text" name="" id="defaultAdSize" class="form-control" />
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="length">Length:</label>
+                <input type="text" name="" id="length" class="form-control" />
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="words">Words:</label>
+                <input type="text" name="" id="words" class="form-control" />
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="units">Units:</label>
+                <input type="text" name="" id="units" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group mb-3">
+                <label for="availableRates">Available Rates:</label>
+                <input type="text" name="" id="availableRates" class="form-control" />
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="columns">Columns:</label>
+                <input type="text" name="" id="columns" class="form-control" />
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="lines">Lines:</label>
+                <input type="text" name="" id="lines" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scheduling -->
+        <div class="tab-pane fade mb-5" id="pills-scheduling" role="tabpanel" aria-labelledby="pills-scheduling-tab">
+          <div class="advertising-calendar pt-5 w-50 mx-auto">
+            <!-- Month/Year Selects -->
+            <div class="month-year-selects d-flex justify-content-between mb-3">
+              <select class="form-select month-select w-50 me-2"></select>
+              <select class="form-select year-select w-50"></select>
+            </div>
+
+            <!-- Calendar -->
+            <div class="calendar border rounded">
+              <div class="calendar-days d-grid text-center fw-bold border-bottom pb-2 mb-2" style="grid-template-columns: repeat(7, 1fr)">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+              </div>
+              <div class="calendar-dates d-grid text-center" id="calendarDates" style="grid-template-columns: repeat(7, 1fr); min-height: 300px">
+                <!-- Days will be injected here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-container d-flex justify-content-between align-items-center w-50 mx-auto">
+          <button type="button" class="btn btn-gray" data-bs-dismiss="modal">Discard Changes</button>
+          <button type="button" class="btn btn-secondary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock%}

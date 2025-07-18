@@ -1,0 +1,189 @@
+<div class="row mb-5">
+  <div class="col-lg-6">
+    <div class="border-bottom border-dark mb-3">
+      <h3 class="mb-0">General Info</h3>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-12 col-lg-6">
+        <span class="mb-0">Ad Name:</span>
+        <h3 class="mb-0">Thanksgiving Ads 1</h3>
+      </div>
+
+      <div class="col-md-12 col-lg-6">
+        <p class="mb-0">Campaign:</p>
+        <p class="mb-0">Thanksgiving Ads</p>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-12 col-lg-6">
+        <span class="mb-0">Publication:</span>
+        <p class="mb-0">Wilmington Observer Print Edition</p>
+      </div>
+
+      <div class="col-md-12 col-lg-6">
+        <p class="mb-0">Product:</p>
+        <p class="mb-0">Print</p>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-12 col-lg-6">
+        <span class="mb-0">Ad Criteria:</span>
+      </div>
+
+      <div class="col-md-12 col-lg-6">
+        <p class="mb-0">Ad Type:</p>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-md-12 col-lg-6">
+        <span class="mb-0">Section:</span>
+      </div>
+
+      <div class="col-md-12 col-lg-6">
+        <p class="mb-0">Page #:</p>
+      </div>
+    </div>
+
+    <div class="border-bottom border-dark mb-3">
+      <h3 class="mb-0">Ad Sizing</h3>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-12 col-lg-6">
+        <span class="mb-0">Default Ad Sizes:</span>
+      </div>
+
+      <div class="col-md-12 col-lg-6">
+        <p class="mb-0">Available Rates:</p>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-12 col-lg-6">
+        <span class="mb-0">Length:</span>
+      </div>
+
+      <div class="col-md-12 col-lg-6">
+        <p class="mb-0">Columns:</p>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-12 col-lg-6">
+        <span class="mb-0">Words:</span>
+      </div>
+
+      <div class="col-md-12 col-lg-6">
+        <p class="mb-0">Lines:</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="border-dark border-bottom mb-3">
+      <h3 class="mb-0">Scheduling</h3>
+    </div>
+
+    <!-- Calendar -->
+    <div class="advertising-calendar pt-5 w-50 mx-auto mb-5">
+      <!-- Month/Year Selects -->
+      <div class="month-year-selects d-flex justify-content-between mb-3">
+        <select class="form-select month-select w-50 me-2"></select>
+        <select class="form-select year-select w-50"></select>
+      </div>
+
+      <!-- Calendar -->
+      <div class="calendar border rounded">
+        <div class="calendar-days d-grid text-center fw-bold border-bottom pb-2 mb-2" style="grid-template-columns: repeat(7, 1fr)">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
+        </div>
+        <div class="calendar-dates d-grid text-center" id="calendarDates" style="grid-template-columns: repeat(7, 1fr); min-height: 300px">
+          <!-- Days will be injected here -->
+        </div>
+      </div>
+    </div>
+
+    <div class="border-dark border-bottom mb-3 text-center">
+      <h3 class="mb-0">Pricing</h3>
+    </div>
+    <div class="pricing-container d-flex justify-content-between mb-2">
+      <p>Total</p>
+      <p>$0.00</p>
+    </div>
+
+    <div class="pricing-container d-flex justify-content-between mb-2">
+      <p>Adjustment 1</p>
+      <p>$0.00</p>
+    </div>
+
+    <div class="pricing-container d-flex justify-content-between mb-2">
+      <p>Adjustment 2</p>
+      <p>$0.00</p>
+    </div>
+
+    <div class="pricing-container d-flex justify-content-between mb-3">
+      <p><strong>Subtotal Cost For this Ad:</strong></p>
+      <p><strong>$0.00</strong></p>
+    </div>
+
+    <form action="">
+      <div class="override-total d-flex justify-content-between align-items-center">
+        <div class="form-check d-flex">
+          <input class="form-check-input" type="checkbox" value="" id="total-override" />
+          <label class="form-check-label" for="total-override">Override Total?</label>
+        </div>
+        <div class="custom-total">
+          <span>Custom Total <input type="text" name="" id="custom-total" disabled /></span>
+        </div>
+        <button class="btn btn-secondary">Update Price</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="border-bottom border-dark mb-3 w-50">
+  <h3 class="mb-0">Notes</h3>
+</div>
+
+<div class="accordion mb-3" id="accountNotes">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseaccountNotes" aria-expanded="true" aria-controls="collapseaccountNotes">Account Notes</button>
+    </h2>
+    <div id="collapseaccountNotes" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accountNotes">
+      <div class="accordion-body"><strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.</div>
+    </div>
+  </div>
+</div>
+
+<div class="accordion mb-3" id="layoutNotes">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapselayoutNotes" aria-expanded="true" aria-controls="collapselayoutNotes">Layout Notes</button>
+    </h2>
+    <div id="collapselayoutNotes" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#layoutNotes">
+      <div class="accordion-body"><strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.</div>
+    </div>
+  </div>
+</div>
+
+<div class="accordion mb-3" id="designNotes">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsedesignNotes" aria-expanded="true" aria-controls="collapsedesignNotes">Design Notes</button>
+    </h2>
+    <div id="collapsedesignNotes" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#designNotes">
+      <div class="accordion-body"><strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.</div>
+    </div>
+  </div>
+</div>
