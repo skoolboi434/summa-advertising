@@ -1812,7 +1812,10 @@ body:not(.open-sidebar) .inner-nav {
 }
 
 body {
-  background-color: #f3f3f3;
+  background: linear-gradient(to bottom, #f3f3f3 60%, rgba(33, 33, 95, 0.3) 40%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
@@ -1842,6 +1845,10 @@ label .fa {
 }
 .filter-container .filters a.active {
   font-weight: 700;
+}
+
+.custom-container {
+  background-color: #fff;
 }
 
 .heading-container .heading {
