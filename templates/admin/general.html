@@ -38,7 +38,13 @@
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active pt-5" id="pills-general-overview" role="tabpanel" aria-labelledby="pills-general-overview-tab" data-heading="General Overview">{% include 'admin/includes/generalOverview.html'%}</div>
 
-    <div class="tab-pane fade pt-5" id="pills-pubs" role="tabpanel" aria-labelledby="pills-pubs-tab" data-heading="General Overview">{% include 'admin/includes/pubs.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-pubs" role="tabpanel" aria-labelledby="pills-pubs-tab" data-heading="Pubs">{% include 'admin/includes/pubs.html'%}</div>
+
+    <div class="tab-pane fade pt-5" id="pills-cc-vendor" role="tabpanel" aria-labelledby="pills-cc-vendor-tab" data-heading="Credit Card Vendor">{% include 'admin/includes/cc-vendor.html'%}</div>
+
+    <div class="tab-pane fade pt-5" id="pills-regions" role="tabpanel" aria-labelledby="pills-regions-tab" data-heading="Regions">{% include 'admin/includes/regions.html'%}</div>
+
+    <div class="tab-pane fade pt-5" id="pills-products" role="tabpanel" aria-labelledby="pills-products-tab" data-heading="Products">{% include 'admin/includes/products.html'%}</div>
   </div>
 </div>
 
@@ -46,13 +52,90 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editAdminInfoModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="editAdminInfoModalLabel">Edit Info</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">...</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-body w-75 mx-auto">
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="nameInput">Name:</label>
+              <input type="text" name="name" id="nameInput" class="form-control" />
+              <small id="nameError" class="text-danger"></small>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="countryInput">Country:</label>
+              <select name="country" id="countryInput" class="form-control">
+                <option value="">Select a Country</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="streetAddressInput">Street Address:</label>
+          <input type="text" name="street_address" id="streetAddressInput" class="form-control" />
+          <small id="streetAddressError" class="text-danger"></small>
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="unitInput">Unit, Suite, etc.:</label>
+          <input type="text" name="unit" id="unitInput" class="form-control" />
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <div class="form-group">
+              <label for="cityInput">City:</label>
+              <input type="text" name="city" id="cityInput" class="form-control" />
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-6">
+            <div class="form-group">
+              <label for="stateInput">State:</label>
+              <select name="state" id="stateInput" class="form-control">
+                <option value="">Select a State</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-6">
+            <div class="form-group">
+              <label for="zipCodeInput">Zip Code:</label>
+              <input type="text" name="zip_code" id="zipCodeInput" class="form-control" />
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-6">
+            <div class="form-group">
+              <label for="countryInput">Country:</label>
+              <select name="country" id="countryInput" class="form-control">
+                <option value="">Select a State</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="companyGLInput">Company GL:</label>
+          <select name="companyGL" id="companyGLInput" class="form-control">
+            <option value=""></option>
+          </select>
+        </div>
+
+        <div class="form-group mb-5">
+          <label for="profileImageUpload">Upload New Profile Picture:</label>
+          <input type="file" class="form-control" id="profileImageUpload" />
+        </div>
+
+        <div class="btn-container d-flex justify-content-center w-75 mx-auto">
+          <button type="button" class="btn btn-gray me-lg-3" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary">Save changes</button>
+        </div>
       </div>
     </div>
   </div>

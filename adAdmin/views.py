@@ -5,3 +5,6 @@ def index(request):
 
 def adminGeneral(request):
   return render(request, 'admin/general.html')
+
+def adminPubSetup(request):
+  return render(request, 'admin/pubs/newPublication.html')

@@ -5,7 +5,8 @@
   box-shadow: $shadow;
   position: relative;
   margin: 30px auto;
-  //overflow-y: scroll;
+  max-width: 1200px;
+  width: 100%;
   &:after {
     position: absolute;
     content: '';
