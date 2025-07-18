@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading mb-3">Welcome To Your Admin Portal</h3>
+  <p>Select an area below to view,<br />edit, and manage!</p>
+</div>
+
+<div class="admin-landing-container">
+  <div class="admin-blocks">
+    <div class="row w-75 mx-auto">
+      <div class="col-md-4 mb-lg-4">
+        <a class="admin-block-link" href="{% url 'adminGeneral' %}" target="_blank">
+          <div class="admin-block general">
+            <h3 class="title">General</h3>
+            <span>Overview | Pubs | CC Vendors<br />Regions | Products</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4 mb-lg-4">
+        <a class="admin-block-link" href="" target="_blank">
+          <div class="admin-block ads">
+            <h3 class="title">Ads</h3>
+            <span>Ad Types | Market Codes | Sections</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4 mb-lg-4">
+        <a class="admin-block-link" href="" target="_blank">
+          <div class="admin-block financial">
+            <h3 class="title">Financial</h3>
+            <span>GL Codes | Billing Terms<br />Fiscal Years &amp; Account Periods</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-4 mb-lg-4">
+        <a class="admin-block-link" href="" target="_blank">
+          <div class="admin-block pricing">
+            <h3 class="title">Pricing</h3>
+            <span>Adjustments | Rate | Tax</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4 mb-lg-4">
+        <a class="admin-block-link" href="" target="_blank">
+          <div class="admin-block classifieds">
+            <h3 class="title">Classifieds</h3>
+            <span>Categories | Measurements | Styles<br />Upsells | Custom fields</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock%}

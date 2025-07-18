@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'adCampaigns.apps.AdcampaignsConfig',
     'advertisers.apps.AdvertisersConfig',
     'users.apps.UsersConfig',
+    'adAdmin.apps.AdadminConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,10 +78,25 @@ WSGI_APPLICATION = 'advertising.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'wp_advdevsummawar',
+        'USER': 'advdevsummawar',
+        'PASSWORD': 'Z6zSKj56CGEjPQHx-6W8',
+        'HOST': 'localhost',
+        'PORT': '4567',
+        'OPTIONS': {
+            'init_command': "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED",
+            'sql_mode': 'STRICT_TRANS_TABLES',
+        },
     }
 }
 

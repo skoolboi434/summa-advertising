@@ -4,11 +4,14 @@ import pages.urls
 import adCampaigns.urls
 import advertisers.urls
 import users.urls
+import adAdmin.urls
+
 
 urlpatterns = [
     path('', include(pages.urls)),
     path('adcampaigns/', include(adCampaigns.urls)),
     path('advertisers/', include(advertisers.urls)),
     path('users/', include(users.urls)),
+    path('adminportal/', include(adAdmin.urls)),
     path('admin/', admin.site.urls),
 ]

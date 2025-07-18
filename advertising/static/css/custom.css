@@ -98,13 +98,6 @@
   border: 1px solid #f26722;
 }
 
-.admin-landing-container .admin-blocks .top {
-  margin-bottom: 20px;
-}
-.admin-landing-container .admin-blocks .bottom {
-  display: flex;
-  justify-content: space-around;
-}
 .admin-landing-container .admin-blocks .admin-block-link {
   text-decoration: none;
 }
@@ -112,11 +105,14 @@
   position: relative;
   background-color: #fff;
   height: 150px;
+  border: 1px solid #666666;
   border-radius: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 .admin-landing-container .admin-blocks .admin-block .title {
   position: relative;
@@ -126,9 +122,16 @@
   color: #000;
   line-height: 26.4px;
 }
+.admin-landing-container .admin-blocks .admin-block span {
+  font-size: 12px;
+  font-weight: 700;
+  color: #000;
+  position: relative;
+  z-index: 2;
+}
 .admin-landing-container .admin-blocks .admin-block.accounts::before {
   content: "";
-  background-image: url("../images/icon-accounts.jpg");
+  background-image: url("../img/icon-accounts.jpg");
   background-position: center;
   background-repeat: no-repeat;
   position: absolute;
@@ -137,7 +140,16 @@
 }
 .admin-landing-container .admin-blocks .admin-block.ads::before {
   content: "";
-  background-image: url("../images/icon-ads.jpg");
+  background-image: url("../img/icon-ads.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.admin-landing-container .admin-blocks .admin-block.classifieds::before {
+  content: "";
+  background-image: url("../img/icon-classifieds.png");
   background-position: center;
   background-repeat: no-repeat;
   position: absolute;
@@ -146,7 +158,7 @@
 }
 .admin-landing-container .admin-blocks .admin-block.financial::before {
   content: "";
-  background-image: url("../images/icon-financial.jpg");
+  background-image: url("../img/icon-financial.jpg");
   background-position: center;
   background-repeat: no-repeat;
   position: absolute;
@@ -155,7 +167,7 @@
 }
 .admin-landing-container .admin-blocks .admin-block.general::before {
   content: "";
-  background-image: url("../images/icon-general.jpg");
+  background-image: url("../img/icon-general.jpg");
   background-position: center;
   background-repeat: no-repeat;
   position: absolute;
@@ -164,7 +176,7 @@
 }
 .admin-landing-container .admin-blocks .admin-block.pricing::before {
   content: "";
-  background-image: url("../images/icon-pricing.jpg");
+  background-image: url("../img/icon-pricing.jpg");
   background-position: center;
   background-repeat: no-repeat;
   position: absolute;

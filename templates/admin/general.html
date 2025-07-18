@@ -1,0 +1,97 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading mb-3">Admin - General</h3>
+</div>
+
+<div class="multi-step-form-container">
+  <div id="tab-heading" class="tab-heading mb-5 d-flex justify-content-between align-items-center">
+    <button class="step-arrow" id="prevTabBtn">
+      <i class="fa fa-solid fa-chevron-left"></i>
+    </button>
+
+    <h3 class="multisteps-form__title text-center mb-0">Overview</h3>
+
+    <button class="step-arrow" id="nextTabBtn">
+      <i class="fa fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <ul class="nav nav-pills mb-5 d-flex justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom active" id="pills-general-overview-tab" data-bs-toggle="pill" data-bs-target="#pills-general-overview" type="button" role="tab" aria-controls="pills-general-overview" aria-selected="true">General Overview</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-pubs-tab" data-bs-toggle="pill" data-bs-target="#pills-pubs" type="button" role="tab" aria-controls="pills-pubs" aria-selected="false">Pubs</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-cc-vendor-tab" data-bs-toggle="pill" data-bs-target="#pills-cc-vendor" type="button" role="tab" aria-controls="pills-cc-vendor" aria-selected="false">Credit Card Vendor</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-regions-tab" data-bs-toggle="pill" data-bs-target="#pills-regions" type="button" role="tab" aria-controls="pills-regions" aria-selected="false">Regions</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-products-tab" data-bs-toggle="pill" data-bs-target="#pills-products" type="button" role="tab" aria-controls="pills-products" aria-selected="false">Products</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active pt-5" id="pills-general-overview" role="tabpanel" aria-labelledby="pills-general-overview-tab" data-heading="General Overview">{% include 'admin/includes/generalOverview.html'%}</div>
+
+    <div class="tab-pane fade pt-5" id="pills-pubs" role="tabpanel" aria-labelledby="pills-pubs-tab" data-heading="General Overview">{% include 'admin/includes/pubs.html'%}</div>
+  </div>
+</div>
+
+<div class="modal fade" id="editAdminInfoModal" tabindex="-1" aria-labelledby="editAdminInfoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editAdminInfoModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const tabHeading = document.querySelector('#tab-heading h3');
+  const tabButtons = document.querySelectorAll('[data-bs-toggle="pill"]');
+  const tabTriggerList = Array.from(tabButtons);
+
+  function updateHeading(targetId) {
+    const targetPane = document.querySelector(targetId);
+    const newHeading = targetPane.dataset.heading;
+    tabHeading.textContent = newHeading;
+  }
+
+  // Add event listener to update heading when tab is changed
+  tabTriggerList.forEach(button => {
+    button.addEventListener('shown.bs.tab', e => {
+      updateHeading(e.target.dataset.bsTarget);
+    });
+  });
+
+  // Handle Next and Prev buttons
+  document.getElementById('nextTabBtn').addEventListener('click', () => {
+    const activeIndex = tabTriggerList.findIndex(btn => btn.classList.contains('active'));
+    if (activeIndex < tabTriggerList.length - 1) {
+      const nextButton = new bootstrap.Tab(tabTriggerList[activeIndex + 1]);
+      nextButton.show();
+    }
+  });
+
+  document.getElementById('prevTabBtn').addEventListener('click', () => {
+    const activeIndex = tabTriggerList.findIndex(btn => btn.classList.contains('active'));
+    if (activeIndex > 0) {
+      const prevButton = new bootstrap.Tab(tabTriggerList[activeIndex - 1]);
+      prevButton.show();
+    }
+  });
+</script>
+
+{% endblock%}
