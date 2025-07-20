@@ -12,17 +12,17 @@
       <div class="d-flex justify-content-between mb-4">
         <div class="w-50">
           <p class="mb-0">Campaign Name:</p>
-          <h3 class="heading-arrows-container m-0">Thanksgiving Ads</h3>
+          <h3 class="heading-arrows-container m-0">{{ campaign.campaign_name }}</h3>
         </div>
 
         <div class="campaign-date d-flex justify-content-between">
           <div class="me-lg-3">
             <span>Start Date:</span>
-            <p><strong>5/22/2023</strong></p>
+            <p><strong>{{ campaign.start_date }}</strong></p>
           </div>
           <div>
             <span>End Date:</span>
-            <p><strong>5/27/2023</strong></p>
+            <p><strong>{{ campaign.end_date }}</strong></p>
           </div>
         </div>
       </div>
@@ -30,14 +30,14 @@
       <div class="d-flex justify-content-between mb-3">
         <div class="account-number">
           <span>Account #:</span>
-          <p>#{{ classified.account.id }}</p>
+          <p>#{{ campaign.id }}</p>
         </div>
 
         <div class="sales-contact">
           <span>Sales Contact:</span>
 
-          {% if classified.classification.sales_contact %}
-          <p>Sales Contact: {{ classified.classification.sales_contact }}</p>
+          {% if campaign.sales_contact %}
+          <p>#{{ campaign.contact_id }} {{ campaign.sales_contact }}</p>
           {% else %}
           <p><em>No sales contact listed.</em></p>
           {% endif %}
@@ -47,6 +47,15 @@
           <span>Status:</span>
           <p class="text-capitalize">{{ classified.status }}</p>
         </div>
+      </div>
+
+      <div class="brief-container">
+        <span>Brief Description <strong>PUBLIC</strong>:</span>
+        {% if campaign.brief %}
+        <p>{{ classified.brief }}</p>
+        {% else %}
+        <p><em>No brief description available.</em></p>
+        {% endif %}
       </div>
     </div>
 

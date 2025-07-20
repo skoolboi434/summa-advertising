@@ -29,30 +29,27 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Account #</th>
+        <th scope="col">Name</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Created By</th>
+        <th scope="col">Sales Contact</th>
+        <th scope="col">Price</th>
       </tr>
     </thead>
     <tbody>
+      {% for campaign in campaigns %}
       <tr>
-        <td>1</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
+        <td><a href="{% url 'adCampaign' campaign.id %}">#{{campaign.id }}</a></td>
+        <td class="text-capitalize">{{campaign.campaign_name }}</td>
+        <td>{{campaign.start_date }}</td>
+        <td>{{campaign.end_date }}</td>
+        <td>{{campaign.advertiser_name }}</td>
+        <td>{{campaign.sales_contact }}</td>
+        <td>${{campaign.total_campaign }}</td>
       </tr>
-      <tr>
-        <td>2</td>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

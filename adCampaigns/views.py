@@ -1,16 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from .models import AdvertisingCampaignSummary, SalesPerson
 
 
-
-# Ad Campaigns 
 def index(request):
-  return render(request, 'adCampaigns/allCampaigns.html')
+    campaigns = AdvertisingCampaignSummary.objects.all()
+    return render(request, 'adCampaigns/allCampaigns.html', {
+        'campaigns': campaigns
+    })
 
 def createCampaign(request):
-  return render(request, 'adCampaigns/createAdCampaign.html')
+  contacts = SalesPerson.objects.all()
+  return render(request, 'adCampaigns/createAdCampaign.html', {'contacts': contacts})
 
-def adCampaign(request, campaign_id):
-    return render(request, 'adCampaigns/singleAdCampaign.html')
+def adCampaign(request, id):
+  campaign = get_object_or_404(AdvertisingCampaignSummary, id=id)
+  return render(request, 'adCampaigns/singleAdCampaign.html', {
+      'campaign': campaign
+  })
 
 # Ads
 

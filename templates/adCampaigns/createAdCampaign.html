@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}{% load static %} {% block content %}
 <div class="heading-container text-center my-5">
   <h3 class="heading">New Campaign</h3>
 </div>
@@ -58,138 +58,234 @@
     </div>
 
     <div class="btn-container d-flex justify-content-end mt-5">
-      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
     </div>
   </div>
 
-  <!-- Campaign Info -->
-  <div class="tab">
-    <div class="tab-description text-center mb-5">
-      <p>Next, Enter some of the core information<br />regarding the campaign</p>
-    </div>
-
-    <div class="form-group mb-3">
-      <label for="campaign-name">*Campaign Name</label>
-      <input id="campaign-name" type="text" class="form-control" placeholder="Enter Campaign Name" />
-    </div>
-
-    <div class="row mb-3">
-      <div class="form-group col-lg-6">
-        <label for="sales-contact">*Sales Contact</label>
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
+  <form action="" method="post">
+    {% csrf_token %}
+    <!-- Campaign Info -->
+    <div class="tab" data-step="info">
+      <div class="tab-description text-center mb-5">
+        <p>Next, Enter some of the core information<br />regarding the campaign</p>
       </div>
 
-      <div class="form-group col-lg-3">
-        <div class="form-group">
-          <label for="start-date">*Start Date:</label>
-          <input type="date" id="start-date" class="form-control" />
+      <div class="form-group mb-3">
+        <label for="campaign-name"><span class="asterisk">*</span> Campaign Name</label>
+        <input id="campaign-name" type="text" class="form-control" placeholder="Enter Campaign Name" />
+      </div>
+
+      <div class="row mb-3">
+        <div class="form-group col-lg-6">
+          <label for="sales-contact"><span class="asterisk">*</span> Sales Contact</label>
+          <select id="sales-contact" name="sales_contact" class="form-select">
+            {% for contact in contacts %}
+            <option value="{{ contact.id }}">{{ contact.first_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group col-lg-3">
+          <div class="form-group">
+            <label for="start-date"><span class="asterisk">*</span> Start Date:</label>
+            <input type="date" id="start-date" name="start_date" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group col-lg-3">
+          <div class="form-group">
+            <label for="end-date">End Date(optional):</label>
+
+            <input type="date" id="end-date" name="end_date" class="form-control" />
+          </div>
         </div>
       </div>
 
-      <div class="form-group col-lg-3">
-        <div class="form-group">
-          <label for="end-date">End Date(optional):</label>
+      <div class="form-group">
+        <label for="brief">Brief Description(optional) <span class="color-secondary fw-bold">*This will be public for everyone to see</span></label>
+        <textarea class="form-control shadow" rows="5" id="brief" name="brief"></textarea>
+      </div>
 
-          <input type="date" id="end-date" class="form-control" />
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Product Selection -->
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Select the type of products you want to<br />include with campaign</p>
+      </div>
+
+      <div class="actions-container d-flex justify-content-between mb-3">
+        <div class="btn-container">
+          <button class="btn btn-secondary-light bg-primary c-filter" onclick="filterAdFormats()"><i class="fa fa-solid fa-filter"></i> Filter</button>
+        </div>
+
+        <div class="has-search">
+          <input class="form-control" type="text" name="" placeholder="Search.... " />
         </div>
       </div>
+
+      <!-- <div class="card scrollbar mgb-3" id="scrollbar1">
+        <div id="ad-format" class="publication row mgb-3">
+          <textarea id="publication_products" style="display: none">{{ publicationProducts }}</textarea>
+          <textarea id="pub_schedule_adtype" style="display: none">{{ pubScheduleAdtye }}</textarea>
+          <textarea id="pub_schedule_rategroups" style="display: none">{{ pubScheduleRategroup }}</textarea>
+          <textarea id="repeat_rategroups" style="display: none">{{ repeatRategroup }}</textarea>
+          <textarea id="admin_adtype" style="display: none">{{ adminAdtype}}</textarea>
+          <textarea id="pub_schedule_sections" style="display: none">{{ pubScheduleSections }}</textarea>
+          <textarea id="admin_sections" style="display: none">{{ adminSections}}</textarea>
+          <textarea id="repeat_sections" style="display: none">{{ repeatSections}}</textarea>
+          <textarea id="adSizes" style="display: none">{{ adSizesList}}</textarea>
+          <textarea id="ratinglist" style="display: none">{{rating}}</textarea>
+          <textarea id="repeat_adtype" style="display: none">{{adTypes}}</textarea>
+          <textarea id="pubScheduleAdjustments" style="display: none">{{scheduleadjustments}}</textarea>
+          <textarea id="repeat_adjustments" style="display: none">{{repeatAdjustments}}</textarea>
+          <textarea id="publication_products_adcriteria" style="display: none">{{pubProductsAdCriteria}}</textarea>
+          <textarea id="adminAdjustmentList" style="display: none">{{adminAdjustmentList}}</textarea>
+          <textarea id="publication_adcriterias" style="display: none">{{adminAdCriteria}}</textarea>
+          <textarea id="repeat_adcriterias" style="display: none">{{adCriterias}}</textarea>
+          <textarea id="publication_products_dates" style="display: none">{{pubScheduleDates}}</textarea>
+          <div id="ad_newspaper" class="col-md-12 col-lg-4 mgb-1 pub_ele">
+            <div class="flex-col pub-card">
+              <div class="c-ad-name">
+                <h3 id="adTypeName_newspaper" class="pub_name">Newspaper</h3>
+              </div>
+              <div class="flex-row content-left c-ml-10" onclick="selectStar('newspaper')">
+                <img id="star_newspaper" src="{% static 'img/Star-white.svg' %}" style="height: 18px" />&nbsp;
+                <h4 class="c-favorite" style="line-height: 20px">Add to Favorites</h4>
+              </div>
+              <div id="ad-format-hover-newspaper" class="c-adType-hover" onclick="selectAdFormat('newspaper')">
+                Add to <br />
+                Campaign!
+              </div>
+            </div>
+            <div id="favoriteIcon_newspaper" class="text-center pub-mark">
+              <img src="{% static 'img/Vector (2).svg' %}" style="height: 15px; margin-top: 8px" />
+            </div>
+          </div>
+
+          <div id="ad_magazine" class="col-md-12 col-lg-4 mgb-1 pub_ele">
+            <div class="flex-col pub-card">
+              <div class="c-ad-name">
+                <h3 id="adTypeName_magazine" class="pub_name">Magazine</h3>
+              </div>
+              <div class="flex-row content-left c-ml-10" onclick="selectStar('magazine')">
+                <img id="star_magazine" src="{% static 'img/Star-white.svg' %}" style="height: 18px" />&nbsp;
+                <h4 class="c-favorite" style="line-height: 20px">Add to Favorites</h4>
+              </div>
+              <div id="ad-format-hover-magazine" class="c-adType-hover" onclick="selectAdFormat('magazine')">
+                Add to <br />
+                Campaign!
+              </div>
+            </div>
+            <div id="favoriteIcon_magazine" class="text-center pub-mark">
+              <img src="{% static 'img/Vector (2).svg' %}" style="height: 15px; margin-top: 8px" />
+            </div>
+          </div>
+
+          <div id="ad_digital" class="col-md-12 col-lg-4 mgb-1 pub_ele">
+            <div class="flex-col pub-card">
+              <div class="c-ad-name">
+                <h3 id="adTypeName_digital" class="pub_name">Digital</h3>
+              </div>
+              <div class="flex-row content-left c-ml-10" onclick="selectStar('digital')">
+                <img id="star_digital" src="{% static 'img/Star-white.svg' %}" style="height: 18px" />&nbsp;
+                <h4 class="c-favorite" style="line-height: 20px">Add to Favorites</h4>
+              </div>
+              <div id="ad-format-hover-digital" class="c-adType-hover" onclick="selectAdFormat('digital')">
+                Add to <br />
+                Campaign!
+              </div>
+            </div>
+            <div id="favoriteIcon_digital" class="text-center pub-mark">
+              <img src="{% static 'img/Vector (2).svg' %}" style="height: 15px; margin-top: 8px" />
+            </div>
+          </div>
+
+          <div id="ad_custom" class="col-md-12 col-lg-4 pub_ele">
+            <div class="flex-col pub-card">
+              <div class="c-ad-name">
+                <h3 id="adTypeName_custom" class="pub_name">New Custom Product</h3>
+              </div>
+              <div class="flex-row content-left c-ml-10" onclick="selectStar('custom')">
+                <img id="star_custom" src="{% static 'img/Star-white.svg' %}" style="height: 18px" />&nbsp;
+                <h4 class="c-favorite" style="line-height: 20px">Add to Favorites</h4>
+              </div>
+              <div id="ad-format-hover-custom" class="c-adType-hover" onclick="selectAdFormat('custom')">
+                Add to <br />
+                Campaign!
+              </div>
+            </div>
+            <div id="favoriteIcon_custom" class="text-center pub-mark">
+              <img src="{% static 'img/Vector (2).svg' %}" style="height: 15px; margin-top: 8px" />
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="brief">Brief Description(optional) <span class="color-secondary fw-bold">*This will be public for everyone to see</span></label>
-      <textarea class="form-control shadow" rows="5" id="brief"></textarea>
-    </div>
-
-    <div class="btn-container d-flex justify-content-between mt-5">
-      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
-      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
-    </div>
-  </div>
-
-  <!-- Product Selection -->
-  <div class="tab">
-    <div class="tab-description text-center mb-5">
-      <p>Select the type of products you want to<br />include with campaign</p>
-    </div>
-
-    <div class="actions-container d-flex justify-content-between mb-3">
-      <div class="btn-container">
-        <button class="btn btn-secondary-light bg-primary c-filter" onclick="filterAdFormats()"><i class="fa fa-solid fa-filter"></i> Filter</button>
+    <!-- Review -->
+    <div class="tab review-tab">
+      <div class="tab-description text-center mb-5">
+        <p>Review the campaign then<br />click create!</p>
       </div>
 
-      <div class="has-search">
-        <input class="form-control" type="text" name="" placeholder="Search.... " />
-      </div>
-    </div>
+      <div class="row mb-5">
+        <div class="col-lg-4">
+          <span>*Campaign Name:</span>
+          <p id="review-campaign-name" class="mb-0"></p>
+        </div>
 
-    <div class="btn-container d-flex justify-content-between mt-5">
-      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
-      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
-    </div>
-  </div>
+        <div class="col-lg-4">
+          <span>*Start Date:</span>
+          <p id="review-start-date" class="mb-0"></p>
+        </div>
 
-  <!-- Review -->
-  <div class="tab">
-    <div class="tab-description text-center mb-5">
-      <p>Review the campaign then<br />click create!</p>
-    </div>
-
-    <div class="row mb-5">
-      <div class="col-lg-4">
-        <span>*Campaign Name:</span>
-        <p class="mb-0">Example Campaign Name</p>
+        <div class="col-lg-4">
+          <span>End Date (optional):</span>
+          <p id="review-end-date" class="mb-0"></p>
+        </div>
       </div>
 
-      <div class="col-lg-4">
-        <span>*Start Date:</span>
-        <p class="mb-0">00/00/0000</p>
+      <div class="row mb-5">
+        <div class="col-lg-4">
+          <span>*Sales Contact:</span>
+          <p id="review-sales-contact" class="mb-0"></p>
+        </div>
+
+        <div class="col-lg-8">
+          <span>Selected Advertisers:</span>
+          <ul id="review-advertisers" class="list-group"></ul>
+        </div>
       </div>
 
-      <div class="col-lg-4">
-        <span>End Date (optional):</span>
-        <p class="mb-0">00/00/0000</p>
-      </div>
-    </div>
-
-    <div class="row mb-5">
-      <div class="col-lg-4">
-        <span>*Sales Contact:</span>
-        <p class="mb-0">Ed Clark</p>
+      <div class="mb-5">
+        <span>Selected Products:</span>
+        <p id="review-products" class="mb-0"></p>
       </div>
 
-      <div class="col-lg-8">
-        <span>Selected Advertisers:</span>
-        <ul class="list-group">
-          <li class="list-group-item">An item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
-          <li class="list-group-item">A fourth item</li>
-          <li class="list-group-item">And a fifth one</li>
-        </ul>
+      <div class="mb-5">
+        <span>Brief Description (optional):</span>
+        <p id="review-brief" class="mb-0"></p>
+      </div>
+
+      <div class="btn-container d-flex justify-content-between">
+        <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
-
-    <div class="mb-5">
-      <span>Selected Products:</span>
-      <p class="mb-0">Digital, Newspaper</p>
-    </div>
-
-    <div class="mb-5">
-      <span>Brief Description (optional):</span>
-      <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque facilisis malesuada. Duis aliquam dui eget purus laoreet imperdiet. Vivamus cursus tortor pulvinar, sagittis turpis a, auctor metus. Duis feugiat, ante non sodales viverra, elit lorem feugiat velit, sit amet pulvinar felis lacus a nisl. Ut a ipsum sit amet nisi imperdiet sollicitudin nec feugiat mauris. In euismod auctor rutrum. In hac habitasse platea dictumst.</p>
-    </div>
-
-    <div class="btn-container d-flex justify-content-between">
-      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
-      <button class="btn btn-light border border-dark">Save as Draft</button>
-      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Create <i class="fa fa-solid fa-arrow-right"></i></button>
-    </div>
-  </div>
+  </form>
 
   <!-- Success tab -->
   <div class="tab">
@@ -211,104 +307,6 @@
   </div>
 </div>
 
-<script>
-  //Step Form
-  var currentTab = 0; // Current tab is set to be the first tab (0)
-  showTab(currentTab); // Display the current tab
+<script src="{% static 'js/stepform.js' %}"></script>
 
-  function showTab(n) {
-    // This function will display the specified tab of the form...
-    var x = document.getElementsByClassName('tab');
-    x[n].style.display = 'block';
-    //... and fix the Previous/Next buttons:
-    if (n == 0) {
-      document.getElementById('prevBtn').style.display = 'none';
-    } else {
-      document.getElementById('prevBtn').style.display = 'inline';
-    }
-    if (n == x.length - 1) {
-      document.getElementById('nextBtn').innerHTML = 'Submit';
-    } else {
-      document.getElementById('nextBtn').innerHTML = 'Next';
-    }
-    //... and run a function that will display the correct step indicator:
-    fixStepIndicator(n);
-    //fixMobileStepIndicator(n);
-  }
-
-  function nextPrev(n) {
-    // This function will figure out which tab to display
-    var x = document.getElementsByClassName('tab');
-    // Going backwards? Remove 'finish' from current step
-    if (n === -1) {
-      var steps = document.getElementsByClassName('step');
-      steps[currentTab].classList.remove('finish');
-    }
-
-    // Exit the function if any field in the current tab is invalid:
-    //if (n == 1 && !validateForm()) return false;
-    // Hide the current tab:
-    x[currentTab].style.display = 'none';
-    // Skip field validation, but still mark step as finished
-    document.getElementsByClassName('step')[currentTab].classList.add('finish');
-
-    // Increase or decrease the current tab by 1:
-    currentTab = currentTab + n;
-    // if you have reached the end of the form...
-    if (currentTab >= x.length) {
-      // ... the form gets submitted:
-      document.getElementById('').submit();
-      return false;
-    }
-    // Otherwise, display the correct tab:
-    showTab(currentTab);
-  }
-
-  function validateForm() {
-    // This function deals with validation of the form fields
-    var x,
-      y,
-      i,
-      valid = true;
-    x = document.getElementsByClassName('tab');
-    y = x[currentTab].getElementsByTagName('input');
-    // A loop that checks every input field in the current tab:
-    for (i = 0; i < y.length; i++) {
-      // If a field is empty...
-      if (y[i].value == '') {
-        // add an "invalid" class to the field:
-        y[i].className += ' invalid';
-        // and set the current valid status to false
-        valid = false;
-      }
-    }
-    // If the valid status is true, mark the step as finished and valid:
-    if (valid) {
-      document.getElementsByClassName('step')[currentTab].className += ' finish';
-    }
-    return valid; // return the valid status
-  }
-
-  function fixStepIndicator(n) {
-    // This function removes the "active" class of all steps...
-    var i,
-      x = document.getElementsByClassName('step');
-    for (i = 0; i < x.length; i++) {
-      x[i].className = x[i].className.replace(' active', '');
-    }
-    //... and adds the "active" class on the current step:
-    x[n].className += ' active';
-  }
-
-  // function fixMobileStepIndicator(n) {
-  //   // This function removes the "active" class of all steps...
-  //   var i,
-  //     x = document.getElementsByClassName('mobile-step');
-  //   for (i = 0; i < x.length; i++) {
-  //     x[i].className = x[i].className.replace(' active', '');
-  //   }
-  //   //... and adds the "active" class on the current step:
-  //   x[n].className += ' active';
-  // }
-</script>
 {% endblock%}
