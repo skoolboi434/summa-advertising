@@ -49,13 +49,13 @@
         <p>Search & select an advertiser to begin<br />creating a campaign</p>
       </div>
 
-      <div class="w-75 mx-auto">
-        <div class="has-search">
+      <div class="justify-content-center d-flex flex-column w-75 mx-auto">
+        <div class="has-search w-75">
           <input id="advertiser-search" class="form-control" type="text" name="advertiser-search" placeholder="Search by name, address, phone, ID.... " />
-        </div>
-        <div class="mb-5">
-          <span>Don't see your advertiser?</span>
-          <a class="color-secondary" href=""> Click here to create one! </a>
+          <div class="mb-5">
+            <span>Don't see your advertiser?</span>
+            <a class="color-secondary" href=""> Click here to create one! </a>
+          </div>
         </div>
       </div>
 
@@ -338,8 +338,9 @@
 
           if (data.results.length > 0) {
             data.results.forEach(advertiser => {
+              console.log(advertiser);
               const li = document.createElement('li');
-              li.className = 'list-group-item d-flex justify-content-between align-items-center';
+              li.className = 'list-group-item d-flex justify-content-between align-items-center bg-secondary-alpha';
 
               const textDiv = document.createElement('div');
               textDiv.innerHTML = `
@@ -347,7 +348,16 @@
                 <h5 class="heading me-3">${advertiser.name}</h5>
                 <small>ID #: ${advertiser.id}</small>
               </div>
-              <small>${advertiser.address || ''}, ${advertiser.phone || ''}</small>
+              <div class="d-flex align-items-center justify-content-between w-75">
+                <div class="address">
+                  <span>Address:</span>
+                  <p>${advertiser.address || ''}</p>
+                </div>
+                <div class="phone">
+                  <span>Phone:</span>
+                  <p>${advertiser.phone || ''}</p>
+                </div>
+              </div>
             `;
 
               const button = document.createElement('button');

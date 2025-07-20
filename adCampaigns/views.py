@@ -47,7 +47,9 @@ def advertiser_search(request):
         results = [
             {
                 'id': acc.id,
-                'name': acc.company_name_1 or acc.account_number
+                'name': acc.company_name_1 or acc.account_number,
+                'phone': acc.phone,
+                'address': acc.address,
             }
             for acc in accounts
         ]
