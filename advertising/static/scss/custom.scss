@@ -59,6 +59,12 @@ label {
   }
 }
 
+.results {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
 .custom-container {
   background-color: $white;
 }

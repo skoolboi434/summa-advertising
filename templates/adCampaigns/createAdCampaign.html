@@ -42,28 +42,39 @@
 
   <!-- End Steps container -->
 
-  <div class="tab">
-    <div class="tab-description text-center mb-5">
-      <p>Search & select an advertiser to begin<br />creating a campaign</p>
-    </div>
-
-    <div class="w-75 mx-auto">
-      <div class="has-search">
-        <input class="form-control" type="text" name="" placeholder="Search by name, address, phone, ID.... " />
-      </div>
-      <div class="mb-5">
-        <span>Don't see your advertiser?</span>
-        <a class="color-secondary" href=""> Click here to create one! </a>
-      </div>
-    </div>
-
-    <div class="btn-container d-flex justify-content-end mt-5">
-      <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
-    </div>
-  </div>
-
   <form action="" method="post">
     {% csrf_token %}
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Search & select an advertiser to begin<br />creating a campaign</p>
+      </div>
+
+      <div class="w-75 mx-auto">
+        <div class="has-search">
+          <input id="advertiser-search" class="form-control" type="text" name="advertiser-search" placeholder="Search by name, address, phone, ID.... " />
+        </div>
+        <div class="mb-5">
+          <span>Don't see your advertiser?</span>
+          <a class="color-secondary" href=""> Click here to create one! </a>
+        </div>
+      </div>
+
+      <!-- Advertiser Results -->
+      <div class="results d-none">
+        <ul class="list-group">
+          <li class="list-group-item">An item</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">A fourth item</li>
+          <li class="list-group-item">And a fifth one</li>
+        </ul>
+      </div>
+
+      <div class="btn-container d-flex justify-content-end mt-5">
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
     <!-- Campaign Info -->
     <div class="tab" data-step="info">
       <div class="tab-description text-center mb-5">
@@ -285,6 +296,7 @@
         <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
+    <input type="hidden" name="advertiser_id" id="selected-advertiser-id" />
   </form>
 
   <!-- Success tab -->
@@ -308,5 +320,129 @@
 </div>
 
 <script src="{% static 'js/stepform.js' %}"></script>
+
+<script>
+  let selectedAdvertisers = [];
+
+  document.getElementById('advertiser-search').addEventListener('input', function (e) {
+    const query = e.target.value;
+    const resultsContainer = document.querySelector('.results');
+    const resultsList = resultsContainer.querySelector('.list-group');
+
+    if (query.length > 1) {
+      fetch(`/adcampaigns/advertiser-search/?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+          resultsList.innerHTML = '';
+          resultsContainer.classList.remove('d-none');
+
+          if (data.results.length > 0) {
+            data.results.forEach(advertiser => {
+              const li = document.createElement('li');
+              li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+              const textDiv = document.createElement('div');
+              textDiv.innerHTML = `
+              <div class="d-flex align-items-center">
+                <h5 class="heading me-3">${advertiser.name}</h5>
+                <small>ID #: ${advertiser.id}</small>
+              </div>
+              <small>${advertiser.address || ''}, ${advertiser.phone || ''}</small>
+            `;
+
+              const button = document.createElement('button');
+              button.className = 'btn btn-secondary';
+              button.innerHTML = '<i class="fa fa-plus"></i> Select';
+              button.dataset.id = advertiser.id;
+
+              button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const advertiserId = advertiser.id;
+
+                const index = selectedAdvertisers.findIndex(a => a.id === advertiserId);
+
+                if (index > -1) {
+                  // Remove from list
+                  selectedAdvertisers.splice(index, 1);
+                  button.className = 'btn btn-secondary';
+                  button.innerHTML = '<i class="fa fa-plus"></i> Select';
+                } else {
+                  // Add to list
+                  selectedAdvertisers.push({
+                    id: advertiser.id,
+                    name: advertiser.name,
+                    address: advertiser.address || ''
+                  });
+                  button.className = 'btn btn-primary';
+                  button.innerHTML = '<i class="fa fa-check"></i> Selected';
+                }
+
+                populateReviewAdvertisers(); // update UI
+              });
+
+              li.appendChild(textDiv);
+              li.appendChild(button);
+              resultsList.appendChild(li);
+            });
+          } else {
+            resultsList.innerHTML = '<li class="list-group-item text-muted">No results found</li>';
+          }
+        });
+    } else {
+      resultsContainer.classList.add('d-none');
+    }
+  });
+
+  // --- populate review ---
+  function populateReview() {
+    const nameEl = document.getElementById('campaign-name');
+    const salesEl = document.getElementById('sales-contact');
+    const startEl = document.getElementById('start-date');
+    const endEl = document.getElementById('end-date');
+    const briefEl = document.getElementById('brief');
+
+    document.getElementById('review-campaign-name').textContent = nameEl.value || '—';
+    document.getElementById('review-sales-contact').textContent = salesEl.options[salesEl.selectedIndex]?.text || '—';
+    document.getElementById('review-start-date').textContent = formatDate(startEl.value);
+    document.getElementById('review-end-date').textContent = formatDate(endEl.value) || '—';
+    document.getElementById('review-brief').textContent = briefEl.value.trim() || '—';
+
+    console.log('Populating review tab...');
+
+    // If you later wire selected advertisers/products, call helper functions here:
+    populateReviewAdvertisers();
+    populateReviewProducts();
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    // iso expected yyyy-mm-dd
+    const [y, m, d] = iso.split('-');
+    if (!y || !m || !d) return iso;
+    return `${m}/${d}/${y}`;
+  }
+
+  // stubs for now
+  function populateReviewAdvertisers() {
+    const list = document.getElementById('review-advertisers');
+    list.innerHTML = '';
+
+    if (selectedAdvertisers.length === 0) {
+      list.innerHTML = '<li class="list-group-item text-muted">None selected</li>';
+      return;
+    }
+
+    selectedAdvertisers.forEach(ad => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item';
+      li.innerHTML = `<strong>${ad.name}</strong><br /><small>${ad.address}</small>`;
+      list.appendChild(li);
+    });
+  }
+
+  function populateReviewProducts() {
+    document.getElementById('review-products').textContent = 'None selected';
+  }
+</script>
 
 {% endblock%}

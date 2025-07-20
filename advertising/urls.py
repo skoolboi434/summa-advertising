@@ -7,6 +7,7 @@ import users.urls
 import adAdmin.urls
 
 
+
 urlpatterns = [
     path('', include(pages.urls)),
     path('adcampaigns/', include(adCampaigns.urls)),

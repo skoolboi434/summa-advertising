@@ -1867,6 +1867,12 @@ label .fa {
   font-weight: 700;
 }
 
+.results {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
 .custom-container {
   background-color: #fff;
 }
