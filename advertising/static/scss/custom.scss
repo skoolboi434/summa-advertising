@@ -60,9 +60,13 @@ label {
 }
 
 .results {
-  max-height: 200px;
+  max-height: 280px;
   overflow-y: auto;
   margin-top: 10px;
+
+  .list-group-item {
+    min-height: 140px;
+  }
 }
 
 .custom-container {

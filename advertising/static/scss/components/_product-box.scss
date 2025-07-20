@@ -24,3 +24,53 @@
     }
   }
 }
+
+.campaign-product-boxes {
+  .product {
+    position: relative;
+    background-color: $offwhite;
+    color: $gray-3;
+    height: 140px;
+
+    .checked {
+      background-color: $primary;
+      width: 33px;
+      height: 33px;
+      color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: -15px;
+      right: -15px;
+    }
+
+    .add-to-fav {
+      .btn {
+        color: $black;
+      }
+    }
+
+    &.selected {
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+      color: white;
+      border-color: #ccc;
+      position: relative;
+    }
+
+    &.checked {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #28a745;
+      color: white;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+  }
+}

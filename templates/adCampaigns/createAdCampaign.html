@@ -140,6 +140,46 @@
         </div>
       </div>
 
+      <div class="campaign-product-boxes row border border-dark rounded p-4">
+        <div class="col-md-12 col-lg-4">
+          <div class="product p-1 border rounded d-flex justify-content-between flex-column">
+            <div class="checked rounded-circle d-none"><i class="fa fa-solid fa-check"></i></div>
+            <div class="d-flex align-items-center justify-content-center pt-5">
+              <h3 class="m-0">Newspaper</h3>
+            </div>
+
+            <div class="add-to-fav">
+              <button class="btn btn-link"><i class="fa fa-solid fa-star"></i> Add to favorites</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-4">
+          <div class="product p-1 border rounded d-flex justify-content-between flex-column">
+            <div class="checked rounded-circle d-none"><i class="fa fa-solid fa-check"></i></div>
+            <div class="d-flex align-items-center justify-content-center pt-5">
+              <h3 class="m-0">Digital</h3>
+            </div>
+
+            <div class="add-to-fav">
+              <button class="btn btn-link"><i class="fa fa-solid fa-star"></i> Add to favorites</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-4">
+          <div class="product p-1 border rounded d-flex justify-content-between flex-column">
+            <div class="checked rounded-circle d-none"><i class="fa fa-solid fa-check"></i></div>
+            <div class="d-flex align-items-center justify-content-center pt-5">
+              <h3 class="m-0">Digital</h3>
+            </div>
+
+            <div class="add-to-fav">
+              <button class="btn btn-link"><i class="fa fa-solid fa-star"></i> Add to favorites</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- <div class="card scrollbar mgb-3" id="scrollbar1">
         <div id="ad-format" class="publication row mgb-3">
           <textarea id="publication_products" style="display: none">{{ publicationProducts }}</textarea>
@@ -322,6 +362,39 @@
 <script src="{% static 'js/stepform.js' %}"></script>
 
 <script>
+  const selectedProducts = [];
+
+  document.querySelectorAll('.product').forEach(product => {
+    product.addEventListener('click', function () {
+      const title = this.querySelector('h3').textContent.trim();
+      const isSelected = this.classList.toggle('selected');
+      const checkIcon = this.querySelector('.checked');
+
+      if (isSelected) {
+        checkIcon.classList.remove('d-none');
+        if (!selectedProducts.includes(title)) {
+          selectedProducts.push(title);
+        }
+      } else {
+        checkIcon.classList.add('d-none');
+        const index = selectedProducts.indexOf(title);
+        if (index !== -1) {
+          selectedProducts.splice(index, 1);
+        }
+      }
+
+      updateReviewProducts(); // <- update display
+    });
+  });
+
+  document.querySelectorAll('.add-to-fav button').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+    });
+  });
+</script>
+
+<script>
   let selectedAdvertisers = [];
 
   document.getElementById('advertiser-search').addEventListener('input', function (e) {
@@ -421,7 +494,7 @@
 
     // If you later wire selected advertisers/products, call helper functions here:
     populateReviewAdvertisers();
-    populateReviewProducts();
+    updateReviewProducts();
   }
 
   function formatDate(iso) {
@@ -450,8 +523,14 @@
     });
   }
 
-  function populateReviewProducts() {
-    document.getElementById('review-products').textContent = 'None selected';
+  function updateReviewProducts() {
+    const reviewEl = document.getElementById('review-products');
+
+    if (selectedProducts.length > 0) {
+      reviewEl.textContent = selectedProducts.join(', ');
+    } else {
+      reviewEl.textContent = 'None selected';
+    }
   }
 </script>
 

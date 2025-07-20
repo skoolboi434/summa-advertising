@@ -1544,6 +1544,48 @@
   line-height: 14.4px;
 }
 
+.campaign-product-boxes .product {
+  position: relative;
+  background-color: #f3f3f3;
+  color: #666666;
+  height: 140px;
+}
+.campaign-product-boxes .product .checked {
+  background-color: #f26722;
+  width: 33px;
+  height: 33px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+}
+.campaign-product-boxes .product .add-to-fav .btn {
+  color: #000;
+}
+.campaign-product-boxes .product.selected {
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+  color: white;
+  border-color: #ccc;
+  position: relative;
+}
+.campaign-product-boxes .product.checked {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #28a745;
+  color: white;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
 .multi-step-form-container {
   background-color: #fff;
   padding: 40px;
@@ -1868,9 +1910,12 @@ label .fa {
 }
 
 .results {
-  max-height: 200px;
+  max-height: 280px;
   overflow-y: auto;
   margin-top: 10px;
+}
+.results .list-group-item {
+  min-height: 140px;
 }
 
 .custom-container {
