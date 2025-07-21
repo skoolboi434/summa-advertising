@@ -55,8 +55,17 @@ def createCampaign(request):
 
             campaign.save()
 
-            return redirect('adCampaign', id=campaign.id)
+            # ✅ Define before render
+            contacts = SalesPerson.objects.all()
+            accounts = Account.objects.all()
 
+            return render(request, 'adCampaigns/createAdCampaign.html', {
+                'form': AdCampaignForm(),  # reset form
+                'contacts': contacts,
+                'accounts': accounts,
+                'success': True,
+                'campaign_id': campaign.id
+            })
 
         else:
             print("Form invalid:", form.errors)

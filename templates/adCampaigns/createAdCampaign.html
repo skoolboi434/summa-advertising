@@ -361,7 +361,13 @@
     </script>
   </form>
 
-  {% if show_success %}
+  {% if success %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      showTab('success'); // or whatever logic you use
+    });
+  </script>
+  {% endif %} {% if show_success %}
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const tabs = document.querySelectorAll('.tab');
@@ -372,7 +378,7 @@
   {% endif %}
 
   <!-- Success tab -->
-  <div class="tab">
+  <div class="tab success-tab" data-step="success">
     <div class="tab-description text-center mb-5">
       <p>
         Congratulation!<br />
@@ -385,13 +391,35 @@
     </div>
 
     <div class="btn-container text-center">
-      <a href="" class="btn btn-secondary">Go to created campaign to book ads</a>
+      {% if campaign_id %}
+      <a href="{% url 'adCampaign' id=campaign_id %}" class="btn btn-secondary"> Go to created campaign to book ads </a>
+      {% endif %}
+
       <a href="{% url 'createCampaign' %}" class="btn btn-light border border-dark">Start Another Campaign</a>
     </div>
   </div>
 </div>
 
 <script src="{% static 'js/stepform.js' %}"></script>
+
+{% if success %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(t => (t.style.display = 'none'));
+
+    // Target the success tab however your structure identifies it
+    const successTab = document.querySelector('.tab[data-step="success"]') || document.querySelector('.success-tab');
+
+    if (successTab) {
+      successTab.style.display = 'block';
+    }
+
+    // Optionally scroll to it
+    successTab.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+{% endif %}
 
 <script>
   const selectedProducts = [];
