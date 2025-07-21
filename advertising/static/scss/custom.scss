@@ -69,6 +69,16 @@ label {
   }
 }
 
+.review-tab {
+  p {
+    font-weight: 700;
+  }
+}
+
+.container {
+  max-width: 1200px;
+}
+
 .custom-container {
   background-color: $white;
 }

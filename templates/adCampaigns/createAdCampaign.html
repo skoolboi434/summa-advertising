@@ -42,8 +42,19 @@
 
   <!-- End Steps container -->
 
-  <form action="" method="post">
-    {% csrf_token %}
+  <form id="create-campaign-form" action="{% url 'createCampaign' %}" method="post">
+    {% if form.errors %}
+    <div class="alert alert-danger">
+      <strong>Form submission failed:</strong>
+      <ul>
+        {% for field in form %} {% for error in field.errors %}
+        <li>{{ field.label }}: {{ error }}</li>
+        {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %} {% csrf_token %}
     <div class="tab">
       <div class="tab-description text-center mb-5">
         <p>Search & select an advertiser to begin<br />creating a campaign</p>
@@ -83,13 +94,13 @@
 
       <div class="form-group mb-3">
         <label for="campaign-name"><span class="asterisk">*</span> Campaign Name</label>
-        <input id="campaign-name" type="text" class="form-control" placeholder="Enter Campaign Name" />
+        <input id="campaign-name" name="campaign_name" type="text" class="form-control" placeholder="Enter Campaign Name" />
       </div>
 
       <div class="row mb-3">
         <div class="form-group col-lg-6">
           <label for="sales-contact"><span class="asterisk">*</span> Sales Contact</label>
-          <select id="sales-contact" name="sales_contact" class="form-select">
+          <select id="sales-contact" name="contact_id" class="form-select">
             {% for contact in contacts %}
             <option value="{{ contact.id }}">{{ contact.first_name }}</option>
             {% endfor %}
@@ -293,12 +304,12 @@
 
       <div class="row mb-5">
         <div class="col-lg-4">
-          <span>*Campaign Name:</span>
+          <span><span class="asterisk">*</span>Campaign Name:</span>
           <p id="review-campaign-name" class="mb-0"></p>
         </div>
 
         <div class="col-lg-4">
-          <span>*Start Date:</span>
+          <span><span class="asterisk">*</span>Start Date:</span>
           <p id="review-start-date" class="mb-0"></p>
         </div>
 
@@ -310,7 +321,7 @@
 
       <div class="row mb-5">
         <div class="col-lg-4">
-          <span>*Sales Contact:</span>
+          <span><span class="asterisk">*</span>Sales Contact:</span>
           <p id="review-sales-contact" class="mb-0"></p>
         </div>
 
@@ -333,11 +344,32 @@
       <div class="btn-container d-flex justify-content-between">
         <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
 
-        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+        <button data-step="final" class="btn btn-secondary step-next" type="button">Create <i class="fa fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
     <input type="hidden" name="advertiser_id" id="selected-advertiser-id" />
+    <input type="hidden" id="selected-advertisers" name="selected_advertisers" /><input type="hidden" id="selected-products" name="selected_products" />
+
+    <script>
+      const advertiserIdInput = document.getElementById('selected-advertiser-id');
+      if (window.selectedAdvertisers && window.selectedAdvertisers.length > 0) {
+        advertiserIdInput.value = window.selectedAdvertisers[0].id;
+      }
+
+      document.getElementById('selected-advertisers').value = JSON.stringify(window.selectedAdvertisers || []);
+      document.getElementById('selected-products').value = JSON.stringify(window.selectedProducts || []);
+    </script>
   </form>
+
+  {% if show_success %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => (tab.style.display = 'none'));
+      tabs[tabs.length - 1].style.display = 'block'; // show last tab
+    });
+  </script>
+  {% endif %}
 
   <!-- Success tab -->
   <div class="tab">
@@ -433,38 +465,32 @@
               </div>
             `;
 
-              const button = document.createElement('button');
-              button.className = 'btn btn-secondary';
-              button.innerHTML = '<i class="fa fa-plus"></i> Select';
-              button.dataset.id = advertiser.id;
+              const checkbox = document.createElement('input');
+              checkbox.type = 'checkbox';
+              checkbox.className = 'form-check-input';
+              checkbox.name = 'advertiser_id'; // ✅ important so it's picked up in request.POST
+              checkbox.value = advertiser.id;
+              checkbox.checked = selectedAdvertisers.some(a => a.id === advertiser.id);
 
-              button.addEventListener('click', function (e) {
-                e.preventDefault();
-                const advertiserId = advertiser.id;
-
-                const index = selectedAdvertisers.findIndex(a => a.id === advertiserId);
-
-                if (index > -1) {
-                  // Remove from list
-                  selectedAdvertisers.splice(index, 1);
-                  button.className = 'btn btn-secondary';
-                  button.innerHTML = '<i class="fa fa-plus"></i> Select';
-                } else {
-                  // Add to list
+              // Update selectedAdvertisers[] when toggled
+              checkbox.addEventListener('change', function () {
+                if (this.checked) {
                   selectedAdvertisers.push({
                     id: advertiser.id,
                     name: advertiser.name,
                     address: advertiser.address || ''
                   });
-                  button.className = 'btn btn-primary';
-                  button.innerHTML = '<i class="fa fa-check"></i> Selected';
+                  document.getElementById('selected-advertiser-id').value = advertiser.id; // still update the hidden input
+                } else {
+                  selectedAdvertisers = selectedAdvertisers.filter(a => a.id !== advertiser.id);
+                  document.getElementById('selected-advertiser-id').value = ''; // optional: clear hidden input
                 }
 
                 populateReviewAdvertisers(); // update UI
               });
 
               li.appendChild(textDiv);
-              li.appendChild(button);
+              li.appendChild(checkbox);
               resultsList.appendChild(li);
             });
           } else {

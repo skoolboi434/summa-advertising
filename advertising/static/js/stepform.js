@@ -1,113 +1,109 @@
-//Step Form
-let currentTab = 0;
-const tabs = document.getElementsByClassName('tab');
-// Show the initial tab when the page loads
-showTab(currentTab);
+document.addEventListener('DOMContentLoaded', function () {
+  const stepContainers = document.querySelectorAll('.stepform');
 
-document.querySelectorAll('.step-next').forEach(btn => {
-  btn.addEventListener('click', () => nextPrev(1));
-});
-document.querySelectorAll('.step-prev').forEach(btn => {
-  btn.addEventListener('click', () => nextPrev(-1));
-});
+  stepContainers.forEach(container => {
+    let currentTab = 0;
+    const tabs = container.querySelectorAll('.tab');
+    const steps = container.querySelectorAll('.step');
+    const form = container.querySelector('form');
 
-function showTab(n) {
-  // Show the current tab
-  tabs[n].style.display = 'block';
+    if (tabs.length === 0) return;
 
-  // Toggle visibility of "Previous" buttons
-  document.querySelectorAll('.step-prev').forEach(btn => {
-    btn.style.display = n === 0 ? 'none' : 'inline-block';
-  });
+    showTab(currentTab);
 
-  // Update text on "Next" buttons
-  const isLastTab = n === tabs.length - 1;
-  document.querySelectorAll('.step-next').forEach(btn => {
-    btn.textContent = isLastTab ? 'Submit' : 'Next';
-  });
+    // Button listeners
+    container.querySelectorAll('.step-next').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const isFinal = btn.dataset.step === 'final';
 
-  // Update step indicator
-  fixStepIndicator(n);
+        if (isFinal) {
+          document.getElementById('selected-advertisers').value = JSON.stringify(window.selectedAdvertisers || []);
+          document.getElementById('selected-products').value = JSON.stringify(window.selectedProducts || []);
 
-  // ✅ Populate the review tab if applicable
-  if (tabs[n].classList.contains('review-tab')) {
-    populateReview();
-  }
-}
+          // Submit the form
+          form.submit();
+        } else {
+          nextPrev(1);
+        }
+      });
+    });
 
-function nextPrev(n) {
-  const steps = document.getElementsByClassName('step');
-  const x = document.getElementsByClassName('tab');
+    container.querySelectorAll('.step-prev').forEach(btn => {
+      btn.addEventListener('click', () => nextPrev(-1));
+    });
 
-  // Hide the current tab
-  x[currentTab].style.display = 'none';
+    function showTab(n) {
+      tabs.forEach((tab, i) => {
+        tab.style.display = i === n ? 'block' : 'none';
+      });
 
-  // If moving forward, mark step as finished
-  if (n === 1) {
-    steps[currentTab].classList.add('finish');
-  }
+      container.querySelectorAll('.step-prev').forEach(btn => {
+        btn.style.display = n === 0 ? 'none' : 'inline-block';
+      });
 
-  // If moving backward, remove the finish class
-  if (n === -1) {
-    steps[currentTab].classList.remove('finish');
-  }
+      const isReviewTab = tabs[n].classList.contains('review-tab');
 
-  // Change current tab
-  currentTab += n;
+      container.querySelectorAll('.step-next').forEach(btn => {
+        // If this button is not marked as the final one, update its text
+        if (!btn.dataset.step || btn.dataset.step !== 'final') {
+          btn.textContent = isReviewTab ? 'Create' : 'Next';
+        }
+      });
 
-  // If at the end, submit
-  if (currentTab >= x.length) {
-    document.querySelector('form').submit();
-    return false;
-  }
+      fixStepIndicator(n);
 
-  // Otherwise, show the correct tab
-  showTab(currentTab);
-}
-
-function validateForm() {
-  // This function deals with validation of the form fields
-  var x,
-    y,
-    i,
-    valid = true;
-  x = document.getElementsByClassName('tab');
-  y = x[currentTab].getElementsByTagName('input');
-  // A loop that checks every input field in the current tab:
-  for (i = 0; i < y.length; i++) {
-    // If a field is empty...
-    if (y[i].value == '') {
-      // add an "invalid" class to the field:
-      y[i].className += ' invalid';
-      // and set the current valid status to false
-      valid = false;
+      if (isReviewTab) {
+        populateReview();
+      }
     }
-  }
-  // If the valid status is true, mark the step as finished and valid:
-  if (valid) {
-    document.getElementsByClassName('step')[currentTab].className += ' finish';
-  }
-  return valid; // return the valid status
-}
 
-function fixStepIndicator(n) {
-  // This function removes the "active" class of all steps...
-  var i,
-    x = document.getElementsByClassName('step');
-  for (i = 0; i < x.length; i++) {
-    x[i].className = x[i].className.replace(' active', '');
-  }
-  //... and adds the "active" class on the current step:
-  x[n].className += ' active';
-}
+    function nextPrev(n) {
+      tabs[currentTab].style.display = 'none';
 
-// function fixMobileStepIndicator(n) {
-//   // This function removes the "active" class of all steps...
-//   var i,
-//     x = document.getElementsByClassName('mobile-step');
-//   for (i = 0; i < x.length; i++) {
-//     x[i].className = x[i].className.replace(' active', '');
-//   }
-//   //... and adds the "active" class on the current step:
-//   x[n].className += ' active';
-// }
+      if (n === 1) {
+        steps[currentTab]?.classList.add('finish');
+      } else {
+        steps[currentTab]?.classList.remove('finish');
+      }
+
+      currentTab += n;
+
+      // ✅ Show the success tab *after* the form is submitted
+      if (currentTab >= tabs.length) {
+        return false;
+      }
+
+      showTab(currentTab);
+    }
+
+    function fixStepIndicator(n) {
+      steps.forEach((step, i) => {
+        step.classList.toggle('active', i === n);
+      });
+    }
+
+    function populateReview() {
+      const nameEl = container.querySelector('#campaign-name');
+      const salesEl = container.querySelector('#sales-contact');
+      const startEl = container.querySelector('#start-date');
+      const endEl = container.querySelector('#end-date');
+      const briefEl = container.querySelector('#brief');
+
+      container.querySelector('#review-campaign-name').textContent = nameEl?.value || '—';
+      container.querySelector('#review-sales-contact').textContent = salesEl?.options[salesEl.selectedIndex]?.text || '—';
+      container.querySelector('#review-start-date').textContent = formatDate(startEl?.value);
+      container.querySelector('#review-end-date').textContent = formatDate(endEl?.value) || '—';
+      container.querySelector('#review-brief').textContent = briefEl?.value?.trim() || '—';
+
+      if (typeof populateReviewAdvertisers === 'function') populateReviewAdvertisers(container);
+      if (typeof populateReviewProducts === 'function') populateReviewProducts(container);
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '';
+      const [y, m, d] = iso.split('-');
+      if (!y || !m || !d) return iso;
+      return `${m}/${d}/${y}`;
+    }
+  });
+});
