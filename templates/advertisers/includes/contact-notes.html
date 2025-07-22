@@ -1,101 +1,103 @@
-<div class="row">
-  <div class="col-lg-6">
-    <div class="bg-white border shadow rounded p-2">
-      <div class="border-bottom border-dark mb-3 pb-2">
-        <h3 class="mb-0"><i class="fa fa-solid fa-user"></i> Contacts</h3>
-      </div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="bg-white border shadow rounded p-2">
+        <div class="border-bottom border-dark mb-3 pb-2">
+          <h3 class="mb-0"><i class="fa fa-solid fa-user"></i> Contacts</h3>
+        </div>
 
-      <div class="border rounded">
-        <div class="">
-          <div class="p-2 border-bottom">
-            <div class="contact-count d-flex justify-content-between">
-              <h3 class="mb-0">Company Contacts (3)</h3>
-              <div class="actions-container">
-                <!-- Button trigger modal -->
-                <button type="button" class="border-0" data-bs-toggle="modal" data-bs-target="#addContactModal"><i class="fa fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Contact List -->
-          <div class="contact-list p-2" style="max-height: 300px; overflow-y: auto">
-            <!-- Example Contact Item -->
-            <div class="contact-item mb-2 border-bottom pb-2 d-flex justify-content-between align-items-center">
-              <div class="contact-info">
-                <div class="fw-bold">Jane Doe</div>
-                <div class="text-muted small">jane.doe@example.com</div>
-                <div class="text-muted small">555-123-4567</div>
-              </div>
-
-              <div class="actions-container">
-                <!-- Button trigger modal -->
-                <button type="button" class="border-0" data-bs-toggle="modal" data-bs-target="#editContactModal"><i class="fa fa-solid fa-pencil"></i></button>
-                <button class="border-0 text-danger"><i class="fa fa-solid fa-trash"></i></button>
+        <div class="border rounded">
+          <div class="">
+            <div class="p-2 border-bottom">
+              <div class="contact-count d-flex justify-content-between">
+                <h3 class="mb-0">Company Contacts (3)</h3>
+                <div class="actions-container">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="border-0" data-bs-toggle="modal" data-bs-target="#addContactModal"><i class="fa fa-solid fa-plus"></i></button>
+                </div>
               </div>
             </div>
 
-            <div class="contact-item mb-2 border-bottom pb-2">
-              <div class="fw-bold">John Smith</div>
-              <div class="text-muted small">john.smith@example.com</div>
-              <div class="text-muted small">555-987-6543</div>
-            </div>
+            <!-- Contact List -->
+            <div class="contact-list p-2" style="max-height: 300px; overflow-y: auto">
+              <!-- Example Contact Item -->
+              <div class="contact-item mb-2 border-bottom pb-2 d-flex justify-content-between align-items-center">
+                <div class="contact-info">
+                  <div class="fw-bold">Jane Doe</div>
+                  <div class="text-muted small">jane.doe@example.com</div>
+                  <div class="text-muted small">555-123-4567</div>
+                </div>
 
-            <div class="contact-item mb-2 border-bottom pb-2">
-              <div class="fw-bold">John Smith</div>
-              <div class="text-muted small">john.smith@example.com</div>
-              <div class="text-muted small">555-987-6543</div>
-            </div>
+                <div class="actions-container">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="border-0" data-bs-toggle="modal" data-bs-target="#editContactModal"><i class="fa fa-solid fa-pencil"></i></button>
+                  <button class="border-0 text-danger"><i class="fa fa-solid fa-trash"></i></button>
+                </div>
+              </div>
 
-            <div class="contact-item mb-2 border-bottom pb-2">
-              <div class="fw-bold">John Smith</div>
-              <div class="text-muted small">john.smith@example.com</div>
-              <div class="text-muted small">555-987-6543</div>
+              <div class="contact-item mb-2 border-bottom pb-2">
+                <div class="fw-bold">John Smith</div>
+                <div class="text-muted small">john.smith@example.com</div>
+                <div class="text-muted small">555-987-6543</div>
+              </div>
+
+              <div class="contact-item mb-2 border-bottom pb-2">
+                <div class="fw-bold">John Smith</div>
+                <div class="text-muted small">john.smith@example.com</div>
+                <div class="text-muted small">555-987-6543</div>
+              </div>
+
+              <div class="contact-item mb-2 border-bottom pb-2">
+                <div class="fw-bold">John Smith</div>
+                <div class="text-muted small">john.smith@example.com</div>
+                <div class="text-muted small">555-987-6543</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="col-lg-6">
-    <div class="bg-white border shadow rounded p-2">
-      <div class="border-bottom border-dark mb-3 pb-2">
-        <h3 class="mb-0"><i class="fa fa-solid fa-comment"></i> Notes</h3>
-      </div>
+    <div class="col-lg-6">
+      <div class="bg-white border shadow rounded p-2">
+        <div class="border-bottom border-dark mb-3 pb-2">
+          <h3 class="mb-0"><i class="fa fa-solid fa-comment"></i> Notes</h3>
+        </div>
 
-      <div class="p-2">
-        <form action="" class="mb-5">
-          <div class="form-group mb-3">
-            <label for="note">Note</label>
-            <textarea class="form-control" id="note"></textarea>
-          </div>
+        <div class="p-2">
+          <form action="" class="mb-5">
+            <div class="form-group mb-3">
+              <label for="note">Note</label>
+              <textarea class="form-control" id="note"></textarea>
+            </div>
 
-          <div class="btn-container text-center d-flex justify-content-around">
-            <select class="form-select w-50" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-            <button type="submit" class="btn btn-secondary">Add Note</button>
-          </div>
-        </form>
+            <div class="btn-container text-center d-flex justify-content-around">
+              <select class="form-select w-50" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+              <button type="submit" class="btn btn-secondary">Add Note</button>
+            </div>
+          </form>
 
-        <div class="notes-list" style="max-height: 300px; overflow-y: auto">
-          <!-- Example note -->
-          <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
-            <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
-            <p class="text-muted small text-end">
-              July 14, 2025 - 9:21 AM <button class="border-0 text-danger bg-transparent"><i class="fa fa-solid fa-trash"></i></button>
-            </p>
-          </div>
+          <div class="notes-list" style="max-height: 300px; overflow-y: auto">
+            <!-- Example note -->
+            <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
+              <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+              <p class="text-muted small text-end">
+                July 14, 2025 - 9:21 AM <button class="border-0 text-danger bg-transparent"><i class="fa fa-solid fa-trash"></i></button>
+              </p>
+            </div>
 
-          <!-- Repeat .note-item border for each note -->
-          <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
-            <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
-            <p class="text-muted small text-end">
-              July 14, 2025 - 9:21 AM <button class="border-0 text-danger bg-transparent"><i class="fa fa-solid fa-trash"></i></button>
-            </p>
+            <!-- Repeat .note-item border for each note -->
+            <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
+              <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
+              <p class="text-muted small text-end">
+                July 14, 2025 - 9:21 AM <button class="border-0 text-danger bg-transparent"><i class="fa fa-solid fa-trash"></i></button>
+              </p>
+            </div>
           </div>
         </div>
       </div>

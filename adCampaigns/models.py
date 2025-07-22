@@ -120,8 +120,8 @@ class Account(models.Model):
     label_line_5 = models.CharField(max_length=255, null=True, blank=True)
     label_line_6 = models.CharField(max_length=255, null=True, blank=True)
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
 
     class Meta:
         permissions = (
@@ -135,6 +135,9 @@ class Account(models.Model):
 class AccountType(models.Model):
     code = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         db_table = 'advertising_accounttype'
@@ -156,6 +159,9 @@ class MarketCode(models.Model):
     description = models.CharField(max_length=100)
     active = models.IntegerField()
     account = models.ForeignKey('Account', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.code
 
     class Meta:
         db_table = "advertising_marketcode"

@@ -45,14 +45,14 @@
 
         <div class="campaign-status">
           <span>Status:</span>
-          <p class="text-capitalize">{{ classified.status }}</p>
+          <p class="text-capitalize">{{ campaign.status }}</p>
         </div>
       </div>
 
       <div class="brief-container">
         <span>Brief Description <strong>PUBLIC</strong>:</span>
         {% if campaign.brief %}
-        <p>{{ classified.brief }}</p>
+        <p>{{ campaign.brief }}</p>
         {% else %}
         <p><em>No brief description available.</em></p>
         {% endif %}

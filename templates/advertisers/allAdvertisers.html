@@ -29,6 +29,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th scope="col">ID#</th>
         <th scope="col">Business Name</th>
         <th scope="col">Contact</th>
         <th scope="col">Account Type</th>
@@ -38,23 +39,67 @@
       </tr>
     </thead>
     <tbody>
+      {% for advertiser in page_obj %}
       <tr>
-        <td>111920 - Walmart Corporation</td>
-        <td>Gail Lewis</td>
-        <td>Grocery</td>
-        <td>844</td>
-        <td>Kyle Jernigan</td>
-        <td>Johnny Cash</td>
+        <td><a href="{% url 'advertiser' advertiser.id %}">{{advertiser.id }}</a></td>
+        <td>{{advertiser.name }}</td>
+        <td>{{ advertiser.contact_name|default:"—" }}</td>
+        <td>{{advertiser.account_type }}</td>
+        <td>{{advertiser.market_code }}</td>
+        <td>{{advertiser.submitter }}</td>
+        <td>{{advertiser.sales_person }}</td>
       </tr>
-      <tr>
-        <td>Casablanca Coffee Roasters</td>
-        <td>Mr. Bean</td>
-        <td>Restaurant</td>
-        <td>12</td>
-        <td>Kyle Jernigan</td>
-        <td>Guy Money</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
+
+<nav aria-label="Page navigation" class="mt-4">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page=1" aria-label="First">
+        <span aria-hidden="true">&laquo;&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link" aria-hidden="true">&laquo;&laquo;</span>
+    </li>
+    <li class="page-item disabled">
+      <span class="page-link" aria-hidden="true">&laquo;</span>
+    </li>
+    {% endif %}
+
+    <li class="page-item active">
+      <span class="page-link"> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} </span>
+    </li>
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+        <span aria-hidden="true">&raquo;&raquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link" aria-hidden="true">&raquo;</span>
+    </li>
+    <li class="page-item disabled">
+      <span class="page-link" aria-hidden="true">&raquo;&raquo;</span>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+
 {% endblock%}

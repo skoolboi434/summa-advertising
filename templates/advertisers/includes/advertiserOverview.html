@@ -10,57 +10,55 @@
   <div class="row mb-5">
     <div class="col-lg-6">
       <div class="heading-container mb-5">
-        <h3 class="color-secondary mb-0">111920 - Walmart</h3>
+        <h3 class="color-secondary mb-0">{{ advertiser.account_number }} - {{ advertiser.name }}</h3>
       </div>
 
       <div class="row mb-5">
         <div class="col-lg-6">
           <span>Status:</span>
-          <p class="mb-0">Active</p>
+          <p class="mb-0">{{ advertiser.status }}</p>
         </div>
 
         <div class="col-lg-6">
           <span>Account Type:</span>
-          <p class="mb-0">Business</p>
+          <p class="mb-0">{{ advertiser.account_type }}</p>
         </div>
       </div>
 
       <div class="row mb-5">
         <div class="col-lg-6">
           <span>Address:</span>
-          <p class="mb-0">
-            120 North Market St.<br />
-            Wilmington, NC 28443
-          </p>
+          <p class="mb-0">{{ advertiser.address }}</p>
+          <p class="mb-0">{{ advertiser.city }}, {{ advertiser.state }} {{ advertiser.zip_code }}</p>
         </div>
 
         <div class="col-lg-6">
           <span>Phone:</span>
-          <p class="mb-0">(111) 111-1111</p>
+          <p class="mb-0">{{ advertiser.phone }}</p>
         </div>
       </div>
 
       <div class="row mb-5">
         <div class="col-lg-6">
           <span>Website:</span>
-          <p class="mb-0">www.Walmart.com</p>
+          <p class="mb-0">{{ advertiser.website|default:"-" }}</p>
         </div>
 
         <div class="col-lg-6">
           <span>Email:</span>
-          <p class="mb-0"><a href="mailto:">walmartservices@gmail.com</a></p>
+          <p class="mb-0"><a href="mailto:">{{ advertiser.email }}</a></p>
         </div>
       </div>
 
       <div class="row mb-5">
         <div class="col-lg-6">
           <span>Market Code:</span>
-          <p class="mb-0">844</p>
+          <p class="mb-0">{{ advertiser.market_code }}</p>
         </div>
 
         <div class="col-lg-6">
           <span>Legacy ID:</span>
-          <p class="mb-0"></p>
+          <p class="mb-0">{{ advertiser.legacy_id }}</p>
         </div>
       </div>
     </div>
@@ -76,16 +74,13 @@
         <div class="col-lg-6">
           <span>Billing Address:</span>
           <p class="mb-0">
-            <strong
-              >120 North Market St.<br />
-              Wilmington, NC 28443</strong
-            >
+            <strong>{{ advertiser.billing_address }}<br />{{ advertiser.billing_city }}, {{ advertiser.billing_state }} {{ advertiser.billing_zip_code }}</strong>
           </p>
         </div>
 
         <div class="col-lg-6">
           <span>Email:</span>
-          <a href="mailto:"><strong>walmartservices@gmail.com</strong></a>
+          <a href="mailto:"><strong>{{ advertiser.billing_email }}</strong></a>
         </div>
       </div>
     </div>
