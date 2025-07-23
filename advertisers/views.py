@@ -7,7 +7,7 @@ import json
 from django.utils.timezone import now
 
 def index(request):
-  advertiser_list = Account.objects.all().order_by('name')
+  advertiser_list = Account.objects.all().order_by('-created_at')
   paginator = Paginator(advertiser_list, 10) 
   
   page_number = request.GET.get('page')
@@ -43,11 +43,80 @@ def advertiser(request, id):
 
   })
 
+
 def createAdvertiser(request):
-  account_types = AccountType.objects.all()
-  sales_persons = SalesPerson.objects.all()
-  industry_codes = IndustryCode.objects.all()
-  return render(request, 'advertisers/createAdvertiser.html', {'account_types': account_types, 'sales_persons': sales_persons, 'industry_codes': industry_codes})
+    account_types = AccountType.objects.all()
+    sales_persons = SalesPerson.objects.all()
+    industry_codes = IndustryCode.objects.all()
+
+    if request.method == 'POST':
+        # Contact Info
+        contact_name_first = request.POST.get('advertiser_firstname', '').strip()
+        contact_name_last = request.POST.get('advertiser_lastname', '').strip()
+        contact_full_name = f"{contact_name_first} {contact_name_last}".strip()
+        phone = request.POST.get('advertiser_phone', '').strip()
+        email = request.POST.get('advertiser_email', '').strip()
+
+        # Business Info
+        company_name_1 = request.POST.get('business_name', '').strip()
+        address = request.POST.get('advertiser_address', '').strip()
+        city = request.POST.get('advertiser_city', '').strip()
+        state = request.POST.get('advertiser_state', '').strip()
+        zip_code = request.POST.get('advertiser_zipcode', '').strip()
+        website = request.POST.get('advertiser_website', '').strip()
+        billing_email = request.POST.get('advertiser_billing_email', '').strip()
+        legacy_id = request.POST.get('advertiser_legacy_id', '').strip()
+
+        # Related FK dropdowns
+        account_type = AccountType.objects.filter(id=request.POST.get('advertiser_account_type')).first()
+        sales_person = SalesPerson.objects.filter(id=request.POST.get('sales-person')).first()
+        industry_code = IndustryCode.objects.filter(id=request.POST.get('advertiser_industry_code')).first()
+
+        # Billing address logic
+        if request.POST.get('billing_option') == 'different':
+            billing_address = request.POST.get('billing_address', '').strip()
+            billing_city = request.POST.get('billing_city', '').strip()
+            billing_state = request.POST.get('billing_state', '').strip()
+            billing_zip = request.POST.get('billing_zipcode', '').strip()
+        else:
+            billing_address = address
+            billing_city = city
+            billing_state = state
+            billing_zip = zip_code
+
+        # Create Account
+        new_account = Account.objects.create(
+            name=company_name_1,
+            contact_name=contact_full_name,
+            contact_name_first=contact_name_first,
+            contact_name_last=contact_name_last,
+            phone=phone,
+            email=email,
+            company_name_1=company_name_1,
+            address=address,
+            city=city,
+            state=state,
+            zip_code=zip_code,
+            website=website,
+            billing_email=billing_email,
+            legacy_id=legacy_id,
+            billing_address=billing_address,
+            billing_city=billing_city,
+            billing_state=billing_state,
+            billing_zip_code=billing_zip,
+            account_type=account_type,
+            sales_person=sales_person,
+            industry_code=industry_code
+        )
+
+        return JsonResponse({'success': True, 'advertiser_id': new_account.id})
+        # Make sure this matches your URLconf
+
+    return render(request, 'advertisers/createAdvertiser.html', {
+        'account_types': account_types,
+        'sales_persons': sales_persons,
+        'industry_codes': industry_codes,
+    })
 
 @csrf_exempt
 def add_contact(request, id):
@@ -70,3 +139,25 @@ def add_contact(request, id):
         return JsonResponse({'success': True, 'contact_id': contact.id})
 
     return JsonResponse({'error': 'Invalid method'}, status=400)
+
+@csrf_exempt
+def add_notes_to_advertiser(request, id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            notes = data.get('notes', [])
+            advertiser = Account.objects.get(id=id)
+
+            for note in notes:
+                AccountNote.objects.create(
+                    account=advertiser,
+                    note=note.get('text', ''),
+                    timestamp=now(),
+                    user=request.user if request.user.is_authenticated else None
+                )
+
+            return JsonResponse({'success': True, 'message': 'Notes saved.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+    return JsonResponse({'error': 'Invalid method'}, status=405)

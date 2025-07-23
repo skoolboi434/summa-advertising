@@ -63,3 +63,39 @@ function populateAdvertiserReview() {
   document.getElementById('review-billing-state').textContent = (billingOption === 'different' ? billingState : fallbackState) || '—';
   document.getElementById('review-billing-zipcode').textContent = (billingOption === 'different' ? billingZip : fallbackZip) || '—';
 }
+
+// notes-sync.js
+
+document.addEventListener('DOMContentLoaded', function () {
+  const advertiserId = getAdvertiserIdFromURL();
+
+  if (advertiserId) {
+    const notes = JSON.parse(localStorage.getItem('advertiserNotes') || '[]');
+
+    if (notes.length > 0) {
+      fetch(`/${advertiserId}/add-notes/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCSRFToken() // Your CSRF helper
+        },
+        body: JSON.stringify({ notes: notes })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log('Notes synced:', data);
+          localStorage.removeItem('advertiserNotes'); // clear localStorage after sync
+        });
+    }
+  }
+});
+
+// Helper functions
+function getAdvertiserIdFromURL() {
+  const match = window.location.pathname.match(/\/advertisers?\/(\d+)/);
+  return match ? match[1] : null;
+}
+
+function getCSRFToken() {
+  return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}

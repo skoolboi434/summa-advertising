@@ -10,7 +10,7 @@
   <div class="row mb-5">
     <div class="col-lg-6">
       <div class="heading-container mb-5">
-        <h3 class="color-secondary mb-0">{{ advertiser.account_number }} - {{ advertiser.name }}</h3>
+        <h3 class="color-secondary mb-0">{{ advertiser.id }} - {{ advertiser.name }}</h3>
       </div>
 
       <div class="row mb-5">
@@ -41,7 +41,7 @@
       <div class="row mb-5">
         <div class="col-lg-6">
           <span>Website:</span>
-          <p class="mb-0">{{ advertiser.website|default:"-" }}</p>
+          <p class="mb-0"><a href="{{ advertiser.website}}" target="_blank">{{ advertiser.website|default:"-" }}</a></p>
         </div>
 
         <div class="col-lg-6">
@@ -53,7 +53,7 @@
       <div class="row mb-5">
         <div class="col-lg-6">
           <span>Market Code:</span>
-          <p class="mb-0">{{ advertiser.market_code }}</p>
+          <p class="mb-0">{{ advertiser.industry_code }}</p>
         </div>
 
         <div class="col-lg-6">
@@ -79,7 +79,7 @@
         </div>
 
         <div class="col-lg-6">
-          <span>Email:</span>
+          <span class="d-block">Email:</span>
           <a href="mailto:"><strong>{{ advertiser.billing_email }}</strong></a>
         </div>
       </div>
