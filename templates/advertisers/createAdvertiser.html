@@ -133,10 +133,10 @@
           <div class="row mb-3">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="advertiser_marketcode">Market Code:</label>
-                <select id="advertiser_marketcode" name="advertiser_marketcode" class="form-select" aria-label="Default select example">
+                <label for="advertiser_industry_code">Industry Code:</label>
+                <select id="advertiser_industry_code" name="advertiser_industry_code" class="form-select" aria-label="Default select example">
                   <option>Open this select menu</option>
-                  {% for type in market_codes %}
+                  {% for type in industry_codes %}
                   <option value="{{ type.id }}">{{ type }}</option>
                   {% endfor %}
                 </select>
@@ -145,8 +145,8 @@
 
             <div class="col-sm-6">
               <div class="form-group mb-3">
-                <label for="advertiser-legacy-id">Legacy ID (optional):</label>
-                <input type="text" name="advertiser-legacy-id" id="advertiser-legacy-id" class="form-control" />
+                <label for="advertiser_legacy_id">Legacy ID (optional):</label>
+                <input type="text" name="advertiser_legacy_id" id="advertiser_legacy_id" class="form-control" />
               </div>
             </div>
           </div>
@@ -166,6 +166,40 @@
           <div class="form-group mb-3">
             <label for="advertiser_billing_contact"><i class="fa fa-solid fa-envelope"></i> Billing Contact:</label>
             <input type="text" name="advertiser_billing_contact" id="advertiser_billing_contact" class="form-control" />
+          </div>
+
+          <div class="billing-address-container">
+            <label class="form-label d-block mb-2">Billing Address:</label>
+
+            <div class="form-check form-check-inline mb-3">
+              <input class="form-check-input" type="radio" name="billing_option" id="same-as-primary" value="same" checked />
+              <label class="form-check-label" for="same-as-primary">Use same as primary address</label>
+            </div>
+
+            <div class="form-check form-check-inline mb-3">
+              <input class="form-check-input" type="radio" name="billing_option" id="different-address" value="different" />
+              <label class="form-check-label" for="different-address">Use different billing address</label>
+            </div>
+
+            <!-- Billing Address Fields -->
+            <div id="billing-fields" class="mt-3" style="display: none">
+              <div class="form-group mb-3">
+                <label for="billing_street">Street</label>
+                <input type="text" id="billing_street" class="form-control" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="billing_city">City</label>
+                <input type="text" id="billing_city" class="form-control" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="billing_state">State</label>
+                <input type="text" id="billing_state" class="form-control" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="billing_zip">ZIP Code</label>
+                <input type="text" id="billing_zip" class="form-control" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -260,8 +294,8 @@
             </div>
 
             <div class="col-lg-6">
-              <span>Market Code:</span>
-              <p id="review-market-code" class="mb-0"></p>
+              <span>Industry_ Code:</span>
+              <p id="review-industry-code" class="mb-0"></p>
             </div>
           </div>
 
@@ -289,9 +323,14 @@
             </div>
           </div>
 
-          <div class="mb-5">
-            <span>Billing Address</span>
-            <p class="mb-0">1122 Boogie Woogie Ave.<br />Hampstead, NC 28443</p>
+          <div class="mb-3">
+            <span>Billing Address:</span>
+            <p id="review-billing-address" class="mb-0"></p>
+            <p class="mb-0">
+              <span id="review-billing-city"></span>,
+              <span id="review-billing-state"></span>
+              <span id="review-billing-zipcode"></span>
+            </p>
           </div>
 
           <div class="border-bottom border-dark mb-3">
@@ -325,7 +364,6 @@
 
         <div class="col-lg-6">
           <div class="review-notes-container">
-            <label for="notes">Notes:</label>
             <div class="border rounded">
               <div class="p-3">
                 <!-- Scrolling notes area -->
@@ -342,10 +380,8 @@
         <button data-step="final" class="btn btn-secondary step-next" type="button">Create <i class="fa fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
-
-    <!-- Success tab -->
   </form>
-
+  <!-- Success tab -->
   <div class="tab">
     <div class="tab-description text-center mb-5">
       <p>
@@ -364,6 +400,23 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const billingFields = document.getElementById('billing-fields');
+    const billingOptions = document.querySelectorAll('input[name="billing_option"]');
+
+    billingOptions.forEach(option => {
+      option.addEventListener('change', function () {
+        if (this.value === 'different') {
+          billingFields.style.display = 'block';
+        } else {
+          billingFields.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
 
 <script src="{% static 'js/notes.js' %}"></script>
 <script src="{% static 'js/stepform/stepform.js' %}"></script>

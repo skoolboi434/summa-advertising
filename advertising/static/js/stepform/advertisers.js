@@ -13,6 +13,7 @@ function populateAdvertiserReview() {
   const advertiser_website = document.getElementById('advertiser_website').value.trim();
   const advertiser_billing_email = document.getElementById('advertiser_billing_email').value.trim();
   const advertiser_billing_contact = document.getElementById('advertiser_billing_contact').value.trim();
+  const advertiser_legacy_id = document.getElementById('advertiser_legacy_id').value.trim();
 
   const accountTypeSelect = document.getElementById('advertiser_account_type');
   const selectedAccountType = accountTypeSelect?.options[accountTypeSelect.selectedIndex]?.text || '—';
@@ -20,8 +21,8 @@ function populateAdvertiserReview() {
   const salesPersonSelect = document.getElementById('sales-person');
   const selectedSalesPerson = salesPersonSelect?.options[salesPersonSelect.selectedIndex]?.text || '—';
 
-  const marketCodeSelect = document.getElementById('advertiser_marketcode');
-  const selectedMarketCode = marketCodeSelect?.options[marketCodeSelect.selectedIndex]?.text || '—';
+  const industryCodeSelect = document.getElementById('advertiser_industry_code');
+  const selectedIndustryCode = industryCodeSelect?.options[industryCodeSelect.selectedIndex]?.text || '—';
 
   document.getElementById('review-first-name').textContent = firstName || '—';
   document.getElementById('review-last-name').textContent = lastName || '—';
@@ -38,5 +39,27 @@ function populateAdvertiserReview() {
   document.getElementById('review-billing-contact').textContent = advertiser_billing_contact || '—';
   document.getElementById('review-account-type').textContent = selectedAccountType;
   document.getElementById('review-sales-person').textContent = selectedSalesPerson;
-  document.getElementById('review-market-code').textContent = selectedMarketCode;
+  document.getElementById('review-industry-code').textContent = selectedIndustryCode;
+  document.getElementById('review-legacy-id').textContent = advertiser_legacy_id;
+
+  // Billing address radio value
+  const billingOption = document.querySelector('input[name="billing_option"]:checked')?.value;
+
+  // Billing address input values
+  const billingStreet = document.getElementById('billing_address')?.value.trim();
+  const billingCity = document.getElementById('billing_city')?.value.trim();
+  const billingState = document.getElementById('billing_state')?.value.trim();
+  const billingZip = document.getElementById('billing_zipcode')?.value.trim();
+
+  // Fallback to advertiser (business) address
+  const fallbackStreet = advertiser_address || '—';
+  const fallbackCity = advertiser_city || '—';
+  const fallbackState = advertiser_state || '—';
+  const fallbackZip = advertiser_zipcode || '—';
+
+  // Review tab billing section
+  document.getElementById('review-billing-address').textContent = (billingOption === 'different' ? billingStreet : fallbackStreet) || '—';
+  document.getElementById('review-billing-city').textContent = (billingOption === 'different' ? billingCity : fallbackCity) || '—';
+  document.getElementById('review-billing-state').textContent = (billingOption === 'different' ? billingState : fallbackState) || '—';
+  document.getElementById('review-billing-zipcode').textContent = (billingOption === 'different' ? billingZip : fallbackZip) || '—';
 }
