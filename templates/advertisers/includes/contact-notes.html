@@ -10,7 +10,8 @@
           <div class="">
             <div class="p-2 border-bottom">
               <div class="contact-count d-flex justify-content-between">
-                <h3 class="mb-0">Company Contacts (3)</h3>
+                <h3 class="mb-0">Company Contacts ({{ contacts|length }})</h3>
+
                 <div class="actions-container">
                   <!-- Button trigger modal -->
                   <button type="button" class="border-0" data-bs-toggle="modal" data-bs-target="#addContactModal"><i class="fa fa-solid fa-plus"></i></button>
@@ -20,38 +21,26 @@
 
             <!-- Contact List -->
             <div class="contact-list p-2" style="max-height: 300px; overflow-y: auto">
-              <!-- Example Contact Item -->
+              {% for contact in contacts %}
               <div class="contact-item mb-2 border-bottom pb-2 d-flex justify-content-between align-items-center">
                 <div class="contact-info">
-                  <div class="fw-bold">Jane Doe</div>
-                  <div class="text-muted small">jane.doe@example.com</div>
-                  <div class="text-muted small">555-123-4567</div>
+                  <div class="fw-bold">{{ contact.full_name }}</div>
+                  <div class="text-muted small">{{ contact.email }}</div>
+                  <div class="text-muted small">{{ contact.phone_number }}</div>
                 </div>
 
                 <div class="actions-container">
-                  <!-- Button trigger modal -->
-                  <button type="button" class="border-0" data-bs-toggle="modal" data-bs-target="#editContactModal"><i class="fa fa-solid fa-pencil"></i></button>
-                  <button class="border-0 text-danger"><i class="fa fa-solid fa-trash"></i></button>
+                  <button type="button" class="border-0" data-bs-toggle="modal" data-bs-target="#editContactModal">
+                    <i class="fa fa-solid fa-pencil"></i>
+                  </button>
+                  <button class="border-0 text-danger">
+                    <i class="fa fa-solid fa-trash"></i>
+                  </button>
                 </div>
               </div>
-
-              <div class="contact-item mb-2 border-bottom pb-2">
-                <div class="fw-bold">John Smith</div>
-                <div class="text-muted small">john.smith@example.com</div>
-                <div class="text-muted small">555-987-6543</div>
-              </div>
-
-              <div class="contact-item mb-2 border-bottom pb-2">
-                <div class="fw-bold">John Smith</div>
-                <div class="text-muted small">john.smith@example.com</div>
-                <div class="text-muted small">555-987-6543</div>
-              </div>
-
-              <div class="contact-item mb-2 border-bottom pb-2">
-                <div class="fw-bold">John Smith</div>
-                <div class="text-muted small">john.smith@example.com</div>
-                <div class="text-muted small">555-987-6543</div>
-              </div>
+              {% empty %}
+              <p class="text-muted">No contacts found for this advertiser.</p>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -65,45 +54,43 @@
         </div>
 
         <div class="p-2">
-          <form action="" class="mb-5">
+          <form method="POST" action="{% url 'advertiser' advertiser.id %}" class="mb-5">
+            {% csrf_token %}
             <div class="form-group mb-3">
               <label for="note">Note</label>
-              <textarea class="form-control" id="note"></textarea>
+              <textarea class="form-control" id="note" name="note"></textarea>
             </div>
 
             <div class="btn-container text-center d-flex justify-content-around">
-              <select class="form-select w-50" aria-label="Default select example">
+              <!-- <select class="form-select w-50" aria-label="Default select example">
                 <option selected>Open this select menu</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
-              </select>
+              </select> -->
               <button type="submit" class="btn btn-secondary">Add Note</button>
             </div>
           </form>
 
-          <div class="notes-list" style="max-height: 300px; overflow-y: auto">
-            <!-- Example note -->
-            <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
-              <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
-              <p class="text-muted small text-end">
-                July 14, 2025 - 9:21 AM <button class="border-0 text-danger bg-transparent"><i class="fa fa-solid fa-trash"></i></button>
-              </p>
+          <div class="note-list mt-3" style="max-height: 300px; overflow-y: auto">
+            {% for note in notes %}
+            <div class="note-item mb-3 p-3 border rounded">
+              <div class="mb-2">{{ note.note }}</div>
+              <div class="small text-muted">Created {{ note.timestamp }} by {{ note.user }}</div>
             </div>
-
-            <!-- Repeat .note-item border for each note -->
-            <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
-              <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
-              <p class="text-muted small text-end">
-                July 14, 2025 - 9:21 AM <button class="border-0 text-danger bg-transparent"><i class="fa fa-solid fa-trash"></i></button>
-              </p>
-            </div>
+            {% empty %}
+            <p class="text-muted">No notes found for this advertiser.</p>
+            {% endfor %}
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<div id="advertiser-data" data-id="{{ advertiser.id }}"></div>
+
+<!-- your modal and other content here -->
 
 <!-- Add Contact Modal -->
 <div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="addContactModalLabel" aria-hidden="true">
@@ -117,6 +104,8 @@
       </div>
       <div class="modal-body">
         <form action="">
+          <input type="hidden" id="account-id" name="account_id" value="{{ advertiser.id }}" />
+
           <div class="container">
             <div class="row mb-3">
               <div class="col-md-12 col-lg-6">
@@ -190,13 +179,63 @@
 
           <div class="btn-container my-4 d-flex justify-content-center">
             <button type="button" class="btn btn-gray me-lg-3">Discard</button>
-            <button type="button" class="btn btn-secondary">Create Contact</button>
+            <button type="button" class="btn btn-secondary" id="create-contact-btn">Create Contact</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById('create-contact-btn').addEventListener('click', function () {
+    const advertiserId = document.getElementById('advertiser-data').dataset.id;
+
+    const payload = {
+      first_name: document.getElementById('firstname').value,
+      last_name: document.getElementById('lastname').value,
+      phone_number: document.getElementById('phone').value,
+      email: document.getElementById('email').value,
+      role: document.getElementById('role').value,
+      status: document.getElementById('status').value,
+      is_primary: document.getElementById('primary-contact').checked
+    };
+
+    fetch(`/advertisers/${advertiserId}/add-contact/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Contact created successfully!');
+          // Optionally update UI here or close modal
+          location.reload();
+        } else {
+          alert('Something went wrong.');
+        }
+      });
+  });
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + '=') {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+</script>
 
 <!-- Edit Contact Modal -->
 <div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">

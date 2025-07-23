@@ -6,4 +6,6 @@ urlpatterns = [
   path('', views.index, name='advertisers'),
   path('newadvertiser/', views.createAdvertiser, name='createAdvertiser'),
   path('<int:id>', views.advertiser, name='advertiser'),
+  path('<int:id>/add-contact/', views.add_contact, name='add_contact'),
+
 ]

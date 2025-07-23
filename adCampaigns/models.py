@@ -181,3 +181,37 @@ class Publication(models.Model):
 
     class Meta:
         db_table = 'advertising_publication'
+
+class CompanyContact(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    full_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=100)
+    account = models.ForeignKey('Account', on_delete=CASCADE)
+    department = models.ForeignKey('CompanyDepartment', on_delete=CASCADE)
+    default = models.IntegerField()
+    active = models.IntegerField()
+    class Meta:
+        db_table = 'advertising_companycontact'
+
+class CompanyDepartment(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'advertising_department'
+
+class AccountNote(models.Model):
+    note = models.TextField()
+    timestamp = models.DateTimeField()
+    account = models.ForeignKey('Account', on_delete=models.CASCADE)
+    user = models.CharField(max_length=100)
+    updatedAt = models.DateTimeField()
+
+    class Meta:
+        db_table = 'advertising_accountnote'  # adjust if your table is named differently
+        managed = False  # do not let Django manage this table
