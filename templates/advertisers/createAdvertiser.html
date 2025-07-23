@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}{% load static %} {% block content %}
 <div class="heading-container text-center my-5">
   <h3 class="heading">Create a New Advertiser</h3>
 </div>
@@ -33,327 +33,319 @@
 
   <!-- End Steps container -->
 
-  <div class="tab">
-    <div class="tab-description text-center mb-5">
-      <p>Start by creating the primary contact for the<br />advertiser</p>
+  <form action="{% url 'createAdvertiser' %}" method="POST">
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Start by creating the primary contact for the<br />advertiser</p>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="advertiser_firstname"><span class="asterisk">*</span>First Name</label>
+        <input type="text" name="advertiser_firstname" id="advertiser_firstname" class="form-control" />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="advertiser_lastname"><span class="asterisk">*</span>Last Name</label>
+        <input type="text" name="advertiser_lastname" id="advertiser_lastname" class="form-control" />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="advertiser_email"><i class="fa fa-solid fa-envelope"></i> Email</label>
+        <input type="email" name="advertiser_email" id="advertiser_email" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="advertiser_phone"><i class="fa fa-solid fa-phone"></i> Phone</label>
+        <input type="text" name="advertiser_phone" id="advertiser_phone" class="form-control" />
+      </div>
+
+      <div class="btn-container d-flex justify-content-end mt-5">
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
     </div>
 
-    <div class="form-group mb-3">
-      <label for="advertiser_firstname"><span class="asterick">*</span>First Name</label>
-      <input type="text" id="advertiser_firstname" class="form-control" />
-    </div>
+    <!-- Advertiser Info -->
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Next, enter all the info for the new advertiser</p>
+      </div>
 
-    <div class="form-group mb-3">
-      <label for="advertiser_lastname"><span class="astericks">*</span>Last Name</label>
-      <input type="text" id="advertiser_lastname" class="form-control" />
-    </div>
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <div class="form-group mb-3">
+            <label for="business_name"><span class="asterisk">*</span>Business Name:</label>
+            <input id="business_name" name="business_name" type="text" class="form-control" placeholder="Enter Business Name" />
+          </div>
 
-    <div class="form-group mb-3">
-      <label for="advertiser_email"><i class="fa fa-solid fa-envelope"></i> Email</label>
-      <input type="email" id="advertiser_email" class="form-control" />
-    </div>
+          <div class="form-group mb-3">
+            <label for="advertiser_account_type"><span class="asterisk">*</span>Account Type:</label>
+            <select id="advertiser_account_type" name="advertiser_account_type" class="form-select" aria-label="Default select example">
+              <option>Open this select menu</option>
+              {% for type in account_types %}
+              <option value="{{ type.id }}">{{ type.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
 
-    <div class="form-group">
-      <label for="advertiser_phone"><i class="fa fa-solid fa-phone"></i> Phone</label>
-      <input type="text" id="advertiser_phone" class="form-control" />
-    </div>
+          <div class="form-group mb-3">
+            <label for="advertiser_address"><span class="asterisk">*</span>Address:</label>
+            <input type="text" name="advertiser_address" id="advertiser_address" class="form-control" />
+          </div>
 
-    <div class="btn-container d-flex justify-content-end mt-5">
-      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
-    </div>
-  </div>
+          <div class="form-group mb-3">
+            <label for="advertiser_city"><span class="asterisk">*</span>City:</label>
+            <input type="text" name="advertiser_city" id="advertiser_city" class="form-control" />
+          </div>
 
-  <!-- Advertiser Info -->
-  <div class="tab">
-    <div class="tab-description text-center mb-5">
-      <p>Next, enter all the info for the new advertiser</p>
-    </div>
+          <div class="row mb-3">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="advertiser_state"><span class="asterisk">*</span>State:</label>
+                <select id="advertiser_state" name="advertiser_state" class="form-select" aria-label="Default select example">
+                  <option>Open this select menu</option>
+                </select>
+              </div>
+            </div>
 
-    <div class="row mb-5">
-      <div class="col-lg-6">
-        <div class="form-group mb-3">
-          <label for="business-name">*Business Name:</label>
-          <input id="business-name" type="text" class="form-control" placeholder="Enter Business Name" />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="account-type"><span class="asterick">*</span>Account Type:</label>
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="advertiser-address"><span class="asterick">*Address:</span></label>
-          <input type="text" id="advertiser-address" class="form-control" />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="advertiser-city"><span class="asterick">*</span>City:</label>
-          <input type="text" id="advertiser-city" class="form-control" />
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="advertiser-state"><span class="asterick">*</span>State:</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+            <div class="col-sm-6">
+              <div class="form-group mb-3">
+                <label for="advertiser_zipcode"><span class="asterisk">*</span>Zipcode:</label>
+                <input type="text" name="advertiser_zipcode" id="advertiser_zipcode" class="form-control" />
+              </div>
             </div>
           </div>
 
-          <div class="col-sm-6">
-            <div class="form-group mb-3">
-              <label for="advertiser-zipcode"><span class="asterick">*</span>Zipcode:</label>
-              <input type="text" id="advertiser-zipcode" class="form-control" />
+          <div class="form-group mb-3">
+            <label for="advertiser_agency">Agency (optional)</label>
+            <input type="text" name="advertiser_agency" id="advertiser_agency" class="form-control" />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="sales-person"><span class="asterisk">*</span>Sales Person:</label>
+            <select id="sales-person" class="form-select" aria-label="Default select example">
+              <option>Open this select menu</option>
+              {% for type in sales_persons %}
+              <option value="{{ type.id }}">{{ type }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="advertiser_marketcode">Market Code:</label>
+                <select id="advertiser_marketcode" name="advertiser_marketcode" class="form-select" aria-label="Default select example">
+                  <option>Open this select menu</option>
+                  {% for type in market_codes %}
+                  <option value="{{ type.id }}">{{ type }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group mb-3">
+                <label for="advertiser-legacy-id">Legacy ID (optional):</label>
+                <input type="text" name="advertiser-legacy-id" id="advertiser-legacy-id" class="form-control" />
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="form-group mb-3">
-          <label for="agency">Agency (optional)</label>
-          <input type="text" id="agency" class="form-control" />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="sales-person"><span class="asterick">*</span>Zipcode:</label>
-          <select id="sales-person" class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label for="advertiser-marketcode">Market Code:</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
+        <div class="col-lg-6">
+          <div class="form-group mb-3">
+            <label for="advertiser_website">Website:</label>
+            <input type="text" name="advertiser_website" id="advertiser_website" class="form-control" />
           </div>
 
-          <div class="col-sm-6">
-            <div class="form-group mb-3">
-              <label for="advertiser-legacy-id">Legacy ID (optional):</label>
-              <input type="text" id="advertiser-legacy-id" class="form-control" />
-            </div>
+          <div class="form-group mb-3">
+            <label for="advertiser_billing_email"><i class="fa fa-solid fa-envelope"></i> Billing Email:</label>
+            <input type="text" id="advertiser_billing_email" name="advertiser_billing_email" id="advertiser_billing_email" class="form-control" />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="advertiser_billing_contact"><i class="fa fa-solid fa-envelope"></i> Billing Contact:</label>
+            <input type="text" name="advertiser_billing_contact" id="advertiser_billing_contact" class="form-control" />
           </div>
         </div>
       </div>
 
-      <div class="col-lg-6">
-        <div class="form-group mb-3">
-          <label for="advertiser-website">Website:</label>
-          <input type="text" id="advertiser-website" class="form-control" />
-        </div>
+      <div class="notes-container">
+        <label for="notes">Notes (optional):</label>
+        <div class="border rounded row">
+          <div class="col-sm-6 border-end p-3">
+            <form id="note-form">
+              {% csrf_token %}
+              <div class="form-group mb-3">
+                <label for="note-type">Note Type:</label>
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Open this select menu</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
 
-        <div class="form-group mb-3">
-          <label for="advertiser-billing-email"><i class="fa fa-solid fa-envelope"></i> Billing Email:</label>
-          <input type="text" id="advertiser-billing-email" class="form-control" />
-        </div>
+              <div class="form-group mb-3">
+                <label for="note-text">Note</label>
+                <textarea class="form-control" id="note-text"></textarea>
+              </div>
 
-        <div class="form-group mb-3">
-          <label for="advertiser-billing-contact"><i class="fa fa-solid fa-envelope"></i> Billing Contact:</label>
-          <input type="text" id="advertiser-billing-contact" class="form-control" />
-        </div>
-      </div>
-    </div>
+              <div class="btn-container text-center">
+                <button type="button" id="add-note-btn" class="btn btn-secondary">Add Note</button>
+              </div>
+            </form>
+          </div>
 
-    <div class="notes-container">
-      <label for="notes">Notes (optional):</label>
-      <div class="border rounded row">
-        <div class="col-sm-6 border-end p-3">
-          <form
-            action="
-          "
-          >
-            <div class="form-group mb-3">
-              <label for="note-type">Note Type:</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-
-            <div class="form-group mb-3">
-              <label for="note">Note</label>
-              <textarea class="form-control" id="note"></textarea>
-            </div>
-
-            <div class="btn-container text-center">
-              <button type="submit" class="btn btn-secondary">Add Note</button>
-            </div>
-          </form>
-        </div>
-
-        <div class="col-sm-6 p-3">
-          <!-- Scrolling notes area -->
-          <span>*Notes:</span>
-          <div class="notes-list" style="max-height: 300px; overflow-y: auto">
-            <!-- Example note -->
-            <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
-              <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
-              <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
-            </div>
-
-            <!-- Repeat .note-item bg-secondary-alpha border for each note -->
-            <div class="note-item bg-secondary-alpha border rounded mb-3 p-2">
-              <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
-              <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
-            </div>
+          <div class="col-sm-6 p-3">
+            <!-- Scrolling notes area -->
+            <span>*Notes:</span>
+            <div class="notes-list" id="note-preview-list" style="max-height: 300px; overflow-y: auto"></div>
           </div>
         </div>
       </div>
+
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
     </div>
 
-    <div class="btn-container d-flex justify-content-between mt-5">
-      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
-      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Next <i class="fa fa-solid fa-arrow-right"></i></button>
-    </div>
-  </div>
+    <!-- Review -->
+    <div class="tab review-tab">
+      <div class="tab-description text-center mb-5">
+        <p>Finally, review and if everything looks correct,<br />click the create button</p>
+      </div>
 
-  <!-- Review -->
-  <div class="tab">
-    <div class="tab-description text-center mb-5">
-      <p>Finally, review and if everything looks correct,<br />click the create button</p>
-    </div>
-
-    <div class="row mb-5">
-      <div class="col-lg-6">
-        <div class="border-bottom border-dark mb-3">
-          <h3 class="m-0">Advertiser Info</h3>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-lg-6">
-            <span>Account Type:</span>
-            <p class="mb-0">Business</p>
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <div class="border-bottom border-dark mb-3">
+            <h3 class="m-0">Advertiser Info</h3>
           </div>
 
-          <div class="col-lg-6">
-            <span>Account Type:</span>
-            <p class="mb-0">Business Name Example</p>
-          </div>
-        </div>
+          <div class="row mb-3">
+            <div class="col-lg-6">
+              <span>Account Type:</span>
+              <p id="review-account-type" class="mb-0"></p>
+            </div>
 
-        <div class="row mb-3">
-          <div class="col-lg-6">
-            <span>Address:</span>
+            <div class="col-lg-6">
+              <span>Business Name:</span>
+              <p id="review-business-name" class="mb-0"></p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-lg-6">
+              <span>Address:</span>
+              <p id="review-business-address" class="mb-0"></p>
+              <p class="mb-0">
+                <span id="review-business-city"></span>,
+                <span id="review-business-state"></span>
+                <span id="review-business-zipcode"></span>
+              </p>
+            </div>
+
+            <div class="col-lg-6">
+              <span>Agency:</span>
+              <p id="review-business-agency" class="mb-0"></p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-lg-6">
+              <span>Salesperson:</span>
+              <p id="review-sales-person" class="mb-0"></p>
+            </div>
+
+            <div class="col-lg-6">
+              <span>Market Code:</span>
+              <p id="review-market-code" class="mb-0"></p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-lg-6">
+              <span>Legacy ID:</span>
+              <p id="review-legacy-id" class="mb-0"></p>
+            </div>
+
+            <div class="col-lg-6">
+              <span>Website:</span>
+              <p id="review-business-website" class="mb-0"></p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-lg-6">
+              <span>Billing Email:</span>
+              <p id="review-billing-email" class="mb-0"></p>
+            </div>
+
+            <div class="col-lg-6">
+              <span>Billing Contact:</span>
+              <p id="review-billing-contact" class="mb-0"></p>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <span>Billing Address</span>
             <p class="mb-0">1122 Boogie Woogie Ave.<br />Hampstead, NC 28443</p>
           </div>
 
-          <div class="col-lg-6">
-            <span>Agency:</span>
-            <p class="mb-0"></p>
+          <div class="border-bottom border-dark mb-3">
+            <h3 class="m-0">Advertiser Primary Contact</h3>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-lg-6">
+              <span>First Name:</span>
+              <p id="review-first-name" class="mb-0"></p>
+            </div>
+
+            <div class="col-lg-6">
+              <span>last Name:</span>
+              <p id="review-last-name" class="mb-0"></p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-lg-6">
+              <span>Email:</span>
+              <p id="review-email" class="mb-0"></p>
+            </div>
+
+            <div class="col-lg-6">
+              <span>Phone:</span>
+              <p id="review-phone" class="mb-0"></p>
+            </div>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <div class="col-lg-6">
-            <span>Salesperson:</span>
-            <p class="mb-0"></p>
-          </div>
-
-          <div class="col-lg-6">
-            <span>Market Code:</span>
-            <p class="mb-0"></p>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-lg-6">
-            <span>Biling Email:</span>
-            <p class="mb-0">exampleemail@email.com</p>
-          </div>
-
-          <div class="col-lg-6">
-            <span>Billing Contact:</span>
-            <p class="mb-0">John Henry</p>
-          </div>
-        </div>
-
-        <div class="mb-5">
-          <span>Billing Address</span>
-          <p class="mb-0">1122 Boogie Woogie Ave.<br />Hampstead, NC 28443</p>
-        </div>
-
-        <div class="border-bottom border-dark mb-3">
-          <h3 class="m-0">Advertiser Primary Contact</h3>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-lg-6">
-            <span>First Name:</span>
-            <p class="mb-0">Kyle</p>
-          </div>
-
-          <div class="col-lg-6">
-            <span>last Name:</span>
-            <p class="mb-0">Jernigan</p>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-lg-6">
-            <span>Email:</span>
-            <p class="mb-0">exampleemail@email.com</p>
-          </div>
-
-          <div class="col-lg-6">
-            <span>Phone:</span>
-            <p class="mb-0">(111) 111-0101</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-6">
-        <div class="notes-container">
-          <label for="notes">Notes:</label>
-          <div class="border rounded">
-            <div class="p-3">
-              <!-- Scrolling notes area -->
-              <div class="notes-list" style="max-height: 300px; overflow-y: auto">
-                <!-- Example note -->
-                <div class="note-item border rounded mb-3 p-2">
-                  <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
-                  <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
-                </div>
-
-                <!-- Repeat .note-item border for each note -->
-                <div class="note-item border rounded mb-3 p-2">
-                  <p class="small">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus fugit expedita nisi porro minus nulla, obcaecati earum itaque inventore minima magni alias consequuntur cum maxime velit, voluptas tenetur adipisci blanditiis.</p>
-                  <p class="text-muted small text-end">July 14, 2025 - 9:21 AM</p>
-                </div>
+        <div class="col-lg-6">
+          <div class="review-notes-container">
+            <label for="notes">Notes:</label>
+            <div class="border rounded">
+              <div class="p-3">
+                <!-- Scrolling notes area -->
+                <div class="notes-list" id="review-notes-list" style="max-height: 300px; overflow-y: auto"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="btn-container d-flex justify-content-between">
+        <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button data-step="final" class="btn btn-secondary step-next" type="button">Create <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
     </div>
 
-    <div class="btn-container d-flex justify-content-between">
-      <button class="btn btn-secondary" type="button" id="prevBtn" onclick="nextPrev(-1)"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
-      <button class="btn btn-light border border-dark">Save as Draft</button>
-      <button class="btn btn-secondary" type="button" id="nextBtn" onclick="nextPrev(1)">Create <i class="fa fa-solid fa-arrow-right"></i></button>
-    </div>
-  </div>
+    <!-- Success tab -->
+  </form>
 
-  <!-- Success tab -->
   <div class="tab">
     <div class="tab-description text-center mb-5">
       <p>
@@ -373,5 +365,11 @@
   </div>
 </div>
 
-<script src="{% static 'js/stepform.js' %}"></script>
+<script src="{% static 'js/notes.js' %}"></script>
+<script src="{% static 'js/stepform/stepform.js' %}"></script>
+
+<script src="{% static 'js/stepform/advertisers.js' %}"></script>
+
+<script src="{% static 'js/statesSelect.js' %}"></script>
+
 {% endblock%}

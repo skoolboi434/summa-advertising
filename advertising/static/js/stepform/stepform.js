@@ -53,7 +53,16 @@ document.addEventListener('DOMContentLoaded', function () {
       fixStepIndicator(n);
 
       if (isReviewTab) {
-        populateReview();
+        // Only call this if those fields exist on the page
+        if (typeof populateReview === 'function' && container.querySelector('#review-campaign-name')) {
+          populateReview();
+        }
+
+        if (typeof populateAdvertiserReview === 'function') {
+          populateAdvertiserReview();
+        }
+
+        populateReviewNotes();
       }
     }
 
@@ -80,23 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
       steps.forEach((step, i) => {
         step.classList.toggle('active', i === n);
       });
-    }
-
-    function populateReview() {
-      const nameEl = container.querySelector('#campaign-name');
-      const salesEl = container.querySelector('#sales-contact');
-      const startEl = container.querySelector('#start-date');
-      const endEl = container.querySelector('#end-date');
-      const briefEl = container.querySelector('#brief');
-
-      container.querySelector('#review-campaign-name').textContent = nameEl?.value || '—';
-      container.querySelector('#review-sales-contact').textContent = salesEl?.options[salesEl.selectedIndex]?.text || '—';
-      container.querySelector('#review-start-date').textContent = formatDate(startEl?.value);
-      container.querySelector('#review-end-date').textContent = formatDate(endEl?.value) || '—';
-      container.querySelector('#review-brief').textContent = briefEl?.value?.trim() || '—';
-
-      if (typeof populateReviewAdvertisers === 'function') populateReviewAdvertisers(container);
-      if (typeof populateReviewProducts === 'function') populateReviewProducts(container);
     }
 
     function formatDate(iso) {

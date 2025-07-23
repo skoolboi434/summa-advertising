@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from adCampaigns.models import Account, CompanyContact, AccountNote
+from adCampaigns.models import Account, CompanyContact, AccountNote, AccountType, SalesPerson, MarketCode
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -44,7 +44,10 @@ def advertiser(request, id):
   })
 
 def createAdvertiser(request):
-  return render(request, 'advertisers/createAdvertiser.html')
+  account_types = AccountType.objects.all()
+  sales_persons = SalesPerson.objects.all()
+  market_codes = MarketCode.objects.all()
+  return render(request, 'advertisers/createAdvertiser.html', {'account_types': account_types, 'sales_persons': sales_persons, 'market_codes': market_codes})
 
 @csrf_exempt
 def add_contact(request, id):

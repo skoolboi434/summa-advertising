@@ -76,7 +76,7 @@
             {% for note in notes %}
             <div class="note-item mb-3 p-3 border rounded">
               <div class="mb-2">{{ note.note }}</div>
-              <div class="small text-muted">Created {{ note.timestamp }} by {{ note.user }}</div>
+              <div class="small text-muted">Created <strong>{{ note.timestamp }}</strong> by <strong>{{ note.user }}</strong></div>
             </div>
             {% empty %}
             <p class="text-muted">No notes found for this advertiser.</p>
