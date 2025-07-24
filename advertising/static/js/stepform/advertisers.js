@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
           console.log('Notes synced:', data);
           localStorage.removeItem('advertiserNotes'); // clear localStorage after sync
+          console.log('🧹 advertiserNotes cleared from localStorage');
         });
     }
   }
@@ -99,3 +100,79 @@ function getAdvertiserIdFromURL() {
 function getCSRFToken() {
   return document.querySelector('[name=csrfmiddlewaretoken]').value;
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  const billingFields = document.getElementById('billing-fields');
+  const billingOptions = document.querySelectorAll('input[name="billing_option"]');
+
+  billingOptions.forEach(option => {
+    option.addEventListener('change', function () {
+      if (this.value === 'different') {
+        billingFields.style.display = 'block';
+      } else {
+        billingFields.style.display = 'none';
+      }
+    });
+  });
+});
+
+document.getElementById('create-advertiser-btn').addEventListener(
+  'click',
+  function (event) {
+    event.preventDefault();
+    console.log('📌 create-advertiser-btn clicked');
+    const btn = this;
+    btn.disabled = true; // 🚫 Prevent double-clicks
+    const form = document.getElementById('advertiser-form');
+    const formData = new FormData(form);
+
+    // Append notes from localStorage
+    const notes = JSON.parse(localStorage.getItem('advertiserNotes') || '[]');
+    formData.append('notes_json', JSON.stringify(notes));
+
+    fetch(form.action, {
+      method: 'POST',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+      },
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.removeItem('advertiserNotes');
+          console.log('🧹 advertiserNotes cleared from localStorage');
+
+          // 🔔 Trigger a custom event to update UI
+          const event = new CustomEvent('advertiserCreated', {
+            detail: { advertiser_id: data.advertiser_id }
+          });
+          document.dispatchEvent(event);
+        } else {
+          alert('Error creating advertiser');
+          btn.disabled = false;
+        }
+      })
+
+      .catch(error => {
+        console.error('Error:', error);
+        btn.disabled = false;
+      });
+  },
+  { once: true }
+);
+
+document.addEventListener('advertiserCreated', function (e) {
+  const advertiserId = e.detail.advertiser_id;
+  console.log('🎉 Advertiser created:', advertiserId);
+
+  const link = document.getElementById('view-advertiser-link');
+  if (link) {
+    link.href = `/advertisers/${advertiserId}`;
+    link.style.display = 'inline-block';
+  }
+});
+
+document.getElementById('note-preview-list').innerHTML = '';
+document.getElementById('review-notes-list').innerHTML = '';

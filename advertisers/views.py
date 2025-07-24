@@ -4,7 +4,8 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
-from django.utils.timezone import now
+from django.utils.timezone import now, make_aware
+from datetime import datetime
 
 def index(request):
   advertiser_list = Account.objects.all().order_by('-created_at')
@@ -50,6 +51,7 @@ def createAdvertiser(request):
     industry_codes = IndustryCode.objects.all()
 
     if request.method == 'POST':
+        print("Creating advertiser", datetime.now())
         # Contact Info
         contact_name_first = request.POST.get('advertiser_firstname', '').strip()
         contact_name_last = request.POST.get('advertiser_lastname', '').strip()
@@ -109,10 +111,34 @@ def createAdvertiser(request):
             industry_code=industry_code
         )
 
+        notes_json = request.POST.get('notes_json')
+        if notes_json:
+            try:
+                notes = json.loads(notes_json)
+                for note in notes:
+                    timestamp_str = note.get('timestamp')
+                    try:
+                        naive_ts = datetime.strptime(timestamp_str, "%B %d, %Y at %I:%M %p")
+                        timestamp = make_aware(naive_ts)
+                    except Exception:
+                        timestamp = now()
+
+                    AccountNote.objects.create(
+                        account=new_account,
+                        note=note.get('text', ''),
+                        timestamp=timestamp,
+                        user=request.user.username if request.user.is_authenticated else 'System',
+                        updatedAt=now()
+                    )
+            except json.JSONDecodeError:
+                pass
+
+
         return JsonResponse({'success': True, 'advertiser_id': new_account.id})
         # Make sure this matches your URLconf
 
     return render(request, 'advertisers/createAdvertiser.html', {
+        'advertiser_id': new_account.id if 'new_account' in locals() else None,
         'account_types': account_types,
         'sales_persons': sales_persons,
         'industry_codes': industry_codes,

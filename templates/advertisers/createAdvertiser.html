@@ -383,7 +383,7 @@
     </div>
   </form>
   <!-- Success tab -->
-  <div class="tab success-tab">
+  <div id="success-tab" class="tab success-tab">
     <div class="tab-description text-center mb-5">
       <p>
         Congratulation!<br />
@@ -397,70 +397,14 @@
 
     <div class="btn-container text-center">
       <a href="{% url 'advertisers' %}" class="btn btn-secondary">Return to Advertisers</a>
-      <a href="" class="btn btn-secondary-light">View Advertiser</a>
+      <a id="view-advertiser-link" href="#" class="btn btn-primary" style="display: none">View Advertiser</a>
+
+      {% if advertiser_id %}
+      <a href="{% url 'advertiser' id=advertiser_id %}">View Advertiser</a>
+      {% endif %}
     </div>
   </div>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const billingFields = document.getElementById('billing-fields');
-    const billingOptions = document.querySelectorAll('input[name="billing_option"]');
-
-    billingOptions.forEach(option => {
-      option.addEventListener('change', function () {
-        if (this.value === 'different') {
-          billingFields.style.display = 'block';
-        } else {
-          billingFields.style.display = 'none';
-        }
-      });
-    });
-  });
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const finalButton = document.querySelector('.step-next[data-step="final"]');
-    if (finalButton) {
-      finalButton.addEventListener('click', function () {
-        const form = document.getElementById('advertiser-form');
-        if (form) {
-          form.submit();
-        } else {
-          console.error('Advertiser form not found!');
-        }
-      });
-    }
-  });
-
-  const btn = document.getElementById('create-advertiser-btn');
-
-  btn.addEventListener('click', function (e) {
-    e.preventDefault(); // <-- just in case
-
-    const form = document.getElementById('advertiser-form');
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-      method: 'POST',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-      },
-      body: formData
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          showTab(tabs.length - 1); // move to success tab
-        } else {
-          alert('Error creating advertiser');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  });
-</script>
 
 <script src="{% static 'js/notes.js' %}"></script>
 <script src="{% static 'js/stepform/stepform.js' %}"></script>

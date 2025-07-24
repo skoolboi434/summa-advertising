@@ -11,19 +11,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     showTab(currentTab);
 
-    // Button listeners
+    // 👉 STEP BUTTONS
     container.querySelectorAll('.step-next').forEach(btn => {
       btn.addEventListener('click', function () {
         const isFinal = btn.dataset.step === 'final';
 
         if (isFinal) {
+          // Let the fetch() logic handle advertiser creation
           document.getElementById('selected-advertisers').value = JSON.stringify(window.selectedAdvertisers || []);
           document.getElementById('selected-products').value = JSON.stringify(window.selectedProducts || []);
-
-          // Submit the form
-          form.submit();
+          return; // ❌ Do not move forward here
         } else {
-          nextPrev(1);
+          nextPrev(1); // Normal next
         }
       });
     });
@@ -32,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
       btn.addEventListener('click', () => nextPrev(-1));
     });
 
+    // 👉 DISPLAY TABS
     function showTab(n) {
       tabs.forEach((tab, i) => {
         tab.style.display = i === n ? 'block' : 'none';
@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const isReviewTab = tabs[n].classList.contains('review-tab');
 
       container.querySelectorAll('.step-next').forEach(btn => {
-        // If this button is not marked as the final one, update its text
         if (!btn.dataset.step || btn.dataset.step !== 'final') {
           btn.textContent = isReviewTab ? 'Create' : 'Next';
         }
@@ -53,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
       fixStepIndicator(n);
 
       if (isReviewTab) {
-        // Only call this if those fields exist on the page
         if (typeof populateReview === 'function' && container.querySelector('#review-campaign-name')) {
           populateReview();
         }
@@ -64,8 +62,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         populateReviewNotes();
       }
+
+      if (n === tabs.length - 1) {
+        localStorage.removeItem('advertiserNotes');
+        console.log('🧼 Cleared localStorage from showTab fallback');
+      }
     }
 
+    // 👉 NEXT/PREV LOGIC
     function nextPrev(n) {
       tabs[currentTab].style.display = 'none';
 
@@ -77,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       currentTab += n;
 
-      // ✅ Show the success tab *after* the form is submitted
       if (currentTab >= tabs.length) {
         return false;
       }
@@ -85,11 +88,19 @@ document.addEventListener('DOMContentLoaded', function () {
       showTab(currentTab);
     }
 
+    // 👉 STEP INDICATORS
     function fixStepIndicator(n) {
       steps.forEach((step, i) => {
         step.classList.toggle('active', i === n);
       });
     }
+
+    // 👉 LISTEN FOR advertiserCreated CUSTOM EVENT
+    document.addEventListener('advertiserCreated', function (e) {
+      console.log('🎉 Advertiser created:', e.detail.advertiser_id);
+      currentTab = tabs.length - 1;
+      showTab(currentTab);
+    });
 
     function formatDate(iso) {
       if (!iso) return '';

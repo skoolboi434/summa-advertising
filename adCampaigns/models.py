@@ -212,6 +212,9 @@ class AccountNote(models.Model):
     user = models.CharField(max_length=100)
     updatedAt = models.DateTimeField()
 
+    def __str__(self):
+        return f"Note for {self.advertiser.name}"
+
     class Meta:
         db_table = 'advertising_accountnote'  # adjust if your table is named differently
         managed = False  # do not let Django manage this table
