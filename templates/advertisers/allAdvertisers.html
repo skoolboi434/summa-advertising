@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}{% load static %} {% block content %}
 <div class="heading-container text-center my-5">
   <h3 class="heading">Advertisers</h3>
 </div>
@@ -9,44 +9,44 @@
       <a href="{% url 'createAdvertiser' %}" target="_blank" class="btn btn-secondary"><i class="fa fa-solid fa-plus"></i> New Advertiser</a>
     </div>
 
-    <div class="form-group d-flex align-items-center">
-      <label class="w-50" for="inputEmail3">Sort By:</label>
-      <select name="" id="" class="form-select">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+    <div class="form-group d-flex align-items-center mb-3">
+      <label class="w-50" for="advertiser-filter">Sort By:</label>
+      <select class="form-select table-filter" data-table="advertiser-table" id="advertiser-filter">
+        <option value="recent">Recently Added</option>
+        <option value="name">Business Name (A-Z)</option>
+        <option value="name-desc">Business Name (Z-A)</option>
+        <option value="contact">Contact Name (A-Z)</option>
       </select>
     </div>
   </div>
 
   <div class="has-search">
-    <input class="form-control" type="text" name="" placeholder="Search Advertisers" />
+    <input class="form-control table-search" type="text" name="" placeholder="Search Advertisers" data-table="advertiser-table" />
   </div>
 </div>
 
 <div class="table-container">
-  <table class="table">
+  <table id="advertiser-table" class="table">
     <thead>
       <tr>
         <th scope="col">ID#</th>
         <th scope="col">Business Name</th>
         <th scope="col">Contact</th>
         <th scope="col">Account Type</th>
-        <th scope="col">Market Code</th>
+        <th scope="col">Industry Code</th>
         <th scope="col">Submitter</th>
         <th scope="col">Billing Contact</th>
       </tr>
     </thead>
     <tbody>
       {% for advertiser in page_obj %}
-      <tr>
-        <td><a href="{% url 'advertiser' advertiser.id %}">{{advertiser.id }}</a></td>
+      <tr data-name="{{ advertiser.name|lower }}" data-contact="{{ advertiser.contact_name|lower }}" data-created="{{ advertiser.id }}">
+        <td><a href="{% url 'advertiser' advertiser.id %}">#{{advertiser.id }}</a></td>
         <td>{{advertiser.name }}</td>
-        <td>{{ advertiser.contact_name|default:"—" }}</td>
+        <td>{{advertiser.contact_name|default:"—" }}</td>
         <td>{{advertiser.account_type }}</td>
         <td>{{advertiser.industry_code }}</td>
-        <td>{{advertiser.submitter }}</td>
+        <td>{{advertiser.contact_name }}</td>
         <td>{{advertiser.sales_person }}</td>
       </tr>
       {% endfor %}
@@ -101,5 +101,8 @@
     {% endif %}
   </ul>
 </nav>
+
+<script src="{% static 'js/tableSearch.js' %}"></script>
+<script src="{% static 'js/tableFilter.js' %}"></script>
 
 {% endblock%}

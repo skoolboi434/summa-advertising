@@ -10,8 +10,8 @@
 
   <div class="actions-container d-flex justify-content-between mb-3">
     <div class="btn-container">
-      <button class="btn btn-light"><i class="fa fa-solid fa-plus"></i> Start Campaign</button>
-      <button class="btn btn-secondary">View All Campaigns</button>
+      <a href="{% url 'createCampaign' %}" target="_blank" class="btn btn-light"><i class="fa fa-solid fa-plus"></i> Start Campaign</a>
+      <a href="{% url 'adCampaigns' %}" target="_blank" class="btn btn-secondary">View All Campaigns</a>
     </div>
 
     <div class="has-search"><input type="text" name="" id="" class="form-control" placeholder="Search" /></div>
@@ -23,7 +23,6 @@
         <tr>
           <th scope="col">Account #</th>
           <th scope="col">Name</th>
-          <th scope="col">Advertiser</th>
           <th scope="col">Start Date</th>
           <th scope="col">End Date</th>
           <th scope="col">Created By</th>
@@ -32,27 +31,17 @@
         </tr>
       </thead>
       <tbody>
+        {% for campaign in page_obj %}
         <tr>
-          <td>00001</td>
-          <td>Valentines Day Ads</td>
-          <td>Walmart</td>
-          <td>01/8/2024</td>
-          <td>02/14/2024</td>
-          <td>Travis Davis</td>
-          <td>Jeff Goldblum</td>
-          <td>$120.00</td>
+          <td><a href="{% url 'adCampaign' campaign.id %}">#{{campaign.id }}</a></td>
+          <td class="text-capitalize">{{campaign.campaign_name }}</td>
+          <td>{{campaign.start_date }}</td>
+          <td>{{campaign.end_date }}</td>
+          <td>{{campaign.advertiser_name }}</td>
+          <td>{{campaign.sales_contact }}</td>
+          <td>${{campaign.total_campaign }}</td>
         </tr>
-
-        <tr>
-          <td>18291</td>
-          <td>4th of July</td>
-          <td>BlackCat Fireworks</td>
-          <td>6/15/2024</td>
-          <td>7/4/2024</td>
-          <td>Kyle Jernigan</td>
-          <td>Gob Bluth</td>
-          <td>$130.42</td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
