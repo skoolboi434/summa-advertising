@@ -15,6 +15,7 @@ def adminPubSetup(request):
 # Admin Account Routes
 def adminAccounts(request):
     accountTypes = AccountType.objects.all().order_by('-id')  # Show newest first
+    roles = Role.objects.all().order_by('-id')
     paginator = Paginator(accountTypes, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -34,7 +35,8 @@ def adminAccounts(request):
             print("⚠️ Name or code missing. Not creating.")
 
     return render(request, 'admin/accounts.html', {
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'roles': roles,
     })
 
 

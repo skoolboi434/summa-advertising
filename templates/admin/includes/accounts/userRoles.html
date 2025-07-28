@@ -3,7 +3,7 @@
     <button type="button" class="btn btn-secondary"><i class="fa fa-solid fa-plus"></i> New Role</button>
   </div>
   <div class="form-group has-search">
-    <input type="text" class="form-control table-search" placeholder="Search..." data-table="account-type-table" />
+    <input type="text" class="form-control table-search" placeholder="Search..." data-table="user-roles-table" />
     <span class="fa fa-search form-control-feedback"></span>
   </div>
 </div>
@@ -11,7 +11,7 @@
 <div class="filters d-flex align-items-center pt-3"><a href="" class="active">Active</a>&nbsp;|&nbsp;<a href="">Inactive</a>&nbsp;|&nbsp;<a href="">Archived</a></div>
 
 <div class="table-container">
-  <table id="users-table" class="table">
+  <table id="user-roles-table" class="table">
     <thead>
       <tr>
         <th scope="col">Role ID</th>
@@ -23,14 +23,16 @@
       </tr>
     </thead>
     <tbody>
+      {% for role in roles %}
       <tr>
-        <td>#00001</td>
-        <td>Ad Taker</td>
+        <td>#{{role.id}}</td>
+        <td>{{role.description}}</td>
         <td>ADTAKER23</td>
         <td>Kyle Jernigan</td>
         <td>Active</td>
         <td><i class="fa fa-solid fa-pen me-3"></i><i class="fa fa-solid fa-envelope-open"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
