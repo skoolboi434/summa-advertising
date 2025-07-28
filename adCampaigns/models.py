@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
+from django.utils import timezone
 
 class AdvertisingCampaignSummary(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -135,6 +136,8 @@ class Account(models.Model):
 class AccountType(models.Model):
     code = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
+    status = models.ForeignKey('adAdmin.Status', on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.name

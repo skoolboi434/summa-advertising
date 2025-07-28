@@ -16,3 +16,12 @@ class Region(models.Model):
         db_table = 'advertising_region'
 
 
+class Status(models.Model):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'advertising_status'  # matches your manual table name
+
+    def __str__(self):
+        return self.name
+

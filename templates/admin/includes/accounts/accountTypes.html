@@ -17,7 +17,7 @@
         <th scope="col">ID#</th>
         <th scope="col">Account Type</th>
         <th scope="col">Type Code</th>
-        <th scope="col">Created By</th>
+        <th scope="col">Created On</th>
         <th scope="col">Status</th>
         <th></th>
       </tr>
@@ -28,8 +28,8 @@
         <td>#{{accountType.id }}</td>
         <td>{{accountType.name }}</td>
         <td>{{accountType.code }}</td>
-        <td>Kyle Jernigan</td>
-        <td>{{accountType.status }}</td>
+        <td>{{ accountType.created_at|date:"M d, Y" }}</td>
+        <td>{{ accountType.status.name }}</td>
         <td><i class="fa fa-solid fa-pen me-3 color-secondary"></i><i class="fa fa-solid fa-envelope-open color-secondary"></i></td>
       </tr>
       {% endfor %}

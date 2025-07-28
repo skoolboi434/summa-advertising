@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}{% load static %} {% block content %}
 
 <div class="heading-container text-center my-5">
   <h3 class="heading mb-3">Welcome To Your Admin Portal</h3>
@@ -60,5 +60,7 @@
     </div>
   </div>
 </div>
+
+<script src="{% static 'js/multistep.js' %}"></script>
 
 {% endblock%}

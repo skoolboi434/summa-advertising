@@ -19,6 +19,17 @@ body {
   color: #c10;
 }
 
+.pagination {
+  .page-item.active .page-link {
+    background-color: $secondary;
+    border-color: $secondary;
+  }
+
+  .page-link {
+    color: $secondary;
+  }
+}
+
 label {
   .fa {
     color: $primary;

@@ -1796,7 +1796,7 @@
 
 .main-content {
   margin-left: 0;
-  padding: 20px;
+  padding: 60px 20px 20px 20px;
   transition: none;
 }
 
@@ -1879,6 +1879,14 @@ body {
 
 .asterisk {
   color: #c10;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #21215f;
+  border-color: #21215f;
+}
+.pagination .page-link {
+  color: #21215f;
 }
 
 label .fa {
