@@ -1,6 +1,6 @@
 <div class="actions-container d-flex justify-content-between border-bottom border-dark pb-1">
   <div class="btn-container">
-    <button type="button" class="btn btn-secondary"><i class="fa fa-solid fa-plus"></i> New Account Type</button>
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#newAccountTypeModal"><i class="fa fa-solid fa-plus"></i> New Account Type</button>
   </div>
   <div class="form-group has-search">
     <input type="text" class="form-control table-search" placeholder="Search..." data-table="account-type-table" />
@@ -11,7 +11,7 @@
 <div class="filters d-flex align-items-center pt-3"><a href="" class="active">Active</a>&nbsp;|&nbsp;<a href="">Inactive</a>&nbsp;|&nbsp;<a href="">Archived</a></div>
 
 <div class="table-container">
-  <table id="users-table" class="table">
+  <table id="account-type-table" class="table">
     <thead>
       <tr>
         <th scope="col">ID#</th>
@@ -23,14 +23,64 @@
       </tr>
     </thead>
     <tbody>
+      {% for accountType in page_obj %}
       <tr>
-        <td>#00001</td>
-        <td>CHAIN</td>
-        <td>CHAIN112</td>
+        <td>#{{accountType.id }}</td>
+        <td>{{accountType.name }}</td>
+        <td>{{accountType.code }}</td>
         <td>Kyle Jernigan</td>
-        <td>Active</td>
-        <td><i class="fa fa-solid fa-pen me-3"></i><i class="fa fa-solid fa-envelope-open"></i></td>
+        <td>{{accountType.status }}</td>
+        <td><i class="fa fa-solid fa-pen me-3 color-secondary"></i><i class="fa fa-solid fa-envelope-open color-secondary"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
+
+<nav aria-label="Page navigation" class="mt-4">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page=1" aria-label="First">
+        <span aria-hidden="true">&laquo;&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link" aria-hidden="true">&laquo;&laquo;</span>
+    </li>
+    <li class="page-item disabled">
+      <span class="page-link" aria-hidden="true">&laquo;</span>
+    </li>
+    {% endif %}
+
+    <li class="page-item active">
+      <span class="page-link"> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} </span>
+    </li>
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+        <span aria-hidden="true">&raquo;&raquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <span class="page-link" aria-hidden="true">&raquo;</span>
+    </li>
+    <li class="page-item disabled">
+      <span class="page-link" aria-hidden="true">&raquo;&raquo;</span>
+    </li>
+    {% endif %}
+  </ul>
+</nav>

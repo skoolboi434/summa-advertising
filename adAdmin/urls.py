@@ -7,4 +7,6 @@ urlpatterns = [
   path('admingeneral', views.adminGeneral, name='adminGeneral'),
   path('adminaccounts', views.adminAccounts, name='adminAccounts'),
   path('admingeneral/newpublication/', views.adminPubSetup, name='adminPubSetup'),
+  path('newuser/', views.createUser, name='createUser'),
+  
 ]
