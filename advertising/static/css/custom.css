@@ -1730,6 +1730,9 @@
   z-index: 1100;
   transition: left 0.3s ease;
 }
+.top-bar .navbar-custom-menu .navbar-nav .dropdown .dropdown-toggle {
+  color: #fff;
+}
 
 #sidebar {
   height: 100%;
@@ -1869,6 +1872,37 @@ body:not(.open-sidebar) .inner-nav {
   display: block;
 }
 
+.classified-item {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  font-family: "Lato";
+  border-radius: 4px;
+}
+.classified-item .classified-heading-container {
+  background-image: linear-gradient(#eeebe5 90%, #ffffff);
+  color: #000;
+  text-align: center;
+}
+.classified-item .classified-heading-container .heading {
+  font-size: 24px;
+}
+.classified-item .classified-heading-container .pub-date {
+  font-size: 16px;
+}
+.classified-item .classified-description {
+  font-size: 16px;
+  line-height: 1.1;
+  padding: 20px;
+}
+.classified-item .btn-container .btn {
+  width: 100%;
+  max-width: 200px;
+  padding: 5px 15px;
+  font-size: 12px;
+}
+
 body {
   background: linear-gradient(to bottom, #f3f3f3 60%, rgba(33, 33, 95, 0.3) 40%);
   background-attachment: fixed;
@@ -1891,6 +1925,10 @@ body {
 
 label .fa {
   color: #f26722;
+}
+
+.flatpickr-calendar {
+  margin: 10px auto 0 auto;
 }
 
 .form-check-star i {

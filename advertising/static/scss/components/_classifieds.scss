@@ -1,0 +1,38 @@
+.classified-item {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  font-family: 'Lato';
+  border-radius: 4px;
+
+  .classified-heading-container {
+    background-image: linear-gradient(#eeebe5 90%, #ffffff);
+
+    color: $black;
+    text-align: center;
+
+    .heading {
+      font-size: 24px;
+    }
+
+    .pub-date {
+      font-size: 16px;
+    }
+  }
+
+  .classified-description {
+    font-size: 16px;
+    line-height: 1.1;
+    padding: 20px;
+  }
+
+  .btn-container {
+    .btn {
+      width: 100%;
+      max-width: 200px;
+      padding: 5px 15px;
+      font-size: 12px;
+    }
+  }
+}

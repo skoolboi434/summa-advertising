@@ -30,7 +30,17 @@
         <td>{{accountType.code }}</td>
         <td>{{ accountType.created_at|date:"M d, Y" }}</td>
         <td>{{ accountType.status.name }}</td>
-        <td><i class="fa fa-solid fa-pen me-3 color-secondary"></i><i class="fa fa-solid fa-envelope-open color-secondary"></i></td>
+        <td>
+          {% if can_edit_account_type %}
+          <a href="{% url 'accounttype_edit' accountType.id %}">
+            <i class="fa fa-solid fa-pen me-3 color-secondary"></i>
+          </a>
+          {% endif %} {% if can_delete_account_type %}
+          <a href="{% url 'accounttype_delete' accountType.id %}">
+            <i class="fa fa-solid fa-trash color-secondary"></i>
+          </a>
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </tbody>

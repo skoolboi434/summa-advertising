@@ -19,29 +19,22 @@
         <th scope="col">Role</th>
         <th scope="col">Email</th>
         <th scope="col">Phone</th>
-        <th scope="col">Added By</th>
+        <th scope="col">Added On</th>
         <th scope="col">Status</th>
       </tr>
     </thead>
     <tbody>
+      {% for user in users %}
       <tr>
-        <td>#11112</td>
-        <td>Gail Lewis</td>
-        <td>Admin</td>
-        <td>emailexample@email.com</td>
-        <td>(111) 111 1111</td>
-        <td>Kyle Jernigan</td>
-        <td>Active</td>
+        <td><a href="{% url 'userProfile' user.id %}">#{{user.id }}</a></td>
+        <td>{{user.first_name }} {{user.last_name}}</td>
+        <td>{{user.role.description}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.phone}}</td>
+        <td>{{user.created_at|date:"M d, Y" }}</td>
+        <td>{{user.status.name }}</td>
       </tr>
-      <tr>
-        <td>#12122</td>
-        <td>Ben Bean</td>
-        <td>User</td>
-        <td>emailexample2@email.com</td>
-        <td>(222) 222 2222</td>
-        <td>Kyle Jernigan</td>
-        <td>Active</td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

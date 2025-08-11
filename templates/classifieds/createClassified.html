@@ -1,0 +1,210 @@
+{% extends 'base.html' %}{% load static %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading">New Classified Ad</h3>
+</div>
+
+<div class="stepform">
+  <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+    <div class="step active">
+      <div class="text">
+        <span class="number">1</span>
+        <span class="title">Customer Info</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">2</span>
+        <span class="title">The Basics</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">3</span>
+        <span class="title">Scheduler</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">4</span>
+        <span class="title">Ad Content</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">5</span>
+        <span class="title">Billing Info and Review</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Steps container -->
+  <form id="classified-form" action="{% url 'createClassified' %}" method="POST">
+    {% csrf_token %}
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Search for a returning customer or<br />enter a new one below</p>
+      </div>
+
+      <div class="has-search d-flex align-items-center w-50 mx-auto mb-5">
+        <input class="form-control" type="text" name="" placeholder="Search for an existing customer..." />
+      </div>
+
+      <div class="w-50 mx-auto">
+        <div class="form-group mb-3">
+          <label for="firstName"><span class="asterisk">*</span>First Name:</label>
+          <input type="text" name="firstName" id="firstName" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="lastName"><span class="asterisk">*</span>Last Name:</label>
+          <input type="text" name="lastName" id="lastName" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="email"><span class="asterisk">*</span>Last Name:</label>
+          <input type="email" name="email" id="email" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone"><span class="asterisk">*</span>Phone Number:</label>
+          <input type="text" name="phone" id="phone" class="form-control" />
+        </div>
+      </div>
+
+      <div class="btn-container d-flex justify-content-end mt-5">
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- The Basics -->
+
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Select the pub, classified type,<br />category and sales rep for the order.</p>
+      </div>
+
+      <div class="w-50 mx-auto">
+        <div class="form-group mb-3">
+          <label for="publicationSelect"><span class="asterisk">*</span>Publication:</label>
+          <select name="publicationSelect" id="publicationSelect" class="form-select"></select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="classifiedType"><span class="asterisk">*</span>Classified Type:</label>
+          <select name="classifiedType" id="classifiedType" class="form-select"></select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="category"><span class="asterisk">*</span>Category:</label>
+          <select name="category" id="category" class="form-select"></select>
+        </div>
+
+        <div class="form-group">
+          <label for="salesRep"><span class="asterisk">*</span>Sales Rep:</label>
+          <select name="salesRep" id="salesRep" class="form-select"></select>
+        </div>
+      </div>
+
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Scheduler -->
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Next, select the start and end date of<br />the publication</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 col-lg-6 mb-5 mb-md-0">
+          <div class="form-group">
+            <label for="start_date">Start</label>
+            <input type="text" id="start_date" class="form-control" name="start_date" />
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-6">
+          <div class="form-group">
+            <label for="end_date">End</label>
+            <input type="text" id="end_date" class="form-control" name="end_date" />
+          </div>
+        </div>
+      </div>
+
+      <p class="text-center mt-5">
+        *Note that for print publications, your ad will appear on the day(s) that publication<br />
+        is published on during the schedule you set
+      </p>
+
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Ad Content -->
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Write out the content of the ad and add<br />any photos</p>
+      </div>
+
+      <div class="alert-container"></div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-6">
+            <div class="form-group mb-4">
+              <label for="title"><span class="asterisk">*</span>Title</label>
+              <div class="d-flex align-items-center">
+                <input id="classified_title" class="form-control" type="text" placeholder="Enter Your Title Here" name="classified_title" />
+              </div>
+            </div>
+
+            <div class="form-group mb-5">
+              <label for="description">Ad Builder</label>
+              <textarea id="classified_description" class="form-control" placeholder="This is where you'll write out and style everything about your ad using the tools above..." name="classified_description" rows="10"></textarea>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-lg-6">
+            <label for="description">Classified Preview</label>
+            <div class="classified-item border border-dark">
+              <div class="classified-heading-container">
+                <h3 id="preview_title">Classified Title</h3>
+              </div>
+              <div class="classified-description">
+                <p id="preview_description">This is where you'll write out and style everything about your ad using the tools above...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="{% static 'js/stepform/stepform.js' %}"></script>
+<script src="{% static 'js/flatPickerScript.js' %}"></script>
+
+{% endblock%}

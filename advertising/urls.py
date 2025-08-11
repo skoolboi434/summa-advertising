@@ -5,6 +5,7 @@ import adCampaigns.urls
 import advertisers.urls
 import users.urls
 import adAdmin.urls
+import classifieds.urls
 
 
 
@@ -14,5 +15,6 @@ urlpatterns = [
     path('advertisers/', include(advertisers.urls)),
     path('users/', include(users.urls)),
     path('adminportal/', include(adAdmin.urls)),
+    path('classifieds/', include(classifieds.urls)),
     path('admin/', admin.site.urls),
 ]

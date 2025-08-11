@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'advertisers.apps.AdvertisersConfig',
     'users.apps.UsersConfig',
     'adAdmin.apps.AdadminConfig',
+    'classifieds.apps.ClassifiedsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

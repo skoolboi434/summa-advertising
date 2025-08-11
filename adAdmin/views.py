@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Role, Region, Status
-from users.models import AdvertisingUser
 from adCampaigns.models import Publication, AccountType
+from users.models import AdvertisingUser
 from django.core.paginator import Paginator
 from django.utils.timezone import now
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -17,8 +18,10 @@ def adminPubSetup(request):
   return render(request, 'admin/pubs/newPublication.html')
 
 # Admin Account Routes
+
 def adminAccounts(request):
-    accountTypes = AccountType.objects.all().order_by('-id')  # Show newest first
+    accountTypes = AccountType.objects.all().order_by('-id')
+    users = AdvertisingUser.objects.all().order_by('-id')
     roles = Role.objects.all().order_by('-id')
     paginator = Paginator(accountTypes, 10)
     page_number = request.GET.get('page')
@@ -41,11 +44,17 @@ def adminAccounts(request):
             return redirect('adminAccounts')
         else:
             print("⚠️ Name or code missing. Not creating.")
+    
+    can_edit_account_type = request.user.has_perm('adAdmin.change_accounttype')
+    can_delete_account_type = request.user.has_perm('adAdmin.delete_accounttype')
 
     return render(request, 'admin/accounts.html', {
         'page_obj': page_obj,
         'roles': roles,
-        'statuses': statuses
+        'statuses': statuses,
+        'users': users,
+        'can_edit_account_type': can_edit_account_type,
+        'can_delete_account_type': can_delete_account_type,
     })
 
 def createUser(request):

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}{% load static %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading">Classifieds</h3>
+</div>
+
+<div class="actions-container d-flex justify-content-between border-bottom border-dark pb-2 mb-3">
+  <div class="add-sort-container d-flex align-items-end">
+    <div class="btn-container me-3">
+      <a href="{% url 'createClassified' %}" target="_blank" class="btn btn-secondary"><i class="fa fa-solid fa-plus"></i> New Classified</a>
+    </div>
+
+    <div class="form-group me-3">
+      <label class="w-50" for="classified-region-filter">Regions:</label>
+      <select class="form-select table-filter" data-table="classified-table" id="classified-filter">
+        <option value="recent">Recently Added</option>
+        <option value="name">Business Name (A-Z)</option>
+        <option value="name-desc">Business Name (Z-A)</option>
+        <option value="contact">Contact Name (A-Z)</option>
+      </select>
+    </div>
+
+    <div class="form-group me-3">
+      <label class="w-50" for="classified-publication-filter">Publications:</label>
+      <select class="form-select table-filter" data-table="classified-table" id="classified-filter">
+        <option value="recent">Recently Added</option>
+        <option value="name">Business Name (A-Z)</option>
+        <option value="name-desc">Business Name (Z-A)</option>
+        <option value="contact">Contact Name (A-Z)</option>
+      </select>
+    </div>
+
+    <div class="form-group me-3">
+      <label class="w-75" for="classified-type-filter">Classified Type:</label>
+      <select class="form-select table-filter" data-table="classified-table" id="classified-type-filter">
+        <option value="recent">Recently Added</option>
+        <option value="name">Business Name (A-Z)</option>
+        <option value="name-desc">Business Name (Z-A)</option>
+        <option value="contact">Contact Name (A-Z)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="has-search d-flex align-items-end">
+    <input class="form-control table-search" type="text" name="classified-table-search" placeholder="Search Classifieds" data-table="classified-table" />
+  </div>
+</div>
+
+<div class="table-container">
+  <table id="classified-table" class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Customer</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone #</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">Classified Type</th>
+        <th scope="col">Status</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for classifiedAd in page_obj %}
+      <tr data-name="{{ classifiedAd.name|lower }}" data-contact="{{ classifiedAd.contact_name|lower }}" data-created="{{ classifiedAd.id }}">
+        <td><a href="">#{{classifiedAd.id }}</a></td>
+        <td>{{classifiedAd.name|default:"—" }}</td>
+        <td>{{classifiedAd.firstName }} {{classifiedAd.lastName }}</td>
+        <td>{{classifiedAd.email|default:"—" }}</td>
+        <td>{{classifiedAd.phone|default:"—" }}</td>
+        <td>{{classifiedAd.start_date|default:"—" }}</td>
+        <td>{{classifiedAd.classification.name|default:"—" }}</td>
+        <td>{{classifiedAd.status }}</td>
+        <td>${{classifiedAd.price }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock%}
