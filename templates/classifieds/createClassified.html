@@ -223,14 +223,15 @@
 
         <div class="form-group mb-3 w-50">
           <label for="wordCount">Increase Word Count:</label>
-          <select name="wordCount" id="wordCount" class="form-select">
+          <select name="ppom[fields][addon_word_count_increase]" class="form-select">
             <option value="">Select an option</option>
-            <option value="35">Increase by 35 words [+10.00]</option>
-            <option value="75">Increase by 75 words [+20.00]</option>
+            {% for option in word_count_options %}
+            <option value="{{ option.label }}" data-price="{{ option.price }}">{{ option.label }} [+{{ option.price }}]</option>
+            {% endfor %}
           </select>
         </div>
 
-        <div id="ppom-file-container-classified_image" class="form-group ppom-input-classified_image">
+        <!-- <div id="ppom-file-container-classified_image" class="form-group ppom-input-classified_image">
           <label class="form-control-label" for="classified_image"> Classified Image - <span class="woocommerce-Price-amount amount">$10.00</span> </label>
 
           <div class="ppom-file-container text-center border rounded p-5 d-flex flex-column" style="height: auto">
@@ -241,7 +242,14 @@
           <div id="filelist-classified_image" class="filelist classified_image"></div>
 
           <input id="html5_1j2bav3ik1c2tnlb16hp1eq91v303" type="file" multiple accept="image/jpeg,.jpg,.png,.pdf,.zip" />
-        </div>
+        </div> -->
+
+        <select name="additional_publications" id="additional_publications" class="form-select">
+          <option value="">Select additional Pub</option>
+          {% for addon in additional_pub_options %} {% if addon.publication %}
+          <option value="{{ addon.publication.id }}">{{ addon.publication.name }} [+${{ addon.price }}]</option>
+          {% endif %} {% endfor %}
+        </select>
       </div>
       <div class="btn-container d-flex justify-content-between mt-5">
         <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>

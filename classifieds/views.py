@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from .models import ClassifiedAd, Classification
+from .models import ClassifiedAd, Classification, ProductAddon
 from adAdmin.models import Publication, SalesPerson, Customer
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+import requests
+from requests.auth import HTTPBasicAuth
 
 
 def index(request):
@@ -22,35 +24,55 @@ def index(request):
 
 
 def createClassified(request):
-  pub_list = Publication.objects.all()
-  classification_list = Classification.objects.all()
-  sales_person_list = SalesPerson.objects.all()
-  customers = Customer.objects.all()
-  return render(request, 'classifieds/createClassified.html', {
-    'pub_list': pub_list,
-    'classification_list': classification_list,
-    'sales_person_list': sales_person_list,
-    "customers": customers
-  })
+    pub_list = Publication.objects.all()
+    classification_list = Classification.objects.all()
+    sales_person_list = SalesPerson.objects.all()
+    customers = Customer.objects.all()
 
-def search_customers(request):
-    q = request.GET.get("q", "").strip()
-    customers = Customer.objects.filter(
-        models.Q(first_name__icontains=q) |
-        models.Q(last_name__icontains=q) |
-        models.Q(company_1__icontains=q) |
-        models.Q(company_2__icontains=q)
-    )[:20]
+    # Get all active addons for each type
+    word_count_options = ProductAddon.objects.filter(
+        addon_type='word_count', is_active=True
+    ).values('label', 'price')
 
-    return JsonResponse({
-        "results": [
-            {
-                "id": c.id,
-                "first_name": c.first_name,
-                "last_name": c.last_name,
-                "email": c.email,
-                "phone": c.phone,
-            }
-            for c in customers
-        ]
+    additional_pub_options = ProductAddon.objects.filter(
+        addon_type='additional_publication', is_active=True
+    ).select_related('publication')
+
+
+    return render(request, 'classifieds/createClassified.html', {
+        'pub_list': pub_list,
+        'classification_list': classification_list,
+        'sales_person_list': sales_person_list,
+        "customers": customers,
+        "word_count_options": word_count_options,
+        "additional_pub_options": additional_pub_options
     })
+
+
+
+
+
+
+
+# def search_customers(request):
+#     q = request.GET.get("q", "").strip()
+#     customers = Customer.objects.filter(
+#         models.Q(first_name__icontains=q) |
+#         models.Q(last_name__icontains=q) |
+#         models.Q(company_1__icontains=q) |
+#         models.Q(company_2__icontains=q)
+#     )[:20]
+
+#     return JsonResponse({
+#         "results": [
+#             {
+#                 "id": c.id,
+#                 "first_name": c.first_name,
+#                 "last_name": c.last_name,
+#                 "email": c.email,
+#                 "phone": c.phone,
+#             }
+#             for c in customers
+#         ]
+#     })
+
