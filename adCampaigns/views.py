@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import AdvertisingCampaignSummary, SalesPerson, Account
+from .models import AdvertisingCampaignSummary
+from adAdmin.models import SalesPerson, Account
 from django.db.models import Q
 from django.http import JsonResponse
 from .forms import AdCampaignForm

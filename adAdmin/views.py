@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Role, Region, Status
-from adCampaigns.models import Publication, AccountType
+from .models import Role, Region, Status, AccountType, Publication
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
 from django.utils.timezone import now
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 
 def index(request):

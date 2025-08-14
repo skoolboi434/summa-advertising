@@ -58,11 +58,17 @@
         <p>Search for a returning customer or<br />enter a new one below</p>
       </div>
 
-      <div class="has-search d-flex align-items-center w-50 mx-auto mb-5">
-        <input class="form-control" type="text" name="" placeholder="Search for an existing customer..." />
-      </div>
-
       <div class="w-50 mx-auto">
+        <div class="form-group mb-3">
+          <label for="customerSelect">Existing Customer:</label>
+          <select id="customerSelect" class="form-select">
+            <option value="">-- Select an Existing Customer --</option>
+            {% for customer in customers %}
+            <option value="{{ customer.id }}" data-firstname="{{ customer.first_name }}" data-lastname="{{ customer.last_name }}" data-email="{{ customer.email }}" data-phone="{{ customer.phone }}">{{ customer.first_name }} {{ customer.last_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
         <div class="form-group mb-3">
           <label for="firstName"><span class="asterisk">*</span>First Name:</label>
           <input type="text" name="firstName" id="firstName" class="form-control" />
@@ -74,7 +80,7 @@
         </div>
 
         <div class="form-group mb-3">
-          <label for="email"><span class="asterisk">*</span>Last Name:</label>
+          <label for="email"><span class="asterisk">*</span>Email:</label>
           <input type="email" name="email" id="email" class="form-control" />
         </div>
 
@@ -99,12 +105,22 @@
       <div class="w-50 mx-auto">
         <div class="form-group mb-3">
           <label for="publicationSelect"><span class="asterisk">*</span>Publication:</label>
-          <select name="publicationSelect" id="publicationSelect" class="form-select"></select>
+          <select name="publicationSelect" id="publicationSelect" class="form-select">
+            <option value="">-- Select a publication --</option>
+            {% for pub in pub_list %}
+            <option value="{{ pub.id }}">{{ pub.name }}</option>
+            {% endfor %}
+          </select>
         </div>
 
         <div class="form-group mb-3">
           <label for="classifiedType"><span class="asterisk">*</span>Classified Type:</label>
-          <select name="classifiedType" id="classifiedType" class="form-select"></select>
+          <select name="classifiedType" id="classifiedType" class="form-select">
+            <option value="">-- Select a Classified Type --</option>
+            {% for type in classification_list %}
+            <option value="{{ type.id }}">{{ type.name }}</option>
+            {% endfor %}
+          </select>
         </div>
 
         <div class="form-group mb-3">
@@ -114,7 +130,12 @@
 
         <div class="form-group">
           <label for="salesRep"><span class="asterisk">*</span>Sales Rep:</label>
-          <select name="salesRep" id="salesRep" class="form-select"></select>
+          <select name="salesRep" id="salesRep" class="form-select">
+            <option value="">-- Select a Sales Rep --</option>
+            {% for type in sales_person_list %}
+            <option value="{{ type.id }}">{{ type.first_name }} {{ type.last_name }}</option>
+            {% endfor %}
+          </select>
         </div>
       </div>
 
@@ -185,7 +206,7 @@
           <div class="col-md-12 col-lg-6">
             <label for="description">Classified Preview</label>
             <div class="classified-item border border-dark">
-              <div class="classified-heading-container">
+              <div class="classified-heading-container py-3">
                 <h3 id="preview_title">Classified Title</h3>
               </div>
               <div class="classified-description">
@@ -193,6 +214,33 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="text-center mb-3 w-50">
+          <h3 class="mb-0 color-secondary">Need more space for your ad?</h3>
+          <span class="color-secondary">Select one of the options below to increase your word limit.</span>
+        </div>
+
+        <div class="form-group mb-3 w-50">
+          <label for="wordCount">Increase Word Count:</label>
+          <select name="wordCount" id="wordCount" class="form-select">
+            <option value="">Select an option</option>
+            <option value="35">Increase by 35 words [+10.00]</option>
+            <option value="75">Increase by 75 words [+20.00]</option>
+          </select>
+        </div>
+
+        <div id="ppom-file-container-classified_image" class="form-group ppom-input-classified_image">
+          <label class="form-control-label" for="classified_image"> Classified Image - <span class="woocommerce-Price-amount amount">$10.00</span> </label>
+
+          <div class="ppom-file-container text-center border rounded p-5 d-flex flex-column" style="height: auto">
+            <a href="javascript:;" id="selectfiles-classified_image" class="btn btn-secondary form-control file ppom-input classified_image w-50 mx-auto"> Select files </a>
+            <span class="ppom-dragdrop-text">Drag File Here</span>
+          </div>
+
+          <div id="filelist-classified_image" class="filelist classified_image"></div>
+
+          <input id="html5_1j2bav3ik1c2tnlb16hp1eq91v303" type="file" multiple accept="image/jpeg,.jpg,.png,.pdf,.zip" />
         </div>
       </div>
       <div class="btn-container d-flex justify-content-between mt-5">
@@ -207,4 +255,91 @@
 <script src="{% static 'js/stepform/stepform.js' %}"></script>
 <script src="{% static 'js/flatPickerScript.js' %}"></script>
 
+<script>
+  document.getElementById('customerSelect').addEventListener('change', function () {
+    let selected = this.options[this.selectedIndex];
+
+    document.getElementById('firstName').value = selected.getAttribute('data-firstname') || '';
+    document.getElementById('lastName').value = selected.getAttribute('data-lastname') || '';
+    document.getElementById('email').value = selected.getAttribute('data-email') || '';
+    document.getElementById('phone').value = selected.getAttribute('data-phone') || '';
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const classifiedTitleInput = document.getElementById('classified_title');
+    const previewTitle = document.getElementById('preview_title');
+    const previewDescription = document.getElementById('preview_description');
+
+    // Update title dynamically in the preview
+    classifiedTitleInput.addEventListener('input', function () {
+      previewTitle.textContent = classifiedTitleInput.value.trim() || 'Classified Title';
+    });
+
+    // Initialize TinyMCE
+    if (typeof tinymce !== 'undefined') {
+      tinymce.init({
+        selector: '#classified_description',
+        resize: false,
+        plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'importcss', 'searchreplace', 'visualblocks', 'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount', 'format'],
+        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | removeformat | code',
+        setup: function (editor) {
+          const maxWords = 50; // Default word count limit
+
+          // Function to enforce word limit
+          const enforceWordLimit = () => {
+            const content = editor.getContent({
+              format: 'text'
+            });
+            const words = content
+              .trim()
+              .split(/\s+/)
+              .filter(word => word.length > 0);
+
+            if (words.length > maxWords) {
+              const truncatedWords = words.slice(0, maxWords).join(' ');
+
+              editor.setContent(truncatedWords);
+              showWordLimitAlert();
+            }
+          };
+
+          const showWordLimitAlert = () => {
+            const alertContainer = document.querySelector('.alert-container');
+            if (!alertContainer) return;
+
+            const existingAlert = document.querySelector('.word-limit-alert');
+            if (existingAlert) existingAlert.remove();
+
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-warning word-limit-alert';
+            alertDiv.role = 'alert';
+            alertDiv.innerHTML = `
+            <strong>Word Limit Reached!</strong> You can only use ${maxWords} words.
+          `;
+
+            alertContainer.appendChild(alertDiv);
+
+            setTimeout(() => {
+              if (alertDiv.parentElement) {
+                alertDiv.parentElement.removeChild(alertDiv);
+              }
+            }, 5000);
+          };
+
+          // Listen for content changes and enforce word limit
+          editor.on('keyup', enforceWordLimit);
+          editor.on('paste', () => setTimeout(enforceWordLimit, 100));
+
+          // Update preview dynamically
+          editor.on('input change keyup', () => {
+            const content = editor.getContent();
+            previewDescription.innerHTML = content.trim() || "This is where you'll write out and style everything about your ad using the tools above...";
+          });
+        }
+      });
+    }
+  });
+</script>
 {% endblock%}

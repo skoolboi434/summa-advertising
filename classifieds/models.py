@@ -1,5 +1,5 @@
 from django.db import models
-from adCampaigns.models import Account
+from adAdmin.models import Account
 from django.contrib.auth.models import User
 
 #from adAdmin.models import AdminAdType
@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class ClassifiedAd(models.Model):
     name = models.CharField(max_length=255)
     account = models.ForeignKey(
-        'adCampaigns.Account',  # app_label.ModelName
+        'adAdmin.Account',  # app_label.ModelName
         on_delete=models.CASCADE,
         related_name='classified_ads'
     )

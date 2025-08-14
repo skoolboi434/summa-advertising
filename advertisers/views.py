@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from adCampaigns.models import Account, CompanyContact, AccountNote, AccountType, SalesPerson, IndustryCode
+from adAdmin.models import CompanyContact, AccountNote, AccountType, IndustryCode, SalesPerson, Account
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
