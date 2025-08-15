@@ -1,10 +1,12 @@
 from django.shortcuts import render
-from .models import ClassifiedAd, Classification, ProductAddon
+from .models import ClassifiedAd, Classification, ProductAddon, ClassifiedSubcategory
 from adAdmin.models import Publication, SalesPerson, Customer
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 import requests
 from requests.auth import HTTPBasicAuth
+from django.core import serializers
+import json
 
 
 def index(request):
@@ -28,6 +30,11 @@ def createClassified(request):
     classification_list = Classification.objects.all()
     sales_person_list = SalesPerson.objects.all()
     customers = Customer.objects.all()
+    subcategories = list(
+        ClassifiedSubcategory.objects.values('id', 'name', 'classification_id')
+    )
+
+    
 
     # Get all active addons for each type
     word_count_options = ProductAddon.objects.filter(
@@ -45,7 +52,8 @@ def createClassified(request):
         'sales_person_list': sales_person_list,
         "customers": customers,
         "word_count_options": word_count_options,
-        "additional_pub_options": additional_pub_options
+        "additional_pub_options": additional_pub_options,
+        "subcategories": json.dumps(subcategories)
     })
 
 

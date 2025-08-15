@@ -124,8 +124,10 @@
         </div>
 
         <div class="form-group mb-3">
-          <label for="category"><span class="asterisk">*</span>Category:</label>
-          <select name="category" id="category" class="form-select"></select>
+          <label for="subcategory"><span class="asterisk">*</span>Subcategory:</label>
+          <select name="subcategory" id="subcategory" class="form-select">
+            <option value="">-- Select a Subcategory --</option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -187,7 +189,7 @@
 
       <div class="alert-container"></div>
 
-      <div class="container">
+      <div class="container mb-5">
         <div class="row">
           <div class="col-md-12 col-lg-6">
             <div class="form-group mb-4">
@@ -244,6 +246,13 @@
           <input id="html5_1j2bav3ik1c2tnlb16hp1eq91v303" type="file" multiple accept="image/jpeg,.jpg,.png,.pdf,.zip" />
         </div> -->
 
+        <div class="my-5">
+          <label for="classified_images">Attach any images you want to include here:</label>
+          <div class="border border-dark rounded p-5">
+            <input type="file" name="classified_images" multiple accept="image/jpeg,.jpg,.png,.pdf,.zip" />
+          </div>
+        </div>
+
         <select name="additional_publications" id="additional_publications" class="form-select">
           <option value="">Select additional Pub</option>
           {% for addon in additional_pub_options %} {% if addon.publication %}
@@ -251,6 +260,22 @@
           {% endif %} {% endfor %}
         </select>
       </div>
+
+      <!-- Price Container -->
+      <div class="border-top p-2">
+        <div class="d-flex justify-content-between">
+          <p class="mb-0"><strong>Product Price $20.00 x1</strong></p>
+          <p class="mb-0"><strong>$20.00</strong></p>
+        </div>
+      </div>
+
+      <div class="border-top border-dark p-2">
+        <div class="d-flex justify-content-between">
+          <p class="mb-0"><strong>Total</strong></p>
+          <p class="mb-0"><strong>$20.00</strong></p>
+        </div>
+      </div>
+
       <div class="btn-container d-flex justify-content-between mt-5">
         <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
 
@@ -262,6 +287,27 @@
 
 <script src="{% static 'js/stepform/stepform.js' %}"></script>
 <script src="{% static 'js/flatPickerScript.js' %}"></script>
+
+<script>
+  const allSubcategories = JSON.parse('{{ subcategories|escapejs }}');
+  const classifiedTypeSelect = document.getElementById('classifiedType');
+  const subcategorySelect = document.getElementById('subcategory');
+
+  classifiedTypeSelect.addEventListener('change', function () {
+    const selectedTypeId = parseInt(this.value) || null;
+    subcategorySelect.innerHTML = '<option value="">-- Select a Subcategory --</option>';
+
+    if (selectedTypeId) {
+      const filtered = allSubcategories.filter(subcat => subcat.classification_id === selectedTypeId);
+      filtered.forEach(subcat => {
+        let opt = document.createElement('option');
+        opt.value = subcat.id;
+        opt.textContent = subcat.name;
+        subcategorySelect.appendChild(opt);
+      });
+    }
+  });
+</script>
 
 <script>
   document.getElementById('customerSelect').addEventListener('change', function () {
