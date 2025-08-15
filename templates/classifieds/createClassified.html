@@ -282,6 +282,60 @@
         <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
+
+    <!-- Billing Info and Review -->
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Enter the customer's billing info and review<br />the order. Once review is complete, click create</p>
+      </div>
+
+      <div class="row">
+        <!-- Billing and Contact Info -->
+        <div class="col-md-12 col-lg-6"></div>
+
+        <!-- Order Summary -->
+        <div class="col-md-12 col-lg-6">
+          <div class="order-summary-container border border-dark rounded p-2">
+            <div class="mb-3">
+              <h3 class="heading">Order Summary</h3>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-lg-3"></div>
+
+              <div class="col-md-12 col-lg-6">
+                <span><strong>Classified Title:</strong></span>
+                <p id="review-classified_title"></p>
+
+                <div class="mb-3">
+                  <span><strong>Classified Preview:</strong></span>
+                  <p id="review_classified_preview"></p>
+                </div>
+
+                <div class="mb-3">
+                  <span><strong>Subcategory:</strong></span>
+                  <p id="review_subcategory"></p>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-12 col-lg-6">
+                    <span><strong>Start Date:</strong></span>
+                    <p id="review_start_date"></p>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <span><strong>End Date:</strong></span>
+                    <p id="review_end_date"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
 </div>
 
@@ -396,4 +450,50 @@
     }
   });
 </script>
+
+<script>
+  const startDateInput = document.getElementById('start_date');
+  const endDateInput = document.getElementById('end_date');
+  const reviewStartDate = document.getElementById('review_start_date');
+  const reviewEndDate = document.getElementById('review_end_date');
+
+  // Function to format the date if needed
+  function formatDate(value) {
+    if (!value) return '—';
+    const date = new Date(value);
+    return isNaN(date) ? value : date.toLocaleDateString();
+  }
+
+  // Update review fields live
+  startDateInput.addEventListener('input', () => {
+    reviewStartDate.textContent = formatDate(startDateInput.value);
+  });
+
+  endDateInput.addEventListener('input', () => {
+    reviewEndDate.textContent = formatDate(endDateInput.value);
+  });
+
+  const reviewSubcategory = document.getElementById('review_subcategory');
+
+  // Update the review paragraph when selection changes
+  subcategorySelect.addEventListener('change', function () {
+    const selectedText = this.options[this.selectedIndex]?.text || '—';
+    reviewSubcategory.textContent = selectedText;
+  });
+
+  function populateClassifiedReview() {
+    const nameEl = document.getElementById('classified_title');
+    const reviewEl = document.getElementById('review-classified_title');
+
+    reviewEl.textContent = nameEl?.value || '—';
+  }
+
+  // Listen for changes on the input
+  const titleInput = document.getElementById('classified_title');
+  titleInput.addEventListener('input', populateClassifiedReview);
+
+  // Optionally, populate initially in case there's a default value
+  populateClassifiedReview();
+</script>
+
 {% endblock%}
