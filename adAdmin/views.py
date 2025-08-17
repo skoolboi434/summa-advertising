@@ -93,3 +93,6 @@ def createUser(request):
         'publications': publications,
         'accountTypes': accountTypes
     })
+
+def adminClassifieds(request):
+  return render(request, 'admin/classifieds.html')
