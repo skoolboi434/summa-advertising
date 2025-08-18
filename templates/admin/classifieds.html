@@ -274,5 +274,131 @@
   </div>
 </div>
 
+<!-- New Measurement Modal -->
+
+<div class="modal fade" id="newMeasurementModal" tabindex="-1" aria-labelledby="newMeasurementModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-0">New Measurement</h3>
+        </div>
+        <form id="classified-measurement-form" action="{% url 'adminClassifieds' %}" method="POST">
+          {% csrf_token %}
+
+          <div class="form-group mb-3 w-50 mx-auto">
+            <label for="measurement-name">Measurement Name:</label>
+            <input type="text" id="measurement-name" name="measurement-name" class="form-control" />
+          </div>
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="fold-orientation"><span class="asterisk">*</span>Fold Orientation:</label>
+                <select name="fold-orientation" id="fold-orientation" class="form-select"></select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="measurement-size-height" class="d-block"><span class="asterisk">*</span>Size:</label>
+                <div class="d-flex justify-content-between align-items-center">
+                  <input class="form-control" type="text" name="measurement-size-height" id="measurement-size-height" />
+                  <span class="px-2"><strong>X</strong></span>
+                  <input class="form-control" type="text" name="measurement-size-width" id="measurement-size-width" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="columns-per-page">Columns Per Page: (optional)</label>
+                <input type="text" class="form-control" name="columns-per-inch" id="columns-per-inch" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="column-width">Columns Width: (optional)</label>
+                <input type="text" class="form-control" name="column-width" id="column-width" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="page-width">Page Width: (optional)</label>
+                <input type="text" class="form-control" name="page-width" id="page-width" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="page-height">Page Height: (optional)</label>
+                <input type="text" class="form-control" name="page-height" id="page-height" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="page-border">Page Border: (optional)</label>
+                <input type="text" class="form-control" name="page-border" id="page-border" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="gutter-size">Gutter Size: (optional)</label>
+                <input type="text" class="form-control" name="gutter-size" id="gutter-size" />
+              </div>
+            </div>
+          </div>
+
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="form-select">
+                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              </select>
+            </div>
+            <div class="transferBtns">
+              <input class="mb-2" type="button" id="btnRight" value="  >  " />
+              <br /><input type="button" id="btnLeft" value="  <  " />
+            </div>
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="w-50 mx-auto text-center mb-4">
+            <p for=""><span class="asterisk">*</span>Include This Category in Self-Service Portal?</p>
+            <div class="custom-toggle primary">
+              <input id="cc-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
+              <label for="cc-toggle1"></label>
+
+              <span class="yes active">Yes</span>
+              <span class="no inactive">No</span>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="{% static 'js/multistep.js' %}"></script>
 {% endblock%}
