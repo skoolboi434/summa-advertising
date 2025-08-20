@@ -291,7 +291,13 @@
 
       <div class="row mb-5">
         <!-- Billing and Contact Info -->
-        <div class="col-md-12 col-lg-6"></div>
+        <div class="col-md-12 col-lg-6">
+          <h4>Billing Info</h4>
+          <p><strong>Name:</strong> {{ contact_info.first_name }} {{ contact_info.last_name }}</p>
+          <p><strong>Email:</strong> {{ contact_info.email }}</p>
+          <p><strong>Phone:</strong> {{ contact_info.phone }}</p>
+          <p><strong>Address:</strong> {{ contact_info.address }}</p>
+        </div>
 
         <!-- Order Summary -->
         <div class="col-md-12 col-lg-6">

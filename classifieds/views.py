@@ -9,6 +9,7 @@ from django.core import serializers
 import json
 
 
+
 def index(request):
   classified_list = ClassifiedAd.objects.all().order_by('-date_created')
   paginator = Paginator(classified_list, 15)
@@ -34,6 +35,15 @@ def createClassified(request):
         ClassifiedSubcategory.objects.values('id', 'name', 'classification_id')
     )
 
+    # wcapi = API(
+    #     url="https://classifieds.championcarolinas.com/",
+    #     consumer_key="ck_2cf6e5733526248c35fd9c2bdbbe8a69a4bfecf8",
+    #     consumer_secret="cs_2ff4d3dfbcb6cd58f953fed46476c78b75f15bba",
+    #     version="wc/v3"
+    # )
+
+    
+    
     
 
     # Get all active addons for each type
@@ -53,7 +63,8 @@ def createClassified(request):
         "customers": customers,
         "word_count_options": word_count_options,
         "additional_pub_options": additional_pub_options,
-        "subcategories": json.dumps(subcategories)
+        "subcategories": json.dumps(subcategories),
+        
     })
 
 

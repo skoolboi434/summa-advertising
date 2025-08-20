@@ -20,13 +20,24 @@
         <th scope="col">ID #</th>
         <th scope="col">Category Name</th>
         <th scope="col">Assigned Pubs</th>
-        <th scope="col">Start Date</th>
-        <th scope="col">End Date</th>
         <th scope="col">Sub Category</th>
         <th scope="col">Status</th>
         <th scope="col">Available for Self-service</th>
         <th scope="col">GL Code</th>
       </tr>
     </thead>
+    <tbody>
+      {% for type in page_obj %}
+      <tr>
+        <td>{{ type.id }}</td>
+        <td>{{ type.name }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{ type.code }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
   </table>
 </div>

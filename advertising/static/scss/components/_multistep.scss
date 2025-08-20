@@ -142,3 +142,49 @@
   display: flex;
   justify-content: end;
 }
+
+// .custom-multistep-form {
+//   .nav-pills {
+//     .nav-item {
+//       .nav-link-custom {
+//         position: relative;
+//         font-size: 13px;
+//         color: $black !important;
+//         text-indent: -9999px;
+//         border: none;
+//         background-color: transparent;
+//         outline: none !important;
+//         margin: 0 2px;
+//         padding: 2px 20px;
+//         border: none;
+//         border-radius: 10px;
+//         @include transition-mix($duration: 0.15s);
+
+//         cursor: pointer;
+
+//         @media (min-width: 500px) {
+//           text-indent: 0;
+//         }
+
+//         //last child - without line decoration
+//         &:first-child {
+//           &:after {
+//             display: none;
+//           }
+//         }
+
+//         //active styles
+//         &.active {
+//           background-color: $secondary;
+//           color: $white !important;
+//           box-shadow: $shadow;
+//           &:before {
+//             transform: translateX(-50%) scale(1.2);
+
+//             background-color: currentColor;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

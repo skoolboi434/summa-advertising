@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Role, Region, Status, AccountType, Publication
+from classifieds.models import Classification
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
 from django.utils.timezone import now
@@ -95,4 +96,10 @@ def createUser(request):
     })
 
 def adminClassifieds(request):
-  return render(request, 'admin/classifieds.html')
+    classification_list = Classification.objects.all()
+    category_paginator = Paginator(classification_list, 15)
+
+    page_number = request.GET.get('page')
+    page_obj = category_paginator.get_page(page_number)
+
+    return render(request, 'admin/classifieds.html', {'page_obj': page_obj})

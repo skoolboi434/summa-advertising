@@ -1903,6 +1903,550 @@ body:not(.open-sidebar) .inner-nav {
   font-size: 12px;
 }
 
+.specs-container {
+  border-radius: 10px;
+  display: flex;
+  min-height: 500px;
+  border: 1px solid #000;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.specs-container .available-custom-fields {
+  background-color: #f3f3f3;
+  width: 26%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  overflow: hidden;
+}
+.specs-container .available-custom-fields .left-side-heading {
+  background-color: rgba(33, 33, 95, 0.5);
+  border-top-left-radius: 10px;
+  padding: 10px;
+}
+.specs-container .available-custom-fields .left-side-heading h3 {
+  font-family: "lato", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 26.4px;
+  text-align: left;
+  margin: 0;
+}
+.specs-container .available-custom-fields .left-side-list {
+  overflow: scroll;
+  height: 100%;
+}
+.specs-container .right-side-container {
+  width: 74%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 20px;
+}
+
+.specs-container .available-fonts .specs-container .available-fonts .fonts-list .font-container {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.specs-container .available-fonts .fonts-list .font-container.active {
+  background-color: rgba(33, 33, 95, 0.1);
+}
+
+.specs-container .specs-container {
+  background-color: rgba(33, 33, 95, 0.1);
+  width: 80%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 20px;
+}
+
+.specs-container .specs-container .font-preview {
+  min-height: 40px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #666666;
+  background-color: #fff;
+}
+
+.colors-container .colors {
+  display: flex;
+  margin-top: 15px;
+}
+
+.colors-container .colors .color-block {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  position: relative;
+}
+
+.colors-container .colors .color-block.selected .check {
+  visibility: visible;
+}
+
+.colors-container .colors .color-block .check {
+  display: none;
+  visibility: hidden;
+  background-color: green;
+  color: #fff;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  text-align: center;
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.colors-container .colors .color-block:not(:last-of-type) {
+  margin-right: 15px;
+}
+
+.colors-container .colors .color-block.yellow {
+  background-color: yellow;
+}
+
+.colors-container .colors .color-block.cyan {
+  background-color: cyan;
+}
+
+.colors-container .colors .color-block.magenta {
+  background-color: magenta;
+}
+
+.colors-container .colors .color-block.black {
+  background-color: black;
+}
+
+#selectedColors {
+  display: flex;
+}
+
+#selectedColors .colors {
+  margin-top: 0 !important;
+}
+
+#selectedColors .color-block {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  position: relative;
+}
+
+#selectedColors .color-block.selected .check {
+  visibility: visible;
+}
+
+#selectedColors .color-block .check {
+  display: none;
+  visibility: hidden;
+  background-color: green;
+  color: #fff;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  text-align: center;
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#selectedColors .color-block:not(:last-of-type) {
+  margin-right: 15px;
+}
+
+#selectedColors .color-block.yellow {
+  background-color: yellow;
+}
+
+#selectedColors .color-block.cyan {
+  background-color: cyan;
+}
+
+#selectedColors .color-block.magenta {
+  background-color: magenta;
+}
+
+#selectedColors .color-block.black {
+  background-color: black;
+}
+
+#selectedColors .colors {
+  display: flex;
+  margin-top: 15px;
+}
+
+.color-select {
+  border: 2px solid #ccc;
+  padding: 0 0 0 6px;
+  border-radius: 4px;
+}
+
+.color-select > span {
+  text-transform: uppercase;
+  padding: 8px 0;
+  display: block;
+  cursor: pointer;
+}
+
+.color-select > span span {
+  margin-top: -8px;
+}
+
+.color-select ul {
+  width: 100%;
+  overflow: visible;
+  padding: 0;
+  border-top: 1px solid #ccc;
+  display: none;
+}
+
+.color-select ul:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.color-select ul li,
+.color-select > span span {
+  list-style: none;
+  width: 30px;
+  height: 30px;
+  display: block;
+  border-radius: 50%;
+  background: #fff;
+  float: left;
+  margin: 0 12px;
+  cursor: pointer;
+  position: relative;
+  top: -7px;
+}
+
+.color-select ul li {
+  margin-top: 25px;
+  transition: all 0.3s ease-in-out;
+}
+
+.color-select ul li span {
+  display: none;
+}
+
+.color-select ul li:hover {
+  transform: scale(1.15);
+}
+
+.font-effects-container .text-effects-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.font-effects-container .text-effects-toggle .effect-toggle {
+  border: none;
+  background: none;
+  width: 26px;
+  height: 26px;
+}
+
+.font-effects-container .text-effects-toggle .effect-toggle hr {
+  margin: 0;
+}
+
+.font-effects-container .text-effects-toggle .effect-toggle.active {
+  background-color: #21215f;
+  border-radius: 4px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  color: #fff;
+}
+
+.font-effects-container .text-effects-toggle .effect-toggle.active hr {
+  border-color: #fff;
+}
+
+.font-effects-container .text-fill-container {
+  margin-bottom: 30px;
+}
+
+.font-effects-container .outline-container {
+  display: flex;
+  align-items: center;
+}
+
+.font-effects-container .outline-container .form-group {
+  width: 75%;
+  margin-right: 15px;
+}
+
+.font-effects-container .outline-container .color-fill {
+  display: none;
+}
+
+.font-effects-container .transparency-container {
+  display: flex;
+  align-items: center;
+}
+
+.font-effects-container .transparency-container .range-container {
+  width: 72%;
+  margin-right: 10px;
+}
+
+.font-effects-container .transparency-container .percentage-container {
+  width: 20%;
+}
+
+.font-effects-container .transparency-container .percentage-container input {
+  width: 70%;
+}
+
+.font-effects-container .gradient-container .dropdown .dropdown-toggle {
+  padding: 5px 10px;
+  background: linear-gradient(180deg, #21215f 0%, rgba(68, 68, 197, 0.5) 100%);
+  width: 25px;
+  height: 25px;
+  border: none;
+  cursor: pointer;
+}
+
+.font-effects-container .gradient-container .dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.font-effects-container .gradient-container .dropdown .dropdown-menu a {
+  display: block;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.font-effects-container .gradient-container .dropdown .dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+.font-effects-container .gradient-container .dropdown .dropdown-menu .dropdown-item {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.font-effects-container .gradient-container .gradient-settings {
+  margin-bottom: 30px;
+}
+
+.font-effects-container .gradient-container .gradient-settings a {
+  font-size: 12px;
+  font-family: "Lato";
+  color: #21215f;
+  line-height: 14.4px;
+}
+
+.spacing-typography-container .spacing .spacing-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.spacing-typography-container .spacing .spacing-select input {
+  width: 20%;
+}
+
+.spacing-typography-container .spacing .spacing-select span {
+  margin: 0 10px;
+}
+
+.spacing-typography-container .position .position-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.spacing-typography-container .position .position-select input {
+  width: 20%;
+}
+
+.spacing-typography-container .position .position-select span {
+  margin: 0 10px;
+}
+
+.spacing-typography-container .kerning-container,
+.spacing-typography-container .contextual-container {
+  display: flex;
+  align-items: center;
+}
+
+.spacing-typography-container .kerning-container .form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.spacing-typography-container .kerning-container .form-group.points {
+  display: flex;
+  align-items: center;
+}
+
+.spacing-typography-container .kerning-container .form-group label {
+  margin-bottom: 0;
+}
+
+.spacing-typography-container .kerning-container .form-group input[type=checkbox] {
+  margin-top: 0;
+}
+
+.spacing-typography-container .kerning-container .form-group input[type=text] {
+  width: 20%;
+  margin-right: 10px;
+}
+
+.shadow-container,
+.glow-container,
+.refelction-container,
+.edges-container,
+.refelction-container,
+.three-d-container {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  border-bottom: 1px solid #000;
+}
+
+.effects-container {
+  position: relative;
+}
+
+.effects-container.disabled input[type=text],
+.effects-container.disabled .presets-container {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.effects-container input[type=text] {
+  width: 50%;
+}
+
+.effects-container .custom-switch {
+  pointer-events: all;
+  opacity: 1 !important;
+}
+
+.effects-container .presets-container {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.custom-multistep-form .step-form-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.custom-multistep-form .step-form-progress .arrow {
+  border: none;
+  background: none;
+}
+.custom-multistep-form .step-form-progress .nav-pills .nav-item .nav-link-custom {
+  position: relative;
+  font-size: 13px;
+  color: #000 !important;
+  text-indent: -9999px;
+  border: none;
+  background-color: transparent;
+  outline: none !important;
+  margin: 0 2px;
+  padding: 2px 20px;
+  border: none;
+  border-radius: 10px;
+  transition-property: all;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  transition-delay: 0s;
+  cursor: pointer;
+}
+@media (min-width: 500px) {
+  .custom-multistep-form .step-form-progress .nav-pills .nav-item .nav-link-custom {
+    text-indent: 0;
+  }
+}
+.custom-multistep-form .step-form-progress .nav-pills .nav-item .nav-link-custom:first-child:after {
+  display: none;
+}
+.custom-multistep-form .step-form-progress .nav-pills .nav-item .nav-link-custom.active {
+  background-color: #21215f;
+  color: #fff !important;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.custom-multistep-form .step-form-progress .nav-pills .nav-item .nav-link-custom.active:before {
+  transform: translateX(-50%) scale(1.2);
+  background-color: currentColor;
+}
+
+.custom-multistep-form .step-form-progress .custom-multistep-form .step-form-progress .progress-buttons .progress-btn {
+  transition-property: all;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  transition-delay: 0s;
+  position: relative;
+  font-size: 13px;
+  color: #000;
+  text-indent: -9999px;
+  border: none;
+  background-color: transparent;
+  outline: none !important;
+  margin: 0 2px;
+  border: none;
+  border-radius: 10px;
+  min-width: 100px;
+  cursor: pointer;
+}
+
+@media (min-width: 500px) {
+  .custom-multistep-form .step-form-progress .progress-buttons .progress-btn {
+    text-indent: 0;
+  }
+}
+.custom-multistep-form .step-form-progress .progress-buttons .progress-btn:first-child:after {
+  display: none;
+}
+
+.custom-multistep-form .step-form-progress .progress-buttons .progress-btn.active-step {
+  background-color: #f26722;
+  color: #fff;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.custom-multistep-form .step-form-progress .progress-buttons .progress-btn.active-step:before {
+  transform: translateX(-50%) scale(1.2);
+  background-color: currentColor;
+}
+
+.custom-multistep-form hr {
+  border-color: #000;
+}
+
+.custom-multistep-form.secondary .active-step {
+  background-color: #21215f !important;
+  color: #fff !important;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.custom-multistep-form.secondary .active-step:before {
+  transform: translateX(-50%) scale(1.2);
+  background-color: currentColor;
+}
+
 body {
   background: linear-gradient(to bottom, #f3f3f3 60%, rgba(33, 33, 95, 0.3) 40%);
   background-attachment: fixed;
