@@ -37,6 +37,13 @@ class Publication(models.Model):
     charge_tax = models.BooleanField(default=False)
     credit_memo = models.TextField(default=None)
 
+    # Many-to-many field to classifications
+    classifications = models.ManyToManyField(
+        'classifieds.Classification',   # app_label.ModelName
+        related_name="publications",
+        blank=True
+    )
+
     def __str__(self):
         return self.name
 

@@ -97,7 +97,6 @@ class Classification(models.Model):
     def __str__(self):
         return self.name
 
-from django.db import models
 
 class ProductAddon(models.Model):
     ADDON_TYPE_CHOICES = [

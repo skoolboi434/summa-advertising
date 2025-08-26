@@ -289,75 +289,97 @@
         <form id="classified-measurement-form" action="{% url 'adminClassifieds' %}" method="POST">
           {% csrf_token %}
 
-          <div class="form-group mb-3 w-50 mx-auto">
-            <label for="measurement-name">Measurement Name:</label>
-            <input type="text" id="measurement-name" name="measurement-name" class="form-control" />
-          </div>
-
           <div class="row mb-4 w-75 mx-auto">
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
-                <label for="fold-orientation"><span class="asterisk">*</span>Fold Orientation:</label>
+                <label for="measurement-id">#ID:</label>
+                <input class="form-control" type="number" name="measurement-id" id="measurement-id" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="measurement-name">Measurement Name:</label>
+                <input class="form-control" type="text" name="measurement-name" id="measurement-name" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="status">Status:</label>
+                <select name="status" id="status" class="form-select"></select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <label for="self-service">Available in in Self-Service Portal</label>
+              <div class="custom-toggle primary">
+                <input id="self-service-toggle" class="check-toggle check-toggle-round-flat" type="checkbox" />
+                <label for="self-service-toggle"></label>
+
+                <span class="yes active">Yes</span>
+                <span class="no inactive">No</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="fold-orientation">Fold Orientation:</label>
                 <select name="fold-orientation" id="fold-orientation" class="form-select"></select>
               </div>
             </div>
 
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="measurement-size-height" class="d-block"><span class="asterisk">*</span>Size:</label>
-                <div class="d-flex justify-content-between align-items-center">
-                  <input class="form-control" type="text" name="measurement-size-height" id="measurement-size-height" />
-                  <span class="px-2"><strong>X</strong></span>
-                  <input class="form-control" type="text" name="measurement-size-width" id="measurement-size-width" />
-                </div>
-              </div>
-            </div>
+            <div class="col-md-12 col-lg-6"></div>
           </div>
 
-          <div class="row mb-4 w-75 mx-auto">
+          <div class="row w-75 mx-auto mb-4">
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="columns-per-page">Columns Per Page: (optional)</label>
-                <input type="text" class="form-control" name="columns-per-inch" id="columns-per-inch" />
+                <input type="text" name="columns-per-page" id="columns-per-page" class="form-control" />
               </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
-                <label for="column-width">Columns Width: (optional)</label>
-                <input type="text" class="form-control" name="column-width" id="column-width" />
+                <label for="column-width">Column Width: (optional)</label>
+                <input type="text" name="column-width" id="column-width" class="form-control" />
               </div>
             </div>
           </div>
 
-          <div class="row mb-4 w-75 mx-auto">
+          <div class="row w-75 mx-auto mb-4">
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="page-width">Page Width: (optional)</label>
-                <input type="text" class="form-control" name="page-width" id="page-width" />
+                <input type="text" name="page-width" id="page-width" class="form-control" />
               </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="page-height">Page Height: (optional)</label>
-                <input type="text" class="form-control" name="page-height" id="page-height" />
+                <input type="text" name="page-height" id="page-height" class="form-control" />
               </div>
             </div>
           </div>
 
-          <div class="row mb-4 w-75 mx-auto">
+          <div class="row w-75 mx-auto mb-4">
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="page-border">Page Border: (optional)</label>
-                <input type="text" class="form-control" name="page-border" id="page-border" />
+                <select name="page-border" id="page-border" class="form-select"></select>
               </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
-                <label for="gutter-size">Gutter Size: (optional)</label>
-                <input type="text" class="form-control" name="gutter-size" id="gutter-size" />
+                <label for="gutter-size">Page Height: (optional)</label>
+                <input class="form-control" type="text" name="gutter-size" id="gutter-size" class="form-control" />
               </div>
             </div>
           </div>
@@ -377,17 +399,6 @@
             <div class="selected-pubs">
               Selected Publications:<br />
               <select multiple="multiple" id="lstBox2" class="form-select"></select>
-            </div>
-          </div>
-
-          <div class="w-50 mx-auto text-center mb-4">
-            <p for=""><span class="asterisk">*</span>Include This Category in Self-Service Portal?</p>
-            <div class="custom-toggle primary">
-              <input id="cc-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
-              <label for="cc-toggle1"></label>
-
-              <span class="yes active">Yes</span>
-              <span class="no inactive">No</span>
             </div>
           </div>
 
