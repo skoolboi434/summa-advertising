@@ -1,0 +1,165 @@
+{% extends 'base.html' %}{% load static %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading">New Style</h3>
+</div>
+
+<div class="stepform">
+  <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+    <div class="step active">
+      <div class="text">
+        <span class="number">1</span>
+        <span class="title">General Info</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">2</span>
+        <span class="title">Fonts &amp; Colors</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">3</span>
+        <span class="title">Font Specs</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">4</span>
+        <span class="title">Review</span>
+      </div>
+    </div>
+  </div>
+
+  <form id="style-form" action="" method="POST">
+    <!-- General Info -->
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Begin creating your new style by filling out<br />the information below</p>
+      </div>
+
+      <div class="d-flex justify-content-center mb-4">
+        <div class="form-group w-50 mx-auto">
+          <label for="style-name"><span class="asterisk">*</span>Style Name:</label>
+          <input type="text" name="style-name" id="style-name" class="form-control" />
+        </div>
+      </div>
+
+      <div class="item-select-container mb-4">
+        <div class="available-pubs">
+          Available Publications:<br />
+          <select multiple="multiple" id="lstBox1" class="form-select">
+            <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+            <option value="times-leader-e-edition">Times Leader - E Edition</option>
+          </select>
+        </div>
+        <div class="transferBtns">
+          <input class="mb-2" type="button" id="btnRight" value="  >  " />
+          <br /><input type="button" id="btnLeft" value="  <  " />
+        </div>
+        <div class="selected-pubs">
+          Selected Publications:<br />
+          <select multiple="multiple" id="lstBox2" class="form-select"></select>
+        </div>
+      </div>
+
+      <div class="w-50 mx-auto text-center mb-4">
+        <p for=""><span class="asterisk">*</span>Available in Self-service:</p>
+        <div class="custom-toggle primary">
+          <input id="cc-style-toggle" class="check-toggle check-toggle-round-flat" type="checkbox" />
+          <label for="cc-style-toggle"></label>
+
+          <span class="yes active">Yes</span>
+          <span class="no inactive">No</span>
+        </div>
+      </div>
+
+      <div class="btn-container d-flex justify-content-end mt-5">
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <div class="tab">
+      <div class="tab-description text-center mb-5">
+        <p>Here you can pick the fonts and colors you'd like<br />associated with your selected Publications</p>
+      </div>
+
+      <div class="row mgb-3">
+        <div class="col-md-12 col-lg-6">
+          <div class="text-center">
+            <h3>Fonts</h3>
+            <hr />
+          </div>
+          <div id="fontSelector">
+            <div class="form-group">
+              <div class="label-container">
+                <label for="fontSelect">Select a font:</label>
+              </div>
+              <select id="fontSelect" class="form-control" multiple></select>
+            </div>
+
+            <div class="text-center"><p>Selected Fonts:</p></div>
+            <div id="selected-font-names" class="selected-fonts-container mgb-3"></div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-6">
+          <div class="text-center">
+            <h3>Colors</h3>
+            <hr />
+          </div>
+          <div class="form-group">
+            <div class="label-container">
+              <label for="fontColorSelect">Color Option:</label>
+            </div>
+            <select id="fontColorSelect" class="form-control">
+              <option value="" selected>Select Color Options</option>
+              <option value="spot-color">Spot Color</option>
+              <option value="black-white">Black &amp; White</option>
+              <option value="grayscale">Grayscale</option>
+            </select>
+          </div>
+
+          <div class="colors-container">
+            <span>Colors:</span>
+            <div class="colors" id="selected-color-names">
+              <div class="color-block yellow">
+                <span class="check"><i class="fa fa-solid fa-check"></i></span>
+              </div>
+              <div class="color-block cyan">
+                <span class="check"><i class="fa fa-solid fa-check"></i></span>
+              </div>
+              <div class="color-block magenta">
+                <span class="check"><i class="fa fa-solid fa-check"></i></span>
+              </div>
+              <div class="color-block black">
+                <span class="check"><i class="fa fa-solid fa-check"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="{% static 'js/stepform/stepform.js' %}"></script>
+<script src="{% static 'js/adminStyles.js' %}"></script>
+
+{% endblock%}

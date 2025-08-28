@@ -1,11 +1,11 @@
 <div class="btn-search-container d-flex justify-content-between border-bottom border-dark mb-3">
   <div class="filter-container">
-    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#newStyleModal"><i class="fa fa-solid fa-plus"></i> New Style</button>
+    <a href="{% url 'createAdminStyle' %}" target="_blank" class="btn btn-secondary"><i class="fa fa-solid fa-plus"></i> New Style</a>
     <div class="filters ps-3 d-flex align-items-center"><a href="" class="active">Active</a>&nbsp;|&nbsp;<a href="">Inactive</a>&nbsp;|&nbsp;<a href="">Archived</a></div>
   </div>
 
   <div class="has-search">
-    <input type="text" class="form-control" placeholder="Search Custom Fields..." />
+    <input type="text" class="form-control" placeholder="Search Styles..." />
   </div>
 </div>
 
@@ -22,5 +22,16 @@
         <th scope="col"></th>
       </tr>
     </thead>
+    <tbody>
+      <tr>
+        <td>00001</td>
+        <td>Obit1</td>
+        <td>See List</td>
+        <td>See Specs</td>
+        <td>active</td>
+        <td>Yes</td>
+        <td><i class="fa fa-solid fa-pen"></i></td>
+      </tr>
+    </tbody>
   </table>
 </div>

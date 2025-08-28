@@ -103,3 +103,7 @@ def adminClassifieds(request):
     page_obj = category_paginator.get_page(page_number)
 
     return render(request, 'admin/classifieds.html', {'page_obj': page_obj})
+
+def createAdminStyle(request):
+
+    return render(request, 'admin/includes/classifieds/createAdminStyle.html')
