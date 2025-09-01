@@ -1,0 +1,111 @@
+<div class="modal fade" id="newCategoryModal" tabindex="-1" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-0">New Category</h3>
+        </div>
+        <form id="classified-category-form" action="{% url 'adminClassifieds' %}" method="POST">
+          {% csrf_token %}
+
+          <div class="form-group mb-3 w-50 mx-auto">
+            <label for="category-name">Category Name:</label>
+            <input type="text" id="category-name" name="category-name" class="form-control" />
+          </div>
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="classified-start-date"><span class="asterisk">*</span>Start Date:</label>
+                <input class="form-control" type="date" name="classified-start-date" id="classified-start-date" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="classified-end-date"><span class="asterisk">*</span>End Date:</label>
+                <input class="form-control" type="date" name="classified-end-date" id="classified-end-date" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <p for=""><span class="asterisk">*</span>Is this a Sub-category?</p>
+              <div class="custom-toggle primary">
+                <input id="cc-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
+                <label for="cc-toggle1"></label>
+
+                <span class="yes active">Yes</span>
+                <span class="no inactive">No</span>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="classified-main-category"><span class="asterisk">*</span>Select main category:</label>
+                <select name="classified-main-category" id="classified-main-category" class="form-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <p for=""><span class="asterisk">*</span>GL Override?</p>
+              <div class="custom-toggle primary">
+                <input id="cc-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
+                <label for="cc-toggle1"></label>
+
+                <span class="yes active">Yes</span>
+                <span class="no inactive">No</span>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="classified-gl-code"><span class="asterisk">*</span>Select GL Code:</label>
+                <select name="classified-gl-code" id="classified-gl-code" class="form-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="form-select">
+                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              </select>
+            </div>
+            <div class="transferBtns">
+              <input class="mb-2" type="button" id="btnRight" value="  >  " />
+              <br /><input type="button" id="btnLeft" value="  <  " />
+            </div>
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="w-50 mx-auto text-center mb-4">
+            <p for=""><span class="asterisk">*</span>Include This Category in Self-Service Portal?</p>
+            <div class="custom-toggle primary">
+              <input id="cc-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
+              <label for="cc-toggle1"></label>
+
+              <span class="yes active">Yes</span>
+              <span class="no inactive">No</span>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

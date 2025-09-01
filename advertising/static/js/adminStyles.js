@@ -1,3 +1,9 @@
+$(document).ready(function () {
+  $('.color-block').click(function () {
+    $(this).toggleClass('selected');
+  });
+});
+
 // Font Select
 document.addEventListener('DOMContentLoaded', function () {
   const fonts = [
@@ -23,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const fontSelect = document.getElementById('fontSelect');
   const selectedFontsContainer = document.getElementById('selected-font-names');
+  const sampleText = document.getElementById('sampleText');
+  const fontsList = document.querySelector('.fonts-list');
+  const fontPreview = document.querySelector('.font-preview');
 
   // Populate <select>
   fonts.forEach(font => {
@@ -49,23 +58,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-let choosenFontsContainer = document.getElementById('choosen-fonts-container');
-let selectedFonts = document.getElementById('selected-font-names').querySelectorAll('span');
-choosenFontsContainer.innerHTML = '';
-selectedFonts.forEach(function (font) {
-  let fontName = font.textContent.trim();
-  let fontDiv = document.createElement('div');
-  fontDiv.classList.add('font-container');
-  fontDiv.style.textWrap = 'nowrap';
-  fontDiv.textContent = fontName;
-  choosenFontsContainer.appendChild(fontDiv);
-});
+// let choosenFontsContainer = document.getElementById('choosen-fonts-container');
+// let selectedFonts = document.getElementById('selected-font-names').querySelectorAll('span');
+// choosenFontsContainer.innerHTML = '';
+// selectedFonts.forEach(function (font) {
+//   let fontName = font.textContent.trim();
+//   let fontDiv = document.createElement('div');
+//   fontDiv.classList.add('font-container');
+//   fontDiv.style.textWrap = 'nowrap';
+//   fontDiv.textContent = fontName;
+//   choosenFontsContainer.appendChild(fontDiv);
+// });
 
-$(document).ready(function () {
-  $('.color-block').click(function () {
-    $(this).toggleClass('selected');
-  });
-});
+// fontSelect.addEventListener('change', changeFont);
 
 // Hide CMYK on Select
 document.getElementById('fontColorSelect').addEventListener('change', function () {
@@ -424,3 +429,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+function updateSelectedFonts(selectedFonts) {
+  selectedFontsContainer.innerHTML = '';
+  fontsList.innerHTML = ''; // Clear existing fonts list
+  selectedFonts.forEach(font => {
+    const selectedFontElement = document.createElement('span');
+    selectedFontElement.classList.add('selected-font');
+    selectedFontElement.textContent = font;
+    selectedFontsContainer.appendChild(selectedFontElement);
+
+    // Add selected font to fonts list
+    const fontContainer = document.createElement('div');
+    fontContainer.classList.add('font-container');
+    const fontName = document.createElement('span');
+    fontName.classList.add('font');
+    fontName.textContent = font;
+    fontContainer.appendChild(fontName);
+    fontsList.appendChild(fontContainer);
+
+    // Attach click event listener to newly added font container
+    fontContainer.addEventListener('click', function () {
+      // Toggle "active" class for font container
+      const isActive = this.classList.contains('active');
+      fontsList.querySelectorAll('.font-container').forEach(container => {
+        container.classList.remove('active');
+      });
+      if (!isActive) {
+        this.classList.add('active');
+        fontPreview.style.fontFamily = font;
+      }
+    });
+  });
+}

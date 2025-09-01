@@ -1,0 +1,134 @@
+<div class="modal fade" id="newMeasurementModal" tabindex="-1" aria-labelledby="newMeasurementModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-0">New Measurement</h3>
+        </div>
+        <form id="classified-measurement-form" action="{% url 'adminClassifieds' %}" method="POST">
+          {% csrf_token %}
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="measurement-id">#ID:</label>
+                <input class="form-control" type="number" name="measurement-id" id="measurement-id" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="measurement-name">Measurement Name:</label>
+                <input class="form-control" type="text" name="measurement-name" id="measurement-name" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="status">Status:</label>
+                <select name="status" id="status" class="form-select"></select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <label for="self-service">Available in in Self-Service Portal</label>
+              <div class="custom-toggle primary">
+                <input id="self-service-toggle" class="check-toggle check-toggle-round-flat" type="checkbox" />
+                <label for="self-service-toggle"></label>
+
+                <span class="yes active">Yes</span>
+                <span class="no inactive">No</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="fold-orientation">Fold Orientation:</label>
+                <select name="fold-orientation" id="fold-orientation" class="form-select"></select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6"></div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="columns-per-page">Columns Per Page: (optional)</label>
+                <input type="text" name="columns-per-page" id="columns-per-page" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="column-width">Column Width: (optional)</label>
+                <input type="text" name="column-width" id="column-width" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="page-width">Page Width: (optional)</label>
+                <input type="text" name="page-width" id="page-width" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="page-height">Page Height: (optional)</label>
+                <input type="text" name="page-height" id="page-height" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="page-border">Page Border: (optional)</label>
+                <select name="page-border" id="page-border" class="form-select"></select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="gutter-size">Page Height: (optional)</label>
+                <input class="form-control" type="text" name="gutter-size" id="gutter-size" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="form-select">
+                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              </select>
+            </div>
+            <div class="transferBtns">
+              <input class="mb-2" type="button" id="btnRight" value="  >  " />
+              <br /><input type="button" id="btnLeft" value="  <  " />
+            </div>
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

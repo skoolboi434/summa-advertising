@@ -155,3 +155,66 @@
   text-align: center;
   font-family: 'Font Awesome';
 }
+
+// Font Specs
+.font-specs-container {
+  border-radius: 10px;
+  display: flex;
+  min-height: 500px;
+  border: 1px solid #000;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.font-specs-container .available-fonts {
+  background-color: #f3f3f3;
+  width: 25%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  overflow: hidden;
+}
+
+.font-specs-container .available-fonts .fonts-heading {
+  background-color: rgba(33, 33, 95, 0.5);
+  border-top-left-radius: 10px;
+  padding: 10px;
+}
+
+.font-specs-container .available-fonts .fonts-heading h3 {
+  font-family: 'lato', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 26.4px;
+  text-align: left;
+  margin: 0;
+}
+
+.font-specs-container .available-fonts .fonts-list {
+  overflow: scroll;
+  height: 100%;
+}
+
+.font-specs-container .available-fonts .fonts-list .font-container {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.font-specs-container .available-fonts .fonts-list .font-container.active {
+  background-color: rgba(33, 33, 95, 0.1);
+}
+
+.font-specs-container .specs-container {
+  background-color: rgba(33, 33, 95, 0.1);
+  width: 75%;
+  border: none;
+  border-radius: 0;
+  padding: 20px;
+}
+
+.font-specs-container .specs-container .font-preview {
+  min-height: 40px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #666666;
+  background-color: #fff;
+}

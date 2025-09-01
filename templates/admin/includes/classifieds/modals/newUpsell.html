@@ -1,0 +1,99 @@
+<div class="modal fade" id="newUpsellModal" tabindex="-1" aria-labelledby="newUpsellModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">New Upsell</h3>
+        </div>
+
+        <div class="text-center w-75 mx-auto">
+          <p>Fill out the form below.<br />This will then be sent to management to get confirmed<br />and applied to the system</p>
+        </div>
+        <form id="classified-measurement-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="upsell-name">Upsell Name:</label>
+                <input class="form-control" type="text" name="upsell-name" id="upsell-name" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="status">Status:</label>
+                <select name="upsell-status" id="upsell-status" class="form-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mb-4 w-75 mx-auto">
+            <label for="upsell-description">Description (optional):</label>
+            <textarea class="form-control" name="upsell-description" id="upsell-description"></textarea>
+          </div>
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <label class="d-block" for="upsell-assigned-rate">Assigned Rate:</label>
+              <div class="custom-toggle primary">
+                <input id="cc-upsell-rate-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
+                <label for="cc-upsell-rate-toggle1"></label>
+
+                <span class="yes active">Use Default</span>
+                <span class="no inactive">Override</span>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <label class="d-block" for="upsell-assigned-gl">Assigned GL:</label>
+              <div class="custom-toggle primary">
+                <input id="cc-upsell-gl-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
+                <label for="cc-upsell-gl-toggle1"></label>
+
+                <span class="yes active">Use Default</span>
+                <span class="no inactive">Override</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="form-select">
+                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              </select>
+            </div>
+            <div class="transferBtns">
+              <input class="mb-2" type="button" id="btnRight" value="  >  " />
+              <br /><input type="button" id="btnLeft" value="  <  " />
+            </div>
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="mb-4 text-center">
+            <label class="d-block" for="upsell-assigned-self-service">Available in Self-service?</label>
+            <div class="custom-toggle primary">
+              <input id="cc-upsell-self-service-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
+              <label for="cc-upsell-self-service-toggle1"></label>
+
+              <span class="yes active">Use Default</span>
+              <span class="no inactive">Override</span>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
