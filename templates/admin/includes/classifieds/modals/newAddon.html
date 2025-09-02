@@ -1,0 +1,79 @@
+<div class="modal fade" id="newAddonModal" tabindex="-1" aria-labelledby="newAddonModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">New Addon</h3>
+        </div>
+
+        <form id="classified-measurement-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="form-group w-75 mx-auto mb-4">
+            <label for="addon-name">Add On Name:</label>
+            <input class="form-control" type="text" name="addon-name" id="addon-name" />
+          </div>
+
+          <div class="form-group mb-4 w-75 mx-auto">
+            <label for="addon-description">Description (optional):</label>
+            <textarea class="form-control" name="addon-description" id="addon-description" rows="5"></textarea>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-4">
+              <div class="form-group">
+                <label for="addon-self-service">In the self-service:</label>
+                <select name="addon-self-service" id="addon-self-service" class="form-control">
+                  <option value="" selected>Select</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-4">
+              <div class="form-group">
+                <label for="addon-pricing">Pricing:</label>
+                <select name="addon-pricing" id="addon-pricing" class="form-control">
+                  <option value="" selected>Select</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-4">
+              <div class="form-group">
+                <label for="addon-status">Status:</label>
+                <select name="addon-status" id="addon-status" class="form-control">
+                  <option value="" selected>Select</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="form-select">
+                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              </select>
+            </div>
+            <div class="transferBtns">
+              <input class="mb-2" type="button" id="btnRight" value="  >  " />
+              <br /><input type="button" id="btnLeft" value="  <  " />
+            </div>
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

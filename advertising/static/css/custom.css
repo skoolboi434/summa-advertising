@@ -1313,6 +1313,29 @@
   background-size: cover;
 }
 
+.pill-group {
+  display: flex;
+  gap: 10px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pill:hover {
+  border-color: #666;
+}
+
+.btn-check:checked + .pill {
+  background-color: #f26722; /* highlight color */
+  color: white;
+  border-color: #f26722;
+}
+
 .switch2 {
   position: relative;
   display: inline-block;
@@ -1807,7 +1830,7 @@
   background-color: #21215f;
   width: 100%;
   min-height: 60px;
-  z-index: 99999;
+  z-index: 888;
 }
 .top-bar #sidebarToggle {
   position: fixed;

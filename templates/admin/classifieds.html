@@ -33,6 +33,9 @@
     <li class="nav-item" role="presentation">
       <button class="nav-link-custom" id="pills-custom-fields-tab" data-bs-toggle="pill" data-bs-target="#pills-custom-fields" type="button" role="tab" aria-controls="pills-custom-fields" aria-selected="false">Custom Fields</button>
     </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-addons-tab" data-bs-toggle="pill" data-bs-target="#pills-addons" type="button" role="tab" aria-controls="pills-addons" aria-selected="false">Add Ons</button>
+    </li>
   </ul>
 
   <div class="tab-content" id="pills-tabContent">
@@ -41,6 +44,7 @@
     <div class="tab-pane fade pt-5" id="pills-styles" role="tabpanel" aria-labelledby="pills-styles-tab" data-heading="Styles">{% include 'admin/includes/classifieds/styles.html'%}</div>
     <div class="tab-pane fade pt-5" id="pills-upsells" role="tabpanel" aria-labelledby="pills-upsells-tab" data-heading="Upsells">{% include 'admin/includes/classifieds/upsells.html'%}</div>
     <div class="tab-pane fade pt-5" id="pills-custom-fields" role="tabpanel" aria-labelledby="pills-custom-fields-tab" data-heading="Custom Fields">{% include 'admin/includes/classifieds/customFields.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-addons" role="tabpanel" aria-labelledby="pills-addons-tab" data-heading="Add Ons">{% include 'admin/includes/classifieds/addons.html'%}</div>
   </div>
 </div>
 
@@ -56,5 +60,18 @@
 <!-- New Upsell Modal -->
 {% include 'admin/includes/classifieds/modals/newUpsell.html'%}
 
+<!-- Edit Upsell Modal -->
+
+<!-- New Custom Field Modal -->
+{% include 'admin/includes/classifieds/modals/newCustomField.html'%}
+
+<!-- Edit Custom Field Modal -->
+{% include 'admin/includes/classifieds/modals/editCustomField.html'%}
+
+<!-- New Add On Modal -->
+{% include 'admin/includes/classifieds/modals/newAddon.html'%}
+
+<!-- Edit Add On Modal -->
+{% include 'admin/includes/classifieds/modals/editAddon.html'%}
 <script src="{% static 'js/multistep.js' %}"></script>
 {% endblock%}

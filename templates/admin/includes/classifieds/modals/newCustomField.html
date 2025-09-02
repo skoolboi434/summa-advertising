@@ -1,0 +1,110 @@
+<div class="modal fade" id="newCustomFieldModal" tabindex="-1" aria-labelledby="newCustomFieldModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">New Custom Field</h3>
+        </div>
+
+        <form id="classified-measurement-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="custom-field-name">Name:</label>
+                <input type="text" name="custom-field-name" id="custom-field-name" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="custom-field-status">Status:</label>
+                <select name="custom-field-status" id="custom-field-status" class="form-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="custom-field-format">Select Format:</label>
+                <select name="custom-field-format" id="custom-field-format" class="form-select"></select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="custom-field-assign-upsell">Assign Upsell:</label>
+                <select name="custom-field-assign-upsell" id="custom-field-assign-upsell" class="form-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="custom-field-applies-to" class="d-block mb-2">Applies to:</label>
+
+                <div class="pill-group">
+                  <input type="radio" class="btn-check" name="flexRadioDefault" id="entire-ad" autocomplete="off" />
+                  <label class="pill" for="entire-ad">Entire Ad</label>
+
+                  <input type="radio" class="btn-check" name="flexRadioDefault" id="by-word" autocomplete="off" />
+                  <label class="pill" for="by-word">By Word</label>
+
+                  <input type="radio" class="btn-check" name="flexRadioDefault" id="by-line" autocomplete="off" />
+                  <label class="pill" for="by-line">By Line</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="classified-codes">Classified Codes:</label>
+                <select name="classified-codes" id="classified-codes" class="form-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="form-select">
+                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              </select>
+            </div>
+            <div class="transferBtns">
+              <input class="mb-2" type="button" id="btnRight" value="  >  " />
+              <br /><input type="button" id="btnLeft" value="  <  " />
+            </div>
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="form-group mb-4 w-50 mx-auto d-flex flex-column align-items-center">
+            <label for="custom-field-self-service" class="d-block mb-2">Available in Self Service?</label>
+
+            <div class="pill-group">
+              <input type="radio" class="btn-check" name="flexRadioDefault" id="yes" autocomplete="off" checked />
+              <label class="pill" for="yes">Yes</label>
+
+              <input type="radio" class="btn-check" name="flexRadioDefault" id="no" autocomplete="off" />
+              <label class="pill" for="no">No</label>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

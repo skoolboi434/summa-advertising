@@ -1,7 +1,7 @@
 <div class="modal fade" id="newUpsellModal" tabindex="-1" aria-labelledby="newUpsellModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header border-0">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -33,29 +33,35 @@
 
           <div class="form-group mb-4 w-75 mx-auto">
             <label for="upsell-description">Description (optional):</label>
-            <textarea class="form-control" name="upsell-description" id="upsell-description"></textarea>
+            <textarea class="form-control" name="upsell-description" id="upsell-description" rows="5"></textarea>
           </div>
 
           <div class="row mb-4 w-75 mx-auto">
             <div class="col-md-12 col-lg-6">
-              <label class="d-block" for="upsell-assigned-rate">Assigned Rate:</label>
-              <div class="custom-toggle primary">
-                <input id="cc-upsell-rate-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
-                <label for="cc-upsell-rate-toggle1"></label>
+              <div class="form-group">
+                <label for="upsell-self-service" class="d-block mb-2"> <span class="asterisk">*</span>Assigned Rate:</label>
 
-                <span class="yes active">Use Default</span>
-                <span class="no inactive">Override</span>
+                <div class="pill-group">
+                  <input type="radio" class="btn-check" name="upsell-sefl-service" id="upsell-sefl-service-default" autocomplete="off" checked />
+                  <label class="pill" for="upsell-sefl-service-default">Use Default</label>
+
+                  <input type="radio" class="btn-check" name="upsell-sefl-service" id="upsell-sefl-service-override" autocomplete="off" />
+                  <label class="pill" for="upsell-sefl-service-override">Override</label>
+                </div>
               </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
-              <label class="d-block" for="upsell-assigned-gl">Assigned GL:</label>
-              <div class="custom-toggle primary">
-                <input id="cc-upsell-gl-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
-                <label for="cc-upsell-gl-toggle1"></label>
+              <div class="form-group">
+                <label for="upsell-self-service" class="d-block mb-2">Assigned GL:</label>
 
-                <span class="yes active">Use Default</span>
-                <span class="no inactive">Override</span>
+                <div class="pill-group">
+                  <input type="radio" class="btn-check" name="upsell-gl" id="upsell-gl-default" autocomplete="off" checked />
+                  <label class="pill" for="upsell-gl-default">Use Default</label>
+
+                  <input type="radio" class="btn-check" name="upsell-gl" id="upsell-gl-override" autocomplete="off" />
+                  <label class="pill" for="upsell-gl-override">Override</label>
+                </div>
               </div>
             </div>
           </div>
@@ -78,14 +84,17 @@
             </div>
           </div>
 
-          <div class="mb-4 text-center">
-            <label class="d-block" for="upsell-assigned-self-service">Available in Self-service?</label>
-            <div class="custom-toggle primary">
-              <input id="cc-upsell-self-service-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
-              <label for="cc-upsell-self-service-toggle1"></label>
+          <div class="mb-4 text-center d-flex align-items-center justify-content-center">
+            <div class="form-group">
+              <label for="upsell-self-service" class="d-block mb-2">Available in Self-service?</label>
 
-              <span class="yes active">Use Default</span>
-              <span class="no inactive">Override</span>
+              <div class="pill-group">
+                <input type="radio" class="btn-check" name="upsell-self-service" id="upsell-self-service-yes" autocomplete="off" checked />
+                <label class="pill" for="upsell-self-service-yes">Yes</label>
+
+                <input type="radio" class="btn-check" name="upsell-self-service" id="upsell-self-service-no" autocomplete="off" />
+                <label class="pill" for="upsell-self-service-no">No</label>
+              </div>
             </div>
           </div>
 

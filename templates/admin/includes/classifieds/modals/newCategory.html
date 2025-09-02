@@ -1,7 +1,7 @@
 <div class="modal fade" id="newCategoryModal" tabindex="-1" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header border-0">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -11,12 +11,23 @@
         <form id="classified-category-form" action="{% url 'adminClassifieds' %}" method="POST">
           {% csrf_token %}
 
-          <div class="form-group mb-3 w-50 mx-auto">
-            <label for="category-name">Category Name:</label>
-            <input type="text" id="category-name" name="category-name" class="form-control" />
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="category-name">ID:</label>
+                <input type="text" id="category-id" name="category-id" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="category-name"><span class="asterisk">*</span>Category Name:</label>
+                <input type="text" id="category-name" name="category-name" class="form-control" />
+              </div>
+            </div>
           </div>
 
-          <div class="row mb-4 w-75 mx-auto">
+          <div class="row mb-4 w-75 mx-auto mb-4">
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="classified-start-date"><span class="asterisk">*</span>Start Date:</label>
@@ -32,35 +43,64 @@
             </div>
           </div>
 
-          <div class="row mb-4 w-75 mx-auto">
+          <div class="row w-75 mx-auto mb-4">
             <div class="col-md-12 col-lg-6">
-              <p for=""><span class="asterisk">*</span>Is this a Sub-category?</p>
-              <div class="custom-toggle primary">
-                <input id="cc-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
-                <label for="cc-toggle1"></label>
-
-                <span class="yes active">Yes</span>
-                <span class="no inactive">No</span>
+              <div class="form-group">
+                <label for="category-status">Status:</label>
+                <select name="category-status" id="category-status" class="form-select"></select>
               </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
-                <label for="classified-main-category"><span class="asterisk">*</span>Select main category:</label>
-                <select name="classified-main-category" id="classified-main-category" class="form-select"></select>
+                <label for="category-self-service" class="d-block mb-2"> <span class="asterisk">*</span>Available in Self-Service Portal? </label>
+
+                <div class="pill-group">
+                  <input type="radio" class="btn-check" name="selfService" id="category-self-service-yes" autocomplete="off" checked />
+                  <label class="pill" for="category-self-service-yes">Yes</label>
+
+                  <input type="radio" class="btn-check" name="selfService" id="category-self-service-no" autocomplete="off" />
+                  <label class="pill" for="category-self-service-no">No</label>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="row mb-4 w-75 mx-auto">
             <div class="col-md-12 col-lg-6">
-              <p for=""><span class="asterisk">*</span>GL Override?</p>
-              <div class="custom-toggle primary">
-                <input id="cc-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
-                <label for="cc-toggle1"></label>
+              <div class="form-group">
+                <label for="category-subcategory" class="d-block mb-2"> <span class="asterisk">*</span>Is this a Sub-category? </label>
 
-                <span class="yes active">Yes</span>
-                <span class="no inactive">No</span>
+                <div class="pill-group">
+                  <input type="radio" class="btn-check" name="isSubcategory" id="subcategory-yes" autocomplete="off" checked />
+                  <label class="pill" for="subcategory-yes">Yes</label>
+
+                  <input type="radio" class="btn-check" name="isSubcategory" id="subcategory-no" autocomplete="off" />
+                  <label class="pill" for="subcategory-no">No</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="category-gl-override" class="d-block mb-2"> <span class="asterisk">*</span>GL Override?</label>
+
+                <div class="pill-group">
+                  <input type="radio" class="btn-check" name="isGl-override" id="gl-override-yes" autocomplete="off" checked />
+                  <label class="pill" for="gl-override-yes">Yes</label>
+
+                  <input type="radio" class="btn-check" name="isGl-override" id="gl-override-no" autocomplete="off" />
+                  <label class="pill" for="gl-override-no">No</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="main-category-select">Select main category:</label>
+                <select name="main-category-select" id="main-category-select" class="form-select"></select>
               </div>
             </div>
 
@@ -87,17 +127,6 @@
             <div class="selected-pubs">
               Selected Publications:<br />
               <select multiple="multiple" id="lstBox2" class="form-select"></select>
-            </div>
-          </div>
-
-          <div class="w-50 mx-auto text-center mb-4">
-            <p for=""><span class="asterisk">*</span>Include This Category in Self-Service Portal?</p>
-            <div class="custom-toggle primary">
-              <input id="cc-toggle1" class="check-toggle check-toggle-round-flat" type="checkbox" />
-              <label for="cc-toggle1"></label>
-
-              <span class="yes active">Yes</span>
-              <span class="no inactive">No</span>
             </div>
           </div>
 
