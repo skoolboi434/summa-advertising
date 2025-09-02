@@ -1,0 +1,52 @@
+{% extends 'base.html' %}{% load static %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading mb-3">Admin - Ads</h3>
+</div>
+
+<div class="multi-step-form-container">
+  <div id="tab-heading" class="tab-heading mb-5 d-flex justify-content-between align-items-center">
+    <button class="step-arrow" id="prevTabBtn">
+      <i class="fa fa-solid fa-chevron-left"></i>
+    </button>
+
+    <h3 class="multisteps-form__title text-center mb-0">Ad Types</h3>
+
+    <button class="step-arrow" id="nextTabBtn">
+      <i class="fa fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <ul class="nav nav-pills mb-5 d-flex justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom active" id="pills-ad-types-tab" data-bs-toggle="pill" data-bs-target="#pills-ad-types" type="button" role="tab" aria-controls="pills-ad-types" aria-selected="true">Ad Types</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-market-codes-tab" data-bs-toggle="pill" data-bs-target="#pills-market-codes" type="button" role="tab" aria-controls="pills-market-codes" aria-selected="false">Market Codes</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-sections-tab" data-bs-toggle="pill" data-bs-target="#pills-sections" type="button" role="tab" aria-controls="pills-sections" aria-selected="false">Sections</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-ad-criteria-tab" data-bs-toggle="pill" data-bs-target="#pills-ad-criteria" type="button" role="tab" aria-controls="pills-ad-criteria" aria-selected="false">Ad Criteria</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active pt-5" id="pills-ad-types" role="tabpanel" aria-labelledby="pills-ad-types-tab" data-heading="Ad Types">{% include 'admin/includes/classifieds/ads/adTypes.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-market-codes" role="tabpanel" aria-labelledby="pills-market-codes-tab" data-heading="Market Codes">{% include 'admin/includes/classifieds/ads/marketCodes.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-sections" role="tabpanel" aria-labelledby="pills-sections-tab" data-heading="Sections">{% include 'admin/includes/classifieds/ads/sections.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-ad-criteria" role="tabpanel" aria-labelledby="pills-ad-criteria-tab" data-heading="Ad Criteria">{% include 'admin/includes/classifieds/ads/adCriteria.html'%}</div>
+  </div>
+</div>
+
+<!-- New Market Code Modal -->
+{% include 'admin/includes/classifieds/ads/modals/newMarketCode.html'%}
+
+<!-- Edit Market Code Modal -->
+{% include 'admin/includes/classifieds/ads/modals/editMarketCode.html'%}
+
+<!-- Edit Ad Criteria Modal -->
+{% include 'admin/includes/classifieds/ads/modals/editAdCriteria.html'%}
+<script src="{% static 'js/multistep.js' %}"></script>
+{% endblock%}

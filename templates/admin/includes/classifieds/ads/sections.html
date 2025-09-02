@@ -1,0 +1,101 @@
+<div class="border border-dark rounded mb-4 pt-3">
+  <div class="heading-container w-50 mx-auto border-bottom border-dark text-center mb-4">
+    <h3 class="heading">New Section</h3>
+  </div>
+
+  <form action="">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-lg-4">
+          <div class="text-center mb-3">
+            <p>Enter Your Section Name, Code Then<br />select publications you want the<br />Section assigned to</p>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="ad-type-name">Name:</label>
+            <input type="text" name="ad-type-name" id="ad-type-name" class="form-control" />
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="ad-type-code">Code:</label>
+                <input type="text" name="ad-type-code" id="ad-type-code" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="ad-sub-section">Sub-Section (optional):</label>
+                <select name="ad-sub-section" id="ad-sub-section" class="form-select"></select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-8">
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="form-select">
+                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              </select>
+            </div>
+            <div class="transferBtns">
+              <input class="mb-2" type="button" id="btnRight" value="  >  " />
+              <br /><input type="button" id="btnLeft" value="  <  " />
+            </div>
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-container text-center mb-4">
+        <button class="btn btn-secondary">Create</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="btn-search-container d-flex justify-content-between border-bottom border-dark pb-1">
+  <div class="filter-container">
+    <div class="filters ps-3 d-flex align-items-center"><a href="" class="active">Active</a>&nbsp;|&nbsp;<a href="">Inactive</a>&nbsp;|&nbsp;<a href="">Archived</a></div>
+  </div>
+
+  <div class="has-search">
+    <input type="text" class="form-control" placeholder="Search Sections..." />
+  </div>
+</div>
+
+<div class="table-container mt-3">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Code</th>
+        <th scope="col">Sub Section</th>
+        <th scope="col">Publications</th>
+        <th scope="col">Status</th>
+        <th scope="col">Create By</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0001</td>
+        <td>Section Name</td>
+        <td>Section_1</td>
+        <td>Obits</td>
+        <td>Times Leader</td>
+        <td>Active</td>
+        <td>Kyle Jernigan</td>
+        <td><i class="fa fa-solid fa-pen"></i></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -18,6 +18,9 @@ def adminGeneral(request):
 def adminPubSetup(request):
   return render(request, 'admin/pubs/newPublication.html')
 
+def adminAds(request):
+  return render(request, 'admin/ads.html')
+
 # Admin Account Routes
 
 def adminAccounts(request):

@@ -1,0 +1,32 @@
+<div class="modal fade" id="editMarketCodeModal" tabindex="-1" aria-labelledby="editMarketCodeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">Edit Market Code</h3>
+        </div>
+
+        <form id="classified-measurement-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="form-group w-75 mx-auto mb-4">
+            <label for="market-name">Market Name:</label>
+            <input id="market-name" name="market-name" type="text" class="form-control" />
+          </div>
+
+          <div class="form-group w-75 mx-auto mb-4">
+            <label for="market-code">Market Code:</label>
+            <input id="market-code" name="market-code" type="text" class="form-control" />
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
