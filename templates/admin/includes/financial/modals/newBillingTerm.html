@@ -1,0 +1,51 @@
+<div class="modal fade" id="newBillingTermModal" tabindex="-1" aria-labelledby="newBillingTermModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">New Billing Term</h3>
+        </div>
+        <form id="classified-category-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="w-75 mx-auto mb-4">
+            <div class="form-group mb-3">
+              <label for="billing-term-name">Name:</label>
+              <input type="text" name="billing-term-name" id="billing-term-name" class="form-control" />
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="billing-term-status">Status:</label>
+                  <select name="billing-term-status" id="billing-term-status" class="form-select"></select>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6"></div>
+            </div>
+
+            <div class="form-group d-flex flex-column align-items-center mb-3">
+              <label for="billing-term-discount" class="d-block mb-2">Early Payment Discount:</label>
+
+              <div class="pill-group">
+                <input type="radio" class="btn-check" name="isBilling-term" id="billing-term-yes" autocomplete="off" checked />
+                <label class="pill" for="billing-term-yes">Yes</label>
+
+                <input type="radio" class="btn-check" name="isBilling-term" id="billing-term-no" autocomplete="off" />
+                <label class="pill" for="billing-term-no">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

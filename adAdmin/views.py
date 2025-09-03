@@ -21,6 +21,9 @@ def adminPubSetup(request):
 def adminAds(request):
   return render(request, 'admin/ads.html')
 
+def adminFinancial(request):
+  return render(request, 'admin/financial.html')
+
 # Admin Account Routes
 
 def adminAccounts(request):

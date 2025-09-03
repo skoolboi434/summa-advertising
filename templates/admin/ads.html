@@ -33,20 +33,20 @@
   </ul>
 
   <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active pt-5" id="pills-ad-types" role="tabpanel" aria-labelledby="pills-ad-types-tab" data-heading="Ad Types">{% include 'admin/includes/classifieds/ads/adTypes.html'%}</div>
-    <div class="tab-pane fade pt-5" id="pills-market-codes" role="tabpanel" aria-labelledby="pills-market-codes-tab" data-heading="Market Codes">{% include 'admin/includes/classifieds/ads/marketCodes.html'%}</div>
-    <div class="tab-pane fade pt-5" id="pills-sections" role="tabpanel" aria-labelledby="pills-sections-tab" data-heading="Sections">{% include 'admin/includes/classifieds/ads/sections.html'%}</div>
-    <div class="tab-pane fade pt-5" id="pills-ad-criteria" role="tabpanel" aria-labelledby="pills-ad-criteria-tab" data-heading="Ad Criteria">{% include 'admin/includes/classifieds/ads/adCriteria.html'%}</div>
+    <div class="tab-pane fade show active pt-5" id="pills-ad-types" role="tabpanel" aria-labelledby="pills-ad-types-tab" data-heading="Ad Types">{% include 'admin/includes/ads/adTypes.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-market-codes" role="tabpanel" aria-labelledby="pills-market-codes-tab" data-heading="Market Codes">{% include 'admin/includes/ads/marketCodes.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-sections" role="tabpanel" aria-labelledby="pills-sections-tab" data-heading="Sections">{% include 'admin/includes/ads/sections.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-ad-criteria" role="tabpanel" aria-labelledby="pills-ad-criteria-tab" data-heading="Ad Criteria">{% include 'admin/includes/ads/adCriteria.html'%}</div>
   </div>
 </div>
 
 <!-- New Market Code Modal -->
-{% include 'admin/includes/classifieds/ads/modals/newMarketCode.html'%}
+{% include 'admin/includes/ads/modals/newMarketCode.html'%}
 
 <!-- Edit Market Code Modal -->
-{% include 'admin/includes/classifieds/ads/modals/editMarketCode.html'%}
+{% include 'admin/includes/ads/modals/editMarketCode.html'%}
 
 <!-- Edit Ad Criteria Modal -->
-{% include 'admin/includes/classifieds/ads/modals/editAdCriteria.html'%}
+{% include 'admin/includes/ads/modals/editAdCriteria.html'%}
 <script src="{% static 'js/multistep.js' %}"></script>
 {% endblock%}

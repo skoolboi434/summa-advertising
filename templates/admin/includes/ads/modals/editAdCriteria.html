@@ -1,0 +1,50 @@
+<div class="modal fade" id="editAdCriteriaModal" tabindex="-1" aria-labelledby="editAdCriteriaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">Edit Ad Criteria</h3>
+        </div>
+
+        <form id="classified-measurement-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="form-group w-75 mx-auto mb-4">
+            <label for="market-name">Market Name:</label>
+            <input id="market-name" name="market-name" type="text" class="form-control" />
+          </div>
+
+          <div class="form-group w-75 mx-auto mb-4">
+            <label for="market-code">Market Code:</label>
+            <input id="market-code" name="market-code" type="text" class="form-control" />
+          </div>
+
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="form-select">
+                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              </select>
+            </div>
+            <div class="transferBtns">
+              <input class="mb-2" type="button" id="btnRight" value="  >  " />
+              <br /><input type="button" id="btnLeft" value="  <  " />
+            </div>
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

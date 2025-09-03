@@ -1,0 +1,53 @@
+<div class="modal fade" id="editAccountingPeriodModal" tabindex="-1" aria-labelledby="editAccountingPeriodModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">Edit Accounting Period</h3>
+        </div>
+        <form id="classified-category-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="accounting-period-name">Name:</label>
+                <input type="text" name="accounting-period-name" id="accounting-period-name" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="assigned-fiscal-year">Assigned Fiscal Year:</label>
+                <select name="assigned-fiscal-year" id="assigned-fiscal-year" class="form-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row w-75 mx-auto mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="accounting-period-start-date"><span class="asterisk">*</span>Start Date:</label>
+                <input class="form-control" type="date" name="accounting-period-start-date" id="accounting-period-start-date" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="accounting-period-end-date"><span class="asterisk">*</span>End Date:</label>
+                <input class="form-control" type="date" name="accounting-period-end-date" id="accounting-period-end-date" />
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
