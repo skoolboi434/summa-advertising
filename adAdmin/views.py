@@ -24,6 +24,9 @@ def adminAds(request):
 def adminFinancial(request):
   return render(request, 'admin/financial.html')
 
+def adminPricing(request):
+  return render(request, 'admin/pricing.html')
+
 # Admin Account Routes
 
 def adminAccounts(request):

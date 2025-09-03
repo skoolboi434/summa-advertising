@@ -1,0 +1,44 @@
+{% extends 'base.html' %}{% load static %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading mb-3">Admin - Pricing</h3>
+</div>
+
+<div class="multi-step-form-container">
+  <div id="tab-heading" class="tab-heading mb-5 d-flex justify-content-between align-items-center">
+    <button class="step-arrow" id="prevTabBtn">
+      <i class="fa fa-solid fa-chevron-left"></i>
+    </button>
+
+    <h3 class="multisteps-form__title text-center mb-0">Adjustments</h3>
+
+    <button class="step-arrow" id="nextTabBtn">
+      <i class="fa fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <ul class="nav nav-pills mb-5 d-flex justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom active" id="pills-adjustments-tab" data-bs-toggle="pill" data-bs-target="#pills-adjustments" type="button" role="tab" aria-controls="pills-adjustments" aria-selected="true">Adjustments</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-rates-tab" data-bs-toggle="pill" data-bs-target="#pills-rates" type="button" role="tab" aria-controls="pills-rates" aria-selected="false">Rates</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-rate-groups-tab" data-bs-toggle="pill" data-bs-target="#pills-rate-groups" type="button" role="tab" aria-controls="pills-rate-groups" aria-selected="false">Rate Groups</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-tax-tab" data-bs-toggle="pill" data-bs-target="#pills-tax" type="button" role="tab" aria-controls="pills-tax" aria-selected="false">Tax</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active pt-5" id="pills-adjustments" role="tabpanel" aria-labelledby="pills-adjustments-tab" data-heading="Adjustments">{% include 'admin/includes/pricing/adjustments.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-rates" role="tabpanel" aria-labelledby="pills-rates-tab" data-heading="Rates">{% include 'admin/includes/pricing/rates.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-rate-groups" role="tabpanel" aria-labelledby="pills-rate-groups-tab" data-heading="Rate Groups">{% include 'admin/includes/pricing/rateGroups.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-tax" role="tabpanel" aria-labelledby="pills-tax-tab" data-heading="Tax">{% include 'admin/includes/pricing/tax.html'%}</div>
+  </div>
+</div>
+
+<script src="{% static 'js/multistep.js' %}"></script>
+{% endblock%}

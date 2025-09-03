@@ -9,6 +9,7 @@ urlpatterns = [
   path('adminclassifieds', views.adminClassifieds, name='adminClassifieds'),
   path('adminaccounts', views.adminAccounts, name='adminAccounts'),
   path('adminFinancial', views.adminFinancial, name='adminFinancial'),
+  path('adminPricing', views.adminPricing, name='adminPricing'),
   path('admingeneral/newpublication/', views.adminPubSetup, name='adminPubSetup'),
   path('new-user/', views.createUser, name='createUser'),
   path('new-style/', views.createAdminStyle, name='createAdminStyle'),
