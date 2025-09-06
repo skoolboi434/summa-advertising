@@ -1,0 +1,33 @@
+<div class="modal fade" id="newLocationCodeModal" tabindex="-1" aria-labelledby="newLocationCodeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">New Location Code</h3>
+        </div>
+        <form id="classified-category-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="w-50 mx-auto mb-4">
+            <div class="form-group mb-4">
+              <label for="location-gl-code">Code:</label>
+              <input type="text" class="form-control" name="location-gl-code" id="location-gl-code" />
+            </div>
+
+            <div class="form-group">
+              <label for="location-glcode-description">Description:</label>
+              <textarea name="location-glcode-description" id="location-glcode-description" class="form-control" rows="5"></textarea>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create Code</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

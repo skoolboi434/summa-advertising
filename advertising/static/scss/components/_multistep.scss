@@ -79,6 +79,28 @@
   }
 }
 
+// Gl Codes
+
+.nav-gl-pills {
+  .nav-item {
+    width: 130px;
+    .nav-gl-link-custom {
+      background: rgba($secondary, 0.2) !important;
+      border: none;
+      color: $white;
+      box-shadow: $shadow;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 132px;
+      padding: 3px 25px;
+      text-align: center;
+      &.active {
+        background: $secondary !important;
+      }
+    }
+  }
+}
+
 .save-container {
   display: flex;
   justify-content: end;

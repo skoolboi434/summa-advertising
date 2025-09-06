@@ -1769,6 +1769,24 @@
   background-color: currentColor;
 }
 
+.nav-gl-pills .nav-item {
+  width: 130px;
+}
+.nav-gl-pills .nav-item .nav-gl-link-custom {
+  background: rgba(33, 33, 95, 0.2) !important;
+  border: none;
+  color: #fff;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 132px;
+  padding: 3px 25px;
+  text-align: center;
+}
+.nav-gl-pills .nav-item .nav-gl-link-custom.active {
+  background: #21215f !important;
+}
+
 .save-container {
   display: flex;
   justify-content: end;
