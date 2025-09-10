@@ -74,13 +74,16 @@
       </div>
 
       <div class="w-50 mx-auto text-center mb-4">
-        <p for=""><span class="asterisk">*</span>Available in Self-service:</p>
-        <div class="custom-toggle primary">
-          <input id="cc-style-toggle" class="check-toggle check-toggle-round-flat" type="checkbox" />
-          <label for="cc-style-toggle"></label>
+        <div class="form-group d-flex flex-column align-items-center">
+          <label for="category-subcategory" class="d-block mb-2"><span class="asterisk">*</span>Available in Self-service:</label>
 
-          <span class="yes active">Yes</span>
-          <span class="no inactive">No</span>
+          <div class="pill-group">
+            <input type="radio" class="btn-check" name="isSubcategory" id="subcategory-yes" autocomplete="off" checked />
+            <label class="pill" for="subcategory-yes">Yes</label>
+
+            <input type="radio" class="btn-check" name="isSubcategory" id="subcategory-no" autocomplete="off" />
+            <label class="pill" for="subcategory-no">No</label>
+          </div>
         </div>
       </div>
 
@@ -89,6 +92,7 @@
       </div>
     </div>
 
+    <!-- Fonts & Colors -->
     <div class="tab">
       <div class="tab-description text-center mb-5">
         <p>Here you can pick the fonts and colors you'd like<br />associated with your selected Publications</p>
@@ -157,7 +161,8 @@
       </div>
     </div>
 
-    <div class="tab">
+    <!-- Font Specs -->
+    <div class="tab w-100">
       <div class="tab-description text-center mb-5">
         <p>Add any custom specs to your selected fonts</p>
       </div>
@@ -169,7 +174,256 @@
           </div>
           <div class="fonts-list"></div>
         </div>
-        <div class="specs-container"></div>
+        <div class="specs-container d-block">
+          <ul class="nav nav-pills mb-3 border-bottom border-dark pb-2 justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link-font-spec active" id="pills-font-tab" data-bs-toggle="pill" data-bs-target="#pills-font" type="button" role="tab" aria-controls="pills-font" aria-selected="true">Font</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link-font-spec" id="pills-spacing-tab" data-bs-toggle="pill" data-bs-target="#pills-spacing" type="button" role="tab" aria-controls="pills-spacing" aria-selected="false">Spacing &amp; Typography</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link-font-spec" id="pills-advanced-tab" data-bs-toggle="pill" data-bs-target="#pills-advanced" type="button" role="tab" aria-controls="pills-advanced" aria-selected="false">Advanced</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link-font-spec" id="pills-effects-tab" data-bs-toggle="pill" data-bs-target="#pills-effects" type="button" role="tab" aria-controls="pills-effects" aria-selected="false">Effects</button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-font" role="tabpanel" aria-labelledby="pills-font-tab">
+              <div class="w-75 mx-auto">
+                <div class="form-group mb-4">
+                  <div class="label-container">
+                    <label for="fontSelect">Font Type:</label>
+                  </div>
+                  <select id="fontSelect" name="font_type" class="form-control"></select>
+                </div>
+
+                <div class="mb-4">
+                  <label for="">Size Ranges:</label>
+                  <div class="row">
+                    <div class="col-md-12 col-lg-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label for="fontSelect">Min:</label>
+                        <input type="text" name="min" id="" class="form-control ms-2" />
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label for="fontSelect">Max:</label>
+                        <input type="text" name="max" id="" class="form-control ms-2" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="fontSelect">Font Color:</label>
+                      <select name="" id="" name="font_color" class="form-control"></select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="fontSelect">Font Effects:</label>
+                      <select name="" id="" name="font_effects" class="form-control">
+                        <option value="Bold">Bold</option>
+                        <option value="italic">Italic</option>
+                        <option value="underline">Underline</option>
+                        <option value="strikethrough">Strikethrough</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="fontSelect">Underline Style:</label>
+                      <select name="" id="" name="underline_style" class="form-control"></select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="fontSelect">Underline Color:</label>
+                      <select class="form-control" name="underline_color" data-colorselect>
+                        <option value="#f1c40f">Yellow</option>
+                        <option value="#00FFFF">Cyan</option>
+                        <option value="#FF00FF">Magenta</option>
+                        <option value="#000000">Black</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-spacing" role="tabpanel" aria-labelledby="pills-spacing-tab">
+              <div class="row mb-5">
+                <div class="col-md-12 col-lg-6">
+                  <div class="form-group mb-3">
+                    <label for="scale">Scale:</label>
+                    <select name="scale" id="scale" class="form-select"></select>
+                  </div>
+
+                  <div class="form-group mb-3"></div>
+                </div>
+
+                <div class="col-md-12 col-lg-6">
+                  <div class="row mb-4">
+                    <div class="col-md-12 col-lg-6">
+                      <div class="form-group">
+                        <label for="ligatures">Ligatures:</label>
+                        <select name="ligatures" id="ligatures" class="form-select"></select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-6">
+                      <div class="form-group">
+                        <label for="number-spacing">Number Spacing:</label>
+                        <select name="number-spacing" id="number-spacing" class="form-select"></select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12 col-lg-6">
+                      <div class="form-group">
+                        <label for="number-forms">Number Forms:</label>
+                        <select name="number-forms" id="number-forms" class="form-select"></select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-6">
+                      <div class="form-group">
+                        <label for="stylistic-sets">Stylistic Sets:</label>
+                        <select name="stylistic-sets" id="stylistic-sets" class="form-select"></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 col-lg-6">
+                  <div class="d-flex">
+                    <div class="form-check w-50 me-lg-2 d-flex align-items-center">
+                      <input class="form-check-input me-2" type="checkbox" value="" id="font-kerning" name="font-kerning" />
+                      <label class="form-check-label" for="font-kerning"> Kerning for Fonts:</label>
+                    </div>
+
+                    <div class="form-group d-flex align-items-center w-50">
+                      <input type="text" class="form-control w-25 me-2" id="points" name="points" />
+                      <label class="form-check-label" for="points">Points and above:</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 col-lg-6 d-flex align-items-center">
+                  <div class="form-group d-flex align-items-center">
+                    <label for="category-subcategory" class="d-block mb-2 me-2"><span class="asterisk">*</span>Available in Self-service:</label>
+
+                    <div class="pill-group">
+                      <input type="radio" class="btn-check" name="isContextual" id="contextual-yes" autocomplete="off" checked />
+                      <label class="pill" for="contextual-yes">Yes</label>
+
+                      <input type="radio" class="btn-check" name="isContextual" id="contextual-no" autocomplete="off" />
+                      <label class="pill" for="contextual-no">No</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-advanced" role="tabpanel" aria-labelledby="pills-advanced-tab">...</div>
+
+            <div class="tab-pane fade" id="pills-effects" role="tabpanel" aria-labelledby="pills-effects-tab">
+              <div class="row">
+                <div class="col-md-12 col-lg-6">
+                  <div class="form-group text-fill-container mb-4">
+                    <div class="label-container">
+                      <label for="textFill">Text Fill:</label>
+                    </div>
+                    <select name="text_fill" id="textFill" class="form-control">
+                      <option value="gradient-fill">Gradient Fill</option>
+                      <option value="solid-fill">Solid Fill</option>
+                      <option value="no-fill">No Fill</option>
+                    </select>
+                  </div>
+
+                  <div class="gradient-container">
+                    <div class="row mb-4">
+                      <div class="col-md-12 col-lg-6">
+                        <div class="label-container">
+                          <label for="textFill">Preset Gradients:</label>
+                        </div>
+                        <div class="dropdown">
+                          <button type="button" id="gradientSelector" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"></button>
+                          <div class="dropdown-menu" aria-labelledby="gradientSelector">
+                            <!-- Gradient options will be dynamically populated here -->
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <div class="label-container">
+                            <label for="textFill">Type:</label>
+                          </div>
+                          <select name="gradient_type" id="gradientType" class="form-select">
+                            <option value="linear">Linear</option>
+                            <option value="radial">Radial</option>
+                            <option value="diagonal">Diagonal</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="gradient-settings">
+                      <a href="#">Custom Gradient Settings</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-6">
+                  <div class="outline-container d-flex align-items-center justify-content-between mb-4">
+                    <div class="form-group w-75">
+                      <div class="label-container">
+                        <label for="textOutline">Text Outline:</label>
+                      </div>
+                      <select name="gradient_fill" id="textOuline" class="form-select">
+                        <option value="gradient-fill">Gradient Fill</option>
+                        <option id="solidFill" value="solid-fill">Solid Fill</option>
+                        <option value="no-fill">No Fill</option>
+                      </select>
+                    </div>
+                    <div class="d-flex align-items-bottom">
+                      <button type="button" class="color-fill"><i class="fa fa-solid fa-fill-drip"></i></button>
+                    </div>
+                  </div>
+                  <div class="transparency-container d-flex align-items-center justify-content-between">
+                    <div class="form-group range-container d-flex flex-column w-75 me-2">
+                      <label for="transparency">Transparency:</label>
+                      <input type="range" name="transparency" id="transparencyRange" min="1" max="100" value="0" />
+                    </div>
+                    <div class="form-group percentage-container w-25">
+                      <input type="text" name="transparency_percentage" id="transparencyText" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-container mt-5">
+            <p>Font Preview</p>
+            <div class="font-preview">
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odio dolor repellendus rem animi odit, eius iste magni, totam perspiciatis eveniet recusandae at aliquid omnis vero consequuntur aspernatur veritatis? Quod, deserunt?</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="btn-container d-flex justify-content-between mt-5">

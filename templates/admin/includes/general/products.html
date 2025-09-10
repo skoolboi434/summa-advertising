@@ -1,11 +1,7 @@
-<div class="save-container">
-  <button class="btn btn-secondary-light">Save Changes</button>
-</div>
-
-<div class="text-container text-center mb-5">
+<div class="text-center mb-5">
   <p>
     Click on an option below to create a<br />
-    new product Type
+    new Media Channel.
   </p>
 </div>
 
@@ -52,17 +48,40 @@
       <tr>
         <th>Name</th>
         <th>Product Type</th>
+        <th>Fold Orientation</th>
+        <th>Media Channel</th>
         <th>Dimensions</th>
         <th>Status</th>
-        <th>Actions</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
-      <!-- Data will be inserted dynamically -->
+      {% for product in page_obj %}
+      <tr>
+        <td>{{product.name}}</td>
+        <td><span class="text-capitalize">{{product.product_type}}</span></td>
+        <td><span class="text-capitalize">{{product.fold_orientation}}</span></td>
+        <td>-</td>
+        <td>-</td>
+        <td><td>
+          <a href="">
+            <i class="fa fa-solid fa-pen me-3 color-secondary"></i>
+          </a>
+        </td></td>
+      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
 
-<div class="save-container d-flex justify-content-end">
-  <button class="btn btn-secondary-light">Save Changes</button>
+<div class="pagination">
+  {% if page_obj.has_previous %}
+  <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+  {% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}">Next</a>
+  {% endif %}
 </div>

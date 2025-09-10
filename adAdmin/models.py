@@ -2,6 +2,25 @@ from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils import timezone
 
+class CompanyInfo(models.Model):
+    name = models.CharField(max_length=255)
+    address = models.TextField(blank=True, null=True)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zipcode = models.CharField(max_length=20, null=True, blank=True)
+    phone = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    logo = models.ImageField(upload_to='company_logos/', blank=True, null=True)
+    
+
+    class Meta:
+        verbose_name = "Company Information"
+        verbose_name_plural = "Company Information"
+        db_table = "company_info"
+
+    def __str__(self):
+        return self.name
+
 class Role(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
@@ -294,4 +313,59 @@ class Customer(models.Model):
     def __str__(self):
         return f"{self.first_name or ''} {self.last_name or ''}".strip()
 
+class AdvPubsProfile(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    publication_name = models.CharField(max_length=255)
+    country = models.CharField(
+        max_length=3,  # ISO 3166-1 Alpha-2 standard for country abbreviations
+        default="US"   # Default abbreviation for United States
+    )
+    address_1 = models.CharField(max_length=255)
+    address_2 = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=50)
+    zip = models.CharField(max_length=20)
 
+    class Meta:
+        db_table = 'adv_pubs_profile'
+
+
+class AdvPubsProduct(models.Model):
+    PUBLICATION_TYPES = [
+        ('magazine', 'Magazine'),
+        ('newspaper', 'Newspaper'),
+        ('digital', 'Digital'),
+    ]
+
+    FOLD_ORIENTATIONS = [
+        ('horizontal', 'Horizontal'),
+        ('vertical', 'Vertical'),
+        ('none', 'None'),
+    ]
+
+    FORMAT_CHOICES = [
+        ('jpg', 'JPG'),
+        ('png', 'PNG'),
+        ('gif', 'GIF'),
+        ('mp4', 'MP4'),
+        ('none', 'None'),
+    ]
+
+    publication = models.ForeignKey('AdvPubsProfile', on_delete=models.CASCADE, related_name='products')
+    product_type = models.CharField(max_length=20, choices=PUBLICATION_TYPES)
+    name = models.TextField()
+    measurement_unit = models.CharField(max_length=10, choices=[('inch', 'Inch'), ('cm', 'CM'), ('pixel', 'Pixel')], null=True, blank=True)
+    fold_orientation = models.CharField(max_length=10, choices=FOLD_ORIENTATIONS, default='none')
+    formats = models.CharField(max_length=100, default='none')  # Use CharField to simulate SET behavior
+    width = models.IntegerField()
+    height = models.IntegerField()
+    active = models.BooleanField(default=True)
+    status = models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'adv_pubs_products'
+
+    def __str__(self):
+        return self.name

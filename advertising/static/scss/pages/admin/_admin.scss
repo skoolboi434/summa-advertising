@@ -163,58 +163,98 @@
   min-height: 500px;
   border: 1px solid #000;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
-}
 
-.font-specs-container .available-fonts {
-  background-color: #f3f3f3;
-  width: 25%;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  overflow: hidden;
-}
+  .available-fonts {
+    background-color: #f3f3f3;
+    width: 25%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    overflow: hidden;
 
-.font-specs-container .available-fonts .fonts-heading {
-  background-color: rgba(33, 33, 95, 0.5);
-  border-top-left-radius: 10px;
-  padding: 10px;
-}
+    .fonts-heading {
+      background-color: rgba(33, 33, 95, 0.5);
+      border-top-left-radius: 10px;
+      padding: 10px;
 
-.font-specs-container .available-fonts .fonts-heading h3 {
-  font-family: 'lato', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: #fff;
-  line-height: 26.4px;
-  text-align: left;
-  margin: 0;
-}
+      h3 {
+        font-family: 'lato', sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 26.4px;
+        text-align: left;
+        margin: 0;
+      }
+    }
 
-.font-specs-container .available-fonts .fonts-list {
-  overflow: scroll;
-  height: 100%;
-}
+    .fonts-list {
+      overflow: scroll;
+      height: 100%;
 
-.font-specs-container .available-fonts .fonts-list .font-container {
-  padding: 10px 20px;
-  cursor: pointer;
-}
+      .font-container {
+        padding: 10px 20px;
+        cursor: pointer;
 
-.font-specs-container .available-fonts .fonts-list .font-container.active {
-  background-color: rgba(33, 33, 95, 0.1);
-}
+        &.active {
+          background-color: rgba(33, 33, 95, 0.1);
+        }
+      }
+    }
+  }
 
-.font-specs-container .specs-container {
-  background-color: rgba(33, 33, 95, 0.1);
-  width: 75%;
-  border: none;
-  border-radius: 0;
-  padding: 20px;
-}
+  .specs-container {
+    background-color: rgba(33, 33, 95, 0.1);
+    width: 75%;
+    border: none;
+    border-radius: 0;
+    padding: 20px;
 
-.font-specs-container .specs-container .font-preview {
-  min-height: 40px;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #666666;
-  background-color: #fff;
+    .nav-link-font-spec {
+      position: relative;
+      font-size: 13px;
+      color: $black !important;
+      text-indent: -9999px;
+      border: none;
+      background-color: transparent;
+      outline: none !important;
+      margin: 0 2px;
+      padding: 2px 20px;
+      border: none;
+      border-radius: 10px;
+      @include transition-mix($duration: 0.15s);
+
+      cursor: pointer;
+
+      @media (min-width: 500px) {
+        text-indent: 0;
+      }
+
+      //last child - without line decoration
+      &:first-child {
+        &:after {
+          display: none;
+        }
+      }
+
+      //active styles
+      &.active {
+        background-color: $secondary;
+        color: $white !important;
+        box-shadow: $shadow;
+        &:before {
+          transform: translateX(-50%) scale(1.2);
+
+          background-color: currentColor;
+        }
+      }
+    }
+
+    .font-preview {
+      min-height: 40px;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #666666;
+      background-color: #fff;
+    }
+  }
 }

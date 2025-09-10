@@ -1,0 +1,72 @@
+<div class="modal fade" id="editRegionModal" tabindex="-1" aria-labelledby="editRegionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">Edit Upsell</h3>
+        </div>
+
+        <form id="region-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="row mb-4 w-75 mx-auto">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="region-id">Id:</label>
+                <input name="region-id" id="region-id" class="form-select" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="region-name">Name:</label>
+                <input class="form-control" type="text" name="region-name" id="region-name" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="region-code">Code:</label>
+                <input name="region-code" id="region-code" class="form-select" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="region-status">Status:</label>
+                <select name="region-status" id="region-status" class="form-select"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="form-select">
+                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
+                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              </select>
+            </div>
+            <div class="transferBtns">
+              <input class="mb-2" type="button" id="btnRight" value="  >  " />
+              <br /><input type="button" id="btnLeft" value="  <  " />
+            </div>
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-region-update" type="submit" class="btn btn-secondary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

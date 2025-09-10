@@ -1,7 +1,3 @@
-<div class="save-container d-flex justify-content-end">
-  <button class="btn btn-secondary-light">Save Changes</button>
-</div>
-
 <div class="edit-info-container">
   <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editAdminInfoModal"><i class="fa fa-solid fa-pencil"></i> Edit Info</button>
   <hr />
@@ -9,13 +5,15 @@
 
 <div class="row">
   <div class="col-md-3">
-    <div class="img-placeholder"></div>
+    <div class="img-placeholder">
+      {% if company.logo %}
+      <img class="img-fluid" src="{{ company.logo.url }}" alt="{{ company.name }} Logo" />
+      {% endif %}
+    </div>
   </div>
   <div class="col-md-9">
-    <h3 class="title">Publication Name <span class="flag"></span></h3>
-    <p class="address">
-      address 1, address 2<br />
-      city, state zip
-    </p>
+    <h3 class="title">{{ company.name }}</h3>
+    <p class="address mb-0">{{ company.address }}</p>
+    <p>{{ company.city }}, {{ company.state }} {{ company.zipcode }}</p>
   </div>
 </div>

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Role, Region, Status, AccountType, Publication
+from .models import Role, Region, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo
 from classifieds.models import Classification
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -9,11 +9,26 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 
+
 def index(request):
   return render(request, 'admin/portal.html')
 
 def adminGeneral(request):
-  return render(request, 'admin/general.html')
+  publications = Publication.objects.all()
+  advertiser_list = Account.objects.all().order_by('-created_at')
+  regions = Region.objects.all()
+  products = AdvPubsProduct.objects.all()
+  products_paginator = Paginator(products, 10)
+  page_number = request.GET.get('page')
+  page_obj = products_paginator.get_page(page_number)
+  company = CompanyInfo.objects.first() 
+  return render(request, 'admin/general.html', {
+        'publications': publications,
+        'advertiser_list': advertiser_list,
+        'regions': regions,
+        'page_obj': page_obj,
+        "company": company,
+    })
 
 def adminPubSetup(request):
   return render(request, 'admin/pubs/newPublication.html')
