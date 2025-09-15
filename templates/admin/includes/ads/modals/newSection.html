@@ -29,7 +29,9 @@
 
             <div class="form-group">
               <label for="ad-sub-section">Sub-Section (optional):</label>
-              <select name="ad-sub-section" id="ad-sub-section" class="form-select"></select>
+              <select name="ad-sub-section" id="ad-sub-section" class="form-select">
+                <option value="none">None</option>
+              </select>
             </div>
           </div>
 
@@ -43,11 +45,11 @@
               </select>
             </div>
             <div class="transferBtns d-flex flex-column align-items-center mx-3">
-              <button type="button" class="btn-all-right btn-sm btn-secondary mb-2" id="btnAllRight">&gt;&gt;</button>
-              <button type="button" class="btn-right btn btn-sm btn-secondary mb-2" id="btnRight">&gt;</button>
-              <button type="button" class="btn-left btn btn-sm btn-secondary mb-2" id="btnLeft">&lt;</button>
+              <button type="button" class="btn-all-right mb-2" id="btnAllRight">&gt;&gt;</button>
+              <button type="button" class="btn-right mb-2" id="btnRight">&gt;</button>
+              <button type="button" class="btn-left mb-2" id="btnLeft">&lt;</button>
 
-              <button type="button" class="btn-all-left btn btn-sm btn-secondary" id="btnAllLeft">&lt;&lt;</button>
+              <button type="button" class="btn-all-left" id="btnAllLeft">&lt;&lt;</button>
             </div>
 
             <div class="selected-pubs">
@@ -57,7 +59,7 @@
           </div>
 
           <div class="btn-container text-center">
-            <button id="submit-ad-type" type="submit" class="btn btn-secondary">Create Code</button>
+            <button id="submit-ad-section" type="submit" class="btn btn-secondary">Create Section</button>
           </div>
         </form>
       </div>

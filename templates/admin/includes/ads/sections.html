@@ -24,16 +24,27 @@
       </tr>
     </thead>
     <tbody>
+      {% for section in sections_page_obj %}
       <tr>
-        <td>0001</td>
-        <td>Section Name</td>
-        <td>Section_1</td>
-        <td>Obits</td>
-        <td>Times Leader</td>
-        <td>Active</td>
-        <td>Kyle Jernigan</td>
+        <td>{{section.id}}</td>
+        <td>{{section.name}}</td>
+        <td>{{section.code}}</td>
+        <td><span class="text-capitalize">{{section.sub_section}}</span></td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in section.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
+        <td><span class="text-capitalize">{{section.status}}</span></td>
+        <td>{% if section.created_by %} <span class="text-capitalize">{{ section.created_by.get_full_name|default:section.created_by.username }}</span> {% else %} - {% endif %}</td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

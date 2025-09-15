@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria
+from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section
 from classifieds.models import Classification
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -100,6 +100,25 @@ def adminAds(request):
                 status="active",
                 created_by=request.user
             )
+            return redirect("adminAds")
+
+        elif "section-name" in request.POST:
+            # Market Code form
+            name = request.POST.get("section-name")
+            code = request.POST.get("section-code")
+            sub_section = request.POST.get("ad-sub-section")
+            publications = request.POST.getlist("publications")
+
+            section = Section.objects.create(
+                name=name,
+                code=code,
+                sub_section=sub_section,
+                status="active",
+                created_by=request.user
+            )
+            if publications:
+                section.publications.set(publications)
+            return redirect("adminAds")
         
         elif "adCriteria-name" in request.POST:
             # Market Code form
@@ -130,6 +149,11 @@ def adminAds(request):
     marketCode_page_number = request.GET.get('page')
     marketCodes_page_obj = marketCodes_paginator.get_page(marketCode_page_number)
 
+    sections = Section.objects.all().order_by('-created_at')
+    sections_paginator = Paginator(sections, 10)
+    section_page_number = request.GET.get('page')
+    sections_page_obj = sections_paginator.get_page(section_page_number)
+
     adCriterias = AdCriteria.objects.all().order_by('-created_at')
     adCriterias_paginator = Paginator(adCriterias, 10)
     adCriteria_page_number = request.GET.get('page')
@@ -141,11 +165,10 @@ def adminAds(request):
     return render(request, 'admin/ads.html', {
         'publications': publications,
         'rates': rates,
-        'adTypes': adTypes,
-        'marketCodes': marketCodes,
         "adTypes_page_obj": adTypes_page_obj,
         "marketCodes_page_obj": marketCodes_page_obj,
         "adCriterias_page_obj": adCriterias_page_obj,
+        "sections_page_obj": sections_page_obj,
     })
 
 
