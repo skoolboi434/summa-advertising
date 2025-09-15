@@ -1,5 +1,5 @@
 from django.db import models
-from adAdmin.models import Account, Publication
+from adAdmin.models import Account, Publication, Rate, AdminAdType
 from django.contrib.auth.models import User
 
 #from adAdmin.models import AdminAdType
@@ -45,7 +45,7 @@ class ClassifiedAd(models.Model):
     rate = models.CharField(max_length=250, blank=True, null=True)  # Updated
 
     # conversion_unit = models.CharField(max_length=20)
-    ad_type = models.ForeignKey('AdminAdType', on_delete=models.CASCADE)
+    ad_type = models.ForeignKey('adAdmin.AdminAdType', on_delete=models.CASCADE)
     # TODO - add a field for picture of the classified ad 
 
     def __str__(self):
@@ -73,18 +73,7 @@ class ClassifiedCampaignSummary(models.Model):
     class Meta:
         db_table = "advertising_campaign_summary"
 
-class AdminAdType(models.Model):
-    code = models.CharField(max_length=100, default=None)
-    name = models.CharField(max_length=255, default=None)
-    #default_rate = models.ForeignKey('Rate', on_delete=models.CASCADE, default=None)
-    active = models.BooleanField(default=True)
-    status = models.IntegerField(default=1)
-    
-    class Meta:
-        db_table = 'advertising_adminadtype'
-
-    def __str__(self):
-        return self.code  
+  
 
 class Classification(models.Model):
     code = models.CharField(max_length=100)

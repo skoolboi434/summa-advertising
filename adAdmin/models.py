@@ -31,7 +31,26 @@ class Role(models.Model):
         db_table = 'advertising_role'
 
 
+class AdminAdType(models.Model):
+    code = models.CharField(max_length=100, default=None)
+    name = models.CharField(max_length=255, default=None)
+    default_rate = models.ForeignKey('Rate', on_delete=models.CASCADE, default=None)
+    status = models.CharField(max_length=100, default="active")
+    created_at = models.DateTimeField(default=timezone.now)
 
+    publications = models.ManyToManyField(
+        'Publication', 
+        related_name="adTypes", 
+        blank=True
+    )
+
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_adTypes")
+    
+    class Meta:
+        db_table = 'advertising_adminadtype'
+
+    def __str__(self):
+        return self.code
 
 
 class Region(models.Model):
@@ -294,9 +313,13 @@ class IndustryCode(models.Model):
 
 class MarketCode(models.Model):
     code = models.CharField(max_length=100)
-    description = models.CharField(max_length=100)
-    active = models.IntegerField()
-    account = models.ForeignKey('Account', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    #description = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default="active")
+    #account = models.ForeignKey('Account', on_delete=models.CASCADE)
+
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_market_code")
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.code

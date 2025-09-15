@@ -28,9 +28,18 @@
         <td>{{adType.id}}</td>
         <td>{{adType.name}}</td>
         <td>{{adType.code}}</td>
-        <td>Times Leader</td>
-        <td>Active</td>
-        <td>Kyle Jernigan</td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in adType.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
+        <td><span class="text-capitalize">{{adType.status}}</span></td>
+        <td>{% if adType.created_by %} <span class="text-capitalize">{{ adType.created_by.get_full_name|default:adType.created_by.username }}</span> {% else %} - {% endif %}</td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
       {% endfor %}

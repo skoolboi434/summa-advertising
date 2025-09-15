@@ -16,18 +16,34 @@
         <th scope="col">ID</th>
         <th scope="col">Market Name</th>
         <th scope="col">Code</th>
+        <th scope="col">Create By</th>
         <th scope="col">Status</th>
         <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
+      {% for code in marketCodes_page_obj %}
       <tr>
-        <td>0001</td>
-        <td>Market Name</td>
-        <td>AAAA</td>
-        <td>Active</td>
+        <td>{{code.id}}</td>
+        <td>{{code.name}}</td>
+        <td>{{code.code}}</td>
+        <td>{% if code.created_by %} <span class="text-capitalize">{{ code.created_by.get_full_name|default:code.created_by.username }}</span> {% else %} - {% endif %}</td>
+        <td>{{code.status}}</td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
+</div>
+
+<div class="pagination">
+  {% if marketCodes_page_obj.has_previous %}
+  <a href="?page={{ marketCodes_page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ marketCodes_page_obj.number }} of {{ marketCodes_page_obj.paginator.num_pages }}</span>
+
+  {% if marketCodes_page_obj.has_next %}
+  <a href="?page={{ marketCodes_page_obj.next_page_number }}">Next</a>
+  {% endif %}
 </div>

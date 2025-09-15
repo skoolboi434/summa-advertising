@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo
-from classifieds.models import Classification, AdminAdType
+from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode
+from classifieds.models import Classification
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
 from django.utils.timezone import now
@@ -69,19 +69,62 @@ def adminPubSetup(request):
   return render(request, 'admin/pubs/newPublication.html')
 
 def adminAds(request):
-  adTypes = AdminAdType.objects.all()
-  adTypes_paginator = Paginator(adTypes, 10)
-  adType_page_number = request.GET.get('page')
-  adTypes_page_obj = adTypes_paginator.get_page(adType_page_number)
+    if request.method == "POST":
+        # Determine which form was submitted
+        if "ad-type-name" in request.POST:
+            # Admin Ad Type form
+            name = request.POST.get("ad-type-name")
+            code = request.POST.get("ad-type-code")
+            default_rate_id = request.POST.get("ad-type-rate")
+            publications = request.POST.getlist("publications")  # list of IDs
 
-  publications = Publication.objects.all()
-  rates = Rate.objects.all()
-  return render(request, 'admin/ads.html', {
-    'publications': publications,
-    'rates': rates,
-    'adTypes': adTypes,
-    "adTypes_page_obj": adTypes_page_obj,
-  })
+            adType = AdminAdType.objects.create(
+                name=name,
+                code=code,
+                status="active",
+                default_rate_id=default_rate_id or None,
+                created_by=request.user
+            )
+            if publications:
+                adType.publications.set(publications)
+
+        elif "market-code-name" in request.POST:
+            # Market Code form
+            name = request.POST.get("market-code-name")
+            code = request.POST.get("market-code")
+
+            marketCode = MarketCode.objects.create(
+                name=name,
+                code=code,
+                status="active",
+                created_by=request.user
+            )
+
+        return redirect("adminAds")
+
+    # GET request
+    adTypes = AdminAdType.objects.all().order_by('-created_at')
+    adTypes_paginator = Paginator(adTypes, 10)
+    adType_page_number = request.GET.get('page')
+    adTypes_page_obj = adTypes_paginator.get_page(adType_page_number)
+
+    marketCodes = MarketCode.objects.all().order_by('-created_at')
+    marketCodes_paginator = Paginator(marketCodes, 10)
+    marketCode_page_number = request.GET.get('page')
+    marketCodes_page_obj = marketCodes_paginator.get_page(adType_page_number)
+
+    publications = Publication.objects.all()
+    rates = Rate.objects.all()
+
+    return render(request, 'admin/ads.html', {
+        'publications': publications,
+        'rates': rates,
+        'adTypes': adTypes,
+        'marketCodes': marketCodes,
+        "adTypes_page_obj": adTypes_page_obj,
+        "marketCodes_page_obj": marketCodes_page_obj,
+    })
+
 
 def adminFinancial(request):
   return render(request, 'admin/financial.html')
