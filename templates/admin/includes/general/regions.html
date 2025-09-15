@@ -29,18 +29,49 @@
       </tr>
     </thead>
     <tbody>
-      {% for region in regions %}
+      {% for region in regions_page_obj %}
       <tr>
         <td>{{region.code}}</td>
         <td>{{region.name}}</td>
-        <td>-</td>
-        <td>-</td>
+        <td>{% if region.created_by %} <span class="text-capitalize">{{ region.created_by.get_full_name|default:region.created_by.username }}</span> {% else %} - {% endif %}</td>
+
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in region.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
         <td>Active</td>
         <td>
-          <span><i class="fa fa-solid fa-envelope-open"></i></span>
+          <i class="fa fa-solid fa-pencil"></i>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
+
+<div class="pagination">
+  {% if regions_page_obj.has_previous %}
+  <a href="?page={{ regions_page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ regions_page_obj.number }} of {{ regions_page_obj.paginator.num_pages }}</span>
+
+  {% if regions_page_obj.has_next %}
+  <a href="?page={{ regions_page_obj.next_page_number }}">Next</a>
+  {% endif %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  });
+</script>

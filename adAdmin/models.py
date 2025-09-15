@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 
 class CompanyInfo(models.Model):
     name = models.CharField(max_length=255)
@@ -31,10 +33,26 @@ class Role(models.Model):
 class Region(models.Model):
     name = models.TextField()
     code = models.TextField()
-    active = models.BooleanField(default=True)
-    status = models.IntegerField(default=1)
+    status = models.CharField(max_length=100, default="active")
+    
+
+    # Many-to-many relationship to Publication
+    publications = models.ManyToManyField(
+        'Publication', 
+        related_name="regions", 
+        blank=True
+    )
+
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_regions")
+
+    created_at = models.DateTimeField(default=timezone.now)
+
     class Meta:
         db_table = 'advertising_region'
+
+    def __str__(self):
+        return self.name
+
 
 
 class Status(models.Model):

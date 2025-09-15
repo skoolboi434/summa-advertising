@@ -1,0 +1,192 @@
+{% extends 'base.html' %}{% load static %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading">New Magazine</h3>
+</div>
+
+<div class="stepform">
+  <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+    <div class="step active">
+      <div class="text">
+        <span class="number">1</span>
+        <span class="title">Product Info</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">2</span>
+        <span class="title">Ad Sizes Setup</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">3</span>
+        <span class="title">Review</span>
+      </div>
+    </div>
+  </div>
+
+  <form id="product-magazine-form" action="{% url 'newMagazine' %}" method="POST">
+    {% csrf_token %}
+    <div class="tab">
+      <div class="row">
+        <div class="col-md-12 col-lg-6">
+          <div class="form-group mb-4">
+            <label for="magazine-product"><span class="asterisk">*</span>Magazine Product:</label>
+            <input type="text" name="magazine-product" id="magazine-product" class="form-control" />
+          </div>
+          <div class="form-group w-50 mb-4">
+            <label for="measurement-type"><span class="asterisk">*</span>Measurement Type:</label>
+            <select name="measurement-type" id="measurement-type" class="form-select">
+              <option value="Inches">Inches</option>
+            </select>
+          </div>
+
+          <div class="d-flex justify-content-between mb-4">
+            <div class="form-group w-50 me-2">
+              <label for="fold-orientation"><span class="asterisk">*</span>Fold Orientation</label>
+              <select name="fold-orientation" id="fold-orientation" class="form-select"></select>
+            </div>
+
+            <div class="form-group w-50">
+              <label for="size"><span class="asterisk">*</span>Size</label>
+              <div class="d-flex justify-content-between mb-3">
+                <div class="">
+                  <input type="number" id="height" class="form-control" placeholder="H" />
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center mx-2">
+                  <span><h5 class="mb-0">X</h5></span>
+                </div>
+
+                <div class="">
+                  <input type="number" id="width" class="form-control" placeholder="W" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mb-4">
+            <div class="form-group me-lg-2">
+              <label for="columns-per-page"><span class="asterisk">*</span>Columns Per Page</label>
+              <input type="text" name="columns-per-page" id="columns-per-page" class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label for="column-width"><span class="asterisk">*</span>Column Width</label>
+              <input type="text" name="column-width" id="column-width" class="form-control" />
+            </div>
+          </div>
+
+          <div class="text-center">
+            <a href="">View Advanced Settings</a>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-6 d-flex align-items-center">
+          <img class="img-fluid" src="{% static 'img/magazine-img.png' %}" alt="magazine-img" />
+        </div>
+      </div>
+
+      <div class="btn-container d-flex justify-content-end mt-5">
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Ad Sizes Setup -->
+    <div class="tab">
+      <div class="row">
+        <div class="col-md-12 col-lg-4">
+          <div class="border border-dark rounded p-3">
+            <div class="heading-container border-bottom border-dark text-center mb-4">
+              <h3 class="color-secondary mb-0">New Standard Ad Size</h3>
+            </div>
+
+            <div class="standard-size-container">
+              <form method="post" id="standardsize-form" class="">
+                <div class="form-group px-3 mb-3">
+                  <label for="size-description">Size Description</label>
+                  <input type="text" name="description" id="size-description" class="form-control" />
+                </div>
+
+                <div class="form-group px-3 mb-4">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="column-num">No. of Columns</label>
+                      <input type="text" name="columns" id="column-num" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="height">Height</label>
+                      <input type="text" name="height" id="height" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="btn-container text-center w-50 mx-auto">
+                  <button class="btn btn-secondary w-100" onclick="createStandardSize()">Create</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-8">
+          <div class="p-3">
+            <div class="heading-container border-bottom border-dark text-center mb-4">
+              <h3 class="color-secondary mb-0">Available Standard Ad Sizes</h3>
+            </div>
+
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">No. of Columns</th>
+                    <th scope="col">Height</th>
+                    <th scope="col">Total Column In.</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0001</td>
+                    <td>Description</td>
+                    <td>4</td>
+                    <td>8</td>
+                    <td>2.25</td>
+                    <td>Active</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Review -->
+    <div class="tab">
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button id="create-magazine-btn" data-step="final" class="btn btn-secondary step-next" type="button">Create Product <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="{% static 'js/stepform/stepform.js' %}"></script>
+{% endblock%}

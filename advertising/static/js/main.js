@@ -78,46 +78,48 @@ function toggleSearchContainer() {
   }
 }
 
-function toggleNewCodePanel() {
-  var newCodePanel = document.getElementById('new-code-panel');
-  if (newCodePanel.style.display === 'none' || newCodePanel.style.display === '') {
-    newCodePanel.style.display = 'block';
-  } else {
-    newCodePanel.style.display = 'none';
-  }
-}
+// function toggleNewCodePanel() {
+//   var newCodePanel = document.getElementById('new-code-panel');
+//   if (newCodePanel.style.display === 'none' || newCodePanel.style.display === '') {
+//     newCodePanel.style.display = 'block';
+//   } else {
+//     newCodePanel.style.display = 'none';
+//   }
+// }
 
-function closeCodePanel() {
-  var newCodePanel = document.getElementById('new-code-panel');
-  if (newCodePanel.style.display === 'block') {
-    newCodePanel.style.display = 'none';
-  } else {
-    newCodePanel.style.display = 'none';
-  }
-}
+// function closeCodePanel() {
+//   var newCodePanel = document.getElementById('new-code-panel');
+//   if (newCodePanel.style.display === 'block') {
+//     newCodePanel.style.display = 'none';
+//   } else {
+//     newCodePanel.style.display = 'none';
+//   }
+// }
 
-$(document).ready(function () {
-  $('#btnRight').click(function (e) {
-    var selectedOpts = $('#lstBox1 option:selected');
-    if (selectedOpts.length == 0) {
-      alert('Nothing to move.');
-      e.preventDefault();
-    }
+// $(document).ready(function () {
+//   $('#btnRight').click(function (e) {
+//     e.preventDefault(); // always prevent default first
 
-    $('#lstBox2').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
-    e.preventDefault();
-  });
+//     var selectedOpts = $('#lstBox1 option:selected');
+//     if (selectedOpts.length === 0) {
+//       alert('Nothing to move.');
+//       return; // stop execution if nothing is selected
+//     }
 
-  $('#btnLeft').click(function (e) {
-    var selectedOpts = $('#lstBox2 option:selected');
-    if (selectedOpts.length == 0) {
-      alert('Nothing to move.');
-      e.preventDefault();
-    }
+//     $('#lstBox2').append($(selectedOpts).clone());
+//     $(selectedOpts).remove();
+//   });
 
-    $('#lstBox1').append($(selectedOpts).clone());
-    $(selectedOpts).remove();
-    e.preventDefault();
-  });
-});
+//   $('#btnLeft').click(function (e) {
+//     e.preventDefault();
+
+//     var selectedOpts = $('#lstBox2 option:selected');
+//     if (selectedOpts.length === 0) {
+//       alert('Nothing to move.');
+//       return;
+//     }
+
+//     $('#lstBox1').append($(selectedOpts).clone());
+//     $(selectedOpts).remove();
+//   });
+// });

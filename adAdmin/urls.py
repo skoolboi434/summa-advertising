@@ -13,5 +13,6 @@ urlpatterns = [
   path('admingeneral/newpublication/', views.adminPubSetup, name='adminPubSetup'),
   path('new-user/', views.createUser, name='createUser'),
   path('new-style/', views.createAdminStyle, name='createAdminStyle'),
+  path('admingeneral/new-magazine/', views.newMagazine, name='newMagazine'),
   
 ]

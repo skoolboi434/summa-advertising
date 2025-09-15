@@ -13,22 +13,57 @@ from django.utils import timezone
 def index(request):
   return render(request, 'admin/portal.html')
 
+from django.shortcuts import redirect
+
 def adminGeneral(request):
-  publications = Publication.objects.all()
-  advertiser_list = Account.objects.all().order_by('-created_at')
-  regions = Region.objects.all()
-  products = AdvPubsProduct.objects.all()
-  products_paginator = Paginator(products, 10)
-  page_number = request.GET.get('page')
-  page_obj = products_paginator.get_page(page_number)
-  company = CompanyInfo.objects.first() 
-  return render(request, 'admin/general.html', {
+    if request.method == "POST":
+        name = request.POST.get("region-name")
+        code = request.POST.get("region-code")
+        publications = request.POST.getlist("publications")  # list of IDs
+
+        region = Region.objects.create(
+            name=name,
+            code=code,
+            status="active",  # or whatever you want as default
+            created_by=request.user 
+        )
+        if publications:
+            region.publications.set(publications)  # save M2M relation
+
+        if request.method == "POST":
+            publications = request.POST.getlist("publications")
+            print("DEBUG publications:", publications)
+
+
+        return redirect("adminGeneral")  # redirect to same page after submit
+
+    publications = Publication.objects.all()
+    advertiser_list = Account.objects.all().order_by('-created_at')
+    regions = Region.objects.all().order_by('-created_at')
+    regions_paginator = Paginator(regions, 10)
+    region_page_number = request.GET.get('page')
+    regions_page_obj = regions_paginator.get_page(region_page_number)
+    
+
+    products = AdvPubsProduct.objects.all()
+    products_paginator = Paginator(products, 10)
+    page_number = request.GET.get('page')
+    page_obj = products_paginator.get_page(page_number)
+    company = CompanyInfo.objects.first() 
+
+    return render(request, 'admin/general.html', {
         'publications': publications,
         'advertiser_list': advertiser_list,
         'regions': regions,
         'page_obj': page_obj,
         "company": company,
+        "regions_page_obj": regions_page_obj,
     })
+
+
+# Admin Products
+def newMagazine(request):
+  return render(request, 'admin/includes/general/newMagazine.html')
 
 def adminPubSetup(request):
   return render(request, 'admin/pubs/newPublication.html')

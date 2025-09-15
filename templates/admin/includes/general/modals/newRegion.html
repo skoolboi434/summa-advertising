@@ -6,7 +6,7 @@
       </div>
       <div class="modal-body">
         <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
-          <h3 class="mb-1">New Upsell</h3>
+          <h3 class="mb-1">New Region</h3>
         </div>
 
         <form id="region-form" action="" method="POST">
@@ -23,7 +23,7 @@
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="region-code">Code:</label>
-                <input name="region-code" id="region-code" class="form-select" />
+                <input name="region-code" id="region-code" class="form-control" />
               </div>
             </div>
           </div>
@@ -32,17 +32,22 @@
             <div class="available-pubs">
               Available Publications:<br />
               <select multiple="multiple" id="lstBox1" class="form-select">
-                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
-                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+                {% for pub in publications %}
+                <option value="{{ pub.id }}">{{ pub.name }}</option>
+                {% endfor %}
               </select>
             </div>
-            <div class="transferBtns">
-              <input class="mb-2" type="button" id="btnRight" value="  >  " />
-              <br /><input type="button" id="btnLeft" value="  <  " />
+            <div class="transferBtns d-flex flex-column align-items-center mx-3">
+              <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnAllRight">&gt;&gt;</button>
+              <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnRight">&gt;</button>
+              <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnLeft">&lt;</button>
+
+              <button type="button" class="btn btn-sm btn-secondary" id="btnAllLeft">&lt;&lt;</button>
             </div>
+
             <div class="selected-pubs">
               Selected Publications:<br />
-              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+              <select multiple="multiple" id="lstBox2" name="publications" class="form-select"></select>
             </div>
           </div>
 
@@ -54,3 +59,54 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById('btnRight').onclick = function () {
+    var from = document.getElementById('lstBox1');
+    var to = document.getElementById('lstBox2');
+    moveSelected(from, to);
+  };
+
+  document.getElementById('btnLeft').onclick = function () {
+    var from = document.getElementById('lstBox2');
+    var to = document.getElementById('lstBox1');
+    moveSelected(from, to);
+  };
+
+  // New “Move All” buttons
+  document.getElementById('btnAllRight').onclick = function () {
+    moveAll(document.getElementById('lstBox1'), document.getElementById('lstBox2'));
+  };
+  document.getElementById('btnAllLeft').onclick = function () {
+    moveAll(document.getElementById('lstBox2'), document.getElementById('lstBox1'));
+  };
+
+  function moveSelected(from, to) {
+    for (var i = 0; i < from.options.length; i++) {
+      if (from.options[i].selected) {
+        let option = from.options[i];
+        option.selected = false; // reset selection
+        to.appendChild(option);
+        i--; // adjust index
+      }
+    }
+  }
+
+  // Move all options
+  function moveAll(from, to) {
+    for (var i = 0; i < from.options.length; i++) {
+      let option = from.options[i];
+      option.selected = false;
+      to.appendChild(option);
+      i--;
+    }
+  }
+
+  // 🔑 Before submitting, force all options in lstBox2 to be selected
+  document.getElementById('region-form').onsubmit = function () {
+    var selected = document.getElementById('lstBox2');
+    for (var i = 0; i < selected.options.length; i++) {
+      selected.options[i].selected = true;
+    }
+  };
+</script>
