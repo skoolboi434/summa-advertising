@@ -51,11 +51,34 @@
 <!-- New Ad Criteria Modal -->
 {% include 'admin/includes/ads/modals/newAdCriteria.html'%}
 
+<!-- New Section Modal -->
+{% include 'admin/includes/ads/modals/newSection.html'%}
+
 <script src="{% static 'js/multistep.js' %}"></script>
 
 <script>
   // 🔑 Before submitting, force all options in lstBox2 to be selected
   document.getElementById('adType-form').onsubmit = function () {
+    var selected = document.getElementById('lstBox2');
+    for (var i = 0; i < selected.options.length; i++) {
+      selected.options[i].selected = true;
+    }
+  };
+</script>
+
+<script>
+  // 🔑 Before submitting, force all options in lstBox2 to be selected
+  document.getElementById('ad-section-form').onsubmit = function () {
+    var selected = document.getElementById('lstBox2');
+    for (var i = 0; i < selected.options.length; i++) {
+      selected.options[i].selected = true;
+    }
+  };
+</script>
+
+<script>
+  // 🔑 Before submitting, force all options in lstBox2 to be selected
+  document.getElementById('adCriteria-form').onsubmit = function () {
     var selected = document.getElementById('lstBox2');
     for (var i = 0; i < selected.options.length; i++) {
       selected.options[i].selected = true;

@@ -76,6 +76,27 @@ class Region(models.Model):
     def __str__(self):
         return self.name
 
+class AdCriteria(models.Model):
+    name = models.TextField()
+    code = models.TextField()
+    status = models.CharField(max_length=100, default="active")
+    created_at = models.DateTimeField(default=timezone.now)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_ad_criterias")
+    
+
+    # Many-to-many relationship to Publication
+    publications = models.ManyToManyField(
+        'Publication', 
+        related_name="ad_criterias", 
+        blank=True
+    )
+
+    class Meta:
+        db_table = 'advertising_ad_criteria'
+
+    def __str__(self):
+        return self.name
+
 
 
 class Status(models.Model):

@@ -23,15 +23,26 @@
       </tr>
     </thead>
     <tbody>
+      {% for adCriteria in adCriterias_page_obj %}
       <tr>
-        <td>0001</td>
-        <td>Inches (For Display Ads)</td>
-        <td>Display</td>
-        <td>Times Leader</td>
-        <td>Active</td>
-        <td>Kyle Jernigan</td>
+        <td>{{adCriteria.id}}</td>
+        <td>{{adCriteria.name}}</td>
+        <td>{{adCriteria.code}}</td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in adCriteria.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
+        <td><span class="text-capitalize">{{adCriteria.status}}</span></td>
+        <td>{% if adCriteria.created_by %} <span class="text-capitalize">{{ adCriteria.created_by.get_full_name|default:adCriteria.created_by.username }}</span> {% else %} - {% endif %}</td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

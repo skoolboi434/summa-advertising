@@ -1,4 +1,4 @@
-<div class="modal fade" id="newAdCriteriaModal" tabindex="-1" aria-labelledby="newAdCriteriaModalLabel" aria-hidden="true">
+<div class="modal fade" id="newSectionModal" tabindex="-1" aria-labelledby="newSectionModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header border-0">
@@ -6,25 +6,30 @@
       </div>
       <div class="modal-body">
         <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
-          <h3 class="mb-1">New Ad Criteria</h3>
+          <h3 class="mb-1">New Section</h3>
         </div>
 
         <div class="text-center mb-3">
-          <p>Enter the Measurement's Name, and Code then<br />select the publication(s) you want the<br />measurement assigned to</p>
+          <p>Enter Your Section Name, Code Then<br />select publications you want the<br />Section assigned to</p>
         </div>
 
-        <form id="adCriteria-form" action="" method="POST">
+        <form id="ad-section-form" action="" method="POST">
           {% csrf_token %}
 
           <div class="w-75 mx-auto mb-4">
             <div class="form-group mb-3">
-              <label for="adCriteria-name"><span class="asterisk">*</span>Name:</label>
-              <input type="text" name="adCriteria-name" id="adCriteria-name" class="form-control" />
+              <label for="section-name">Name:</label>
+              <input type="text" name="section-name" id="section-name" class="form-control" />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="section-code">Code:</label>
+              <input type="text" name="section-code" id="section-code" class="form-control" />
             </div>
 
             <div class="form-group">
-              <label for="adCriteria-code"><span class="asterisk">*</span>Code:</label>
-              <input type="text" name="adCriteria-code" id="adCriteria-code" class="form-control" />
+              <label for="ad-sub-section">Sub-Section (optional):</label>
+              <select name="ad-sub-section" id="ad-sub-section" class="form-select"></select>
             </div>
           </div>
 
@@ -38,11 +43,11 @@
               </select>
             </div>
             <div class="transferBtns d-flex flex-column align-items-center mx-3">
-              <button type="button" class="btn-all-right mb-2" id="btnAllRight">&gt;&gt;</button>
-              <button type="button" class="btn-right mb-2" id="btnRight">&gt;</button>
-              <button type="button" class="btn-left mb-2" id="btnLeft">&lt;</button>
+              <button type="button" class="btn-all-right btn-sm btn-secondary mb-2" id="btnAllRight">&gt;&gt;</button>
+              <button type="button" class="btn-right btn btn-sm btn-secondary mb-2" id="btnRight">&gt;</button>
+              <button type="button" class="btn-left btn btn-sm btn-secondary mb-2" id="btnLeft">&lt;</button>
 
-              <button type="button" class="btn-all-left" id="btnAllLeft">&lt;&lt;</button>
+              <button type="button" class="btn-all-left btn btn-sm btn-secondary" id="btnAllLeft">&lt;&lt;</button>
             </div>
 
             <div class="selected-pubs">
@@ -52,7 +57,7 @@
           </div>
 
           <div class="btn-container text-center">
-            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create</button>
+            <button id="submit-ad-type" type="submit" class="btn btn-secondary">Create Code</button>
           </div>
         </form>
       </div>

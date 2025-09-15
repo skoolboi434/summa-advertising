@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode
+from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria
 from classifieds.models import Classification
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -87,6 +87,7 @@ def adminAds(request):
             )
             if publications:
                 adType.publications.set(publications)
+            return redirect("adminAds")
 
         elif "market-code-name" in request.POST:
             # Market Code form
@@ -99,8 +100,24 @@ def adminAds(request):
                 status="active",
                 created_by=request.user
             )
+        
+        elif "adCriteria-name" in request.POST:
+            # Market Code form
+            name = request.POST.get("adCriteria-name")
+            code = request.POST.get("adCriteria-code")
+            publications = request.POST.getlist("publications")
 
-        return redirect("adminAds")
+            adCriteria = AdCriteria.objects.create(
+                name=name,
+                code=code,
+                status="active",
+                created_by=request.user
+            )
+            if publications:
+                adCriteria.publications.set(publications)
+            return redirect("adminAds")
+
+        
 
     # GET request
     adTypes = AdminAdType.objects.all().order_by('-created_at')
@@ -111,7 +128,12 @@ def adminAds(request):
     marketCodes = MarketCode.objects.all().order_by('-created_at')
     marketCodes_paginator = Paginator(marketCodes, 10)
     marketCode_page_number = request.GET.get('page')
-    marketCodes_page_obj = marketCodes_paginator.get_page(adType_page_number)
+    marketCodes_page_obj = marketCodes_paginator.get_page(marketCode_page_number)
+
+    adCriterias = AdCriteria.objects.all().order_by('-created_at')
+    adCriterias_paginator = Paginator(adCriterias, 10)
+    adCriteria_page_number = request.GET.get('page')
+    adCriterias_page_obj = adCriterias_paginator.get_page(adCriteria_page_number)
 
     publications = Publication.objects.all()
     rates = Rate.objects.all()
@@ -123,6 +145,7 @@ def adminAds(request):
         'marketCodes': marketCodes,
         "adTypes_page_obj": adTypes_page_obj,
         "marketCodes_page_obj": marketCodes_page_obj,
+        "adCriterias_page_obj": adCriterias_page_obj,
     })
 
 
