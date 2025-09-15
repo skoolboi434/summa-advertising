@@ -30,6 +30,10 @@ class Role(models.Model):
     class Meta:
         db_table = 'advertising_role'
 
+
+
+
+
 class Region(models.Model):
     name = models.TextField()
     code = models.TextField()
@@ -178,6 +182,72 @@ class Account(models.Model):
             # TODO - add permission to restrict access to changing sales rep field
         )
         db_table = 'advertising_account'
+
+class Rate(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    pricing = models.BooleanField(default=False)
+    measurement_type = models.CharField(max_length=100)
+    extra_groups = models.CharField(max_length=100)
+    tax_category = models.CharField(max_length=100, default="No Tax")
+    override_privileges= models.BooleanField(default=True)
+    active = models.BooleanField(default=True)
+    assigned_groups = models.BooleanField(default=True)
+    ad_type_id = models.CharField(max_length=255, null=True, blank=True)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True,blank=True)
+    insertion_min = models.CharField(max_length=255)
+    insertion_max = models.CharField(max_length=255)
+    line_for_ad_min = models.CharField(max_length=255)
+    line_for_ad_max = models.CharField(max_length=255)
+    insertion_count = models.IntegerField()
+    base_cost = models.CharField(max_length=100)
+    base_count = models.CharField(max_length=100)
+    additional_cost = models.CharField(max_length=100)
+    additional_count = models.CharField(max_length=100)
+    charge_for = models.BooleanField()
+    account = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    default_gl_code = models.ForeignKey('GLCode', on_delete=models.CASCADE)
+    status = models.IntegerField(default=1)
+    product = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        permissions = (
+            ("can_deactivate_rate", "Can deactivate rate"),
+            ("can_reactivate_rate", "Can reactivate rate"),
+            ("can_view_hidden_rates", "Can view hidden rates"),
+            ("can_lock_rates", "Can lock rates"),
+            ('can_create_rates', "Can create rates")
+        )
+
+        db_table = 'advertising_rate'
+
+class GLCode(models.Model):
+    code = models.CharField(max_length=4, unique=True)
+    description = models.CharField(max_length=100)
+    # company = models.ForeignKey('Company', on_delete=models.CASCADE)
+    pl_type = models.CharField(max_length=100)
+    last_updated = models.DateTimeField(auto_now=True)
+    created_by = models.CharField(max_length=100)
+    date_created = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.code
+
+    class Meta:
+        permissions = (
+            ('can_create_gl_codes', 'Can create GL Codes'),
+            ('can_edit_gl_codes', 'Can edit GL Codes'),
+            ('can_import_gl_codes', 'Can import GL Codes'),
+            ('can_export_gl_codes', 'Can export GL Codes'),
+        )
+
+    class Meta:
+        db_table = 'advertising_glcode'
 
 class SalesPerson(models.Model):
     first_name = models.CharField(max_length=100)
@@ -387,3 +457,4 @@ class AdvPubsProduct(models.Model):
 
     def __str__(self):
         return self.name
+

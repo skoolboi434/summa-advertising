@@ -32,11 +32,11 @@
         <td>{{ accountType.status.name }}</td>
         <td>
           {% if can_edit_account_type %}
-          <a href="{% url 'accounttype_edit' accountType.id %}">
+          <a href="">
             <i class="fa fa-solid fa-pen me-3 color-secondary"></i>
           </a>
           {% endif %} {% if can_delete_account_type %}
-          <a href="{% url 'accounttype_delete' accountType.id %}">
+          <a href="">
             <i class="fa fa-solid fa-trash color-secondary"></i>
           </a>
           {% endif %}

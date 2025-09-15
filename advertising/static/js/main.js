@@ -78,48 +78,33 @@ function toggleSearchContainer() {
   }
 }
 
-// function toggleNewCodePanel() {
-//   var newCodePanel = document.getElementById('new-code-panel');
-//   if (newCodePanel.style.display === 'none' || newCodePanel.style.display === '') {
-//     newCodePanel.style.display = 'block';
-//   } else {
-//     newCodePanel.style.display = 'none';
-//   }
-// }
+document.querySelectorAll('.item-select-container').forEach(function (container) {
+  const from = container.querySelector('.from-list');
+  const to = container.querySelector('.to-list');
 
-// function closeCodePanel() {
-//   var newCodePanel = document.getElementById('new-code-panel');
-//   if (newCodePanel.style.display === 'block') {
-//     newCodePanel.style.display = 'none';
-//   } else {
-//     newCodePanel.style.display = 'none';
-//   }
-// }
+  container.querySelector('.btn-right').addEventListener('click', () => moveSelected(from, to));
+  container.querySelector('.btn-left').addEventListener('click', () => moveSelected(to, from));
+  container.querySelector('.btn-all-right').addEventListener('click', () => moveAll(from, to));
+  container.querySelector('.btn-all-left').addEventListener('click', () => moveAll(to, from));
 
-// $(document).ready(function () {
-//   $('#btnRight').click(function (e) {
-//     e.preventDefault(); // always prevent default first
+  function moveSelected(fromList, toList) {
+    Array.from(fromList.selectedOptions).forEach(option => {
+      option.selected = false;
+      toList.appendChild(option);
+    });
+  }
 
-//     var selectedOpts = $('#lstBox1 option:selected');
-//     if (selectedOpts.length === 0) {
-//       alert('Nothing to move.');
-//       return; // stop execution if nothing is selected
-//     }
+  function moveAll(fromList, toList) {
+    Array.from(fromList.options).forEach(option => {
+      option.selected = false;
+      toList.appendChild(option);
+    });
+  }
 
-//     $('#lstBox2').append($(selectedOpts).clone());
-//     $(selectedOpts).remove();
-//   });
-
-//   $('#btnLeft').click(function (e) {
-//     e.preventDefault();
-
-//     var selectedOpts = $('#lstBox2 option:selected');
-//     if (selectedOpts.length === 0) {
-//       alert('Nothing to move.');
-//       return;
-//     }
-
-//     $('#lstBox1').append($(selectedOpts).clone());
-//     $(selectedOpts).remove();
-//   });
-// });
+  const form = container.closest('form');
+  if (form) {
+    form.addEventListener('submit', function () {
+      Array.from(to.options).forEach(opt => (opt.selected = true));
+    });
+  }
+});

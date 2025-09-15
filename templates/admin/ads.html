@@ -40,13 +40,26 @@
   </div>
 </div>
 
+<!-- New Ad Type Modal -->
+{% include 'admin/includes/ads/modals/newAdType.html'%}
+
 <!-- New Market Code Modal -->
 {% include 'admin/includes/ads/modals/newMarketCode.html'%}
 
 <!-- Edit Market Code Modal -->
-{% include 'admin/includes/ads/modals/editMarketCode.html'%}
 
-<!-- Edit Ad Criteria Modal -->
-{% include 'admin/includes/ads/modals/editAdCriteria.html'%}
+<!-- New Ad Criteria Modal -->
+{% include 'admin/includes/ads/modals/newAdCriteria.html'%}
+
 <script src="{% static 'js/multistep.js' %}"></script>
+
+<script>
+  // 🔑 Before submitting, force all options in lstBox2 to be selected
+  document.getElementById('adCriteria-form').onsubmit = function () {
+    var selected = document.getElementById('lstBox2');
+    for (var i = 0; i < selected.options.length; i++) {
+      selected.options[i].selected = true;
+    }
+  };
+</script>
 {% endblock%}

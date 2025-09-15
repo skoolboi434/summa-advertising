@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Role, Region, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo
-from classifieds.models import Classification
+from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo
+from classifieds.models import Classification, AdminAdType
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
 from django.utils.timezone import now
@@ -69,7 +69,19 @@ def adminPubSetup(request):
   return render(request, 'admin/pubs/newPublication.html')
 
 def adminAds(request):
-  return render(request, 'admin/ads.html')
+  adTypes = AdminAdType.objects.all()
+  adTypes_paginator = Paginator(adTypes, 10)
+  adType_page_number = request.GET.get('page')
+  adTypes_page_obj = adTypes_paginator.get_page(adType_page_number)
+
+  publications = Publication.objects.all()
+  rates = Rate.objects.all()
+  return render(request, 'admin/ads.html', {
+    'publications': publications,
+    'rates': rates,
+    'adTypes': adTypes,
+    "adTypes_page_obj": adTypes_page_obj,
+  })
 
 def adminFinancial(request):
   return render(request, 'admin/financial.html')

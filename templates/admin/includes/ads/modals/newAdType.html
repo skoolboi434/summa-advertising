@@ -1,0 +1,77 @@
+<div class="modal fade" id="newAdTypeModal" tabindex="-1" aria-labelledby="newAdTypeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">New Ad Type</h3>
+        </div>
+
+        <div class="text-center mb-3">
+          <p>Enter Your Ad Type Name, Code and<br />select publications you want the Ad<br />Type assigned to</p>
+        </div>
+
+        <form id="adCriteria-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="w-75 mx-auto mb-4">
+            <div class="form-group mb-3">
+              <label for="ad-type-name">Name:</label>
+              <input type="text" name="ad-type-name" id="ad-type-name" class="form-control" />
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="ad-type-code">Code:</label>
+                  <input type="text" name="ad-type-code" id="ad-type-code" class="form-control" />
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="ad-type-rate">Default Rates:</label>
+                  <select name="ad-type-rate" id="ad-type-rate" class="form-select">
+                    <option value="">Select Rate</option>
+                    {% for rate in rates %}
+                    <option value="{{ rate.id }}">{{ rate.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="item-select-container mb-4">
+            <div class="available-pubs">
+              Available Publications:<br />
+              <select multiple="multiple" id="lstBox1" class="from-list form-select">
+                {% for pub in publications %}
+                <option value="{{ pub.id }}">{{ pub.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="transferBtns d-flex flex-column align-items-center mx-3">
+              <button type="button" class="btn-all-right btn-sm btn-secondary mb-2" id="btnAllRight">&gt;&gt;</button>
+              <button type="button" class="btn-right btn btn-sm btn-secondary mb-2" id="btnRight">&gt;</button>
+              <button type="button" class="btn-left btn btn-sm btn-secondary mb-2" id="btnLeft">&lt;</button>
+
+              <button type="button" class="btn-all-left btn btn-sm btn-secondary" id="btnAllLeft">&lt;&lt;</button>
+            </div>
+
+            <div class="selected-pubs">
+              Selected Publications:<br />
+              <select multiple="multiple" id="lstBox2" name="publications" class="to-list form-select"></select>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-account-type" type="submit" class="btn btn-secondary">Create Code</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
