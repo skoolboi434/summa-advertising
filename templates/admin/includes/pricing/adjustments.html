@@ -27,19 +27,55 @@
       </tr>
     </thead>
     <tbody>
+      {% for adjustment in adjustments_page_obj %}
       <tr>
-        <td>0001</td>
-        <td>Example1</td>
-        <td>examp_1</td>
-        <td>$0.00</td>
-        <td>Debit</td>
-        <td></td>
+        <td>{{adjustment.id}}</td>
+        <td>{{adjustment.name}}</td>
+        <td>{{adjustment.code}}</td>
+        <td>${{adjustment.value}}</td>
+        <td><span class="text-capitalize">{{adjustment.type}}</span></td>
+        <td><span class="text-capitalize">{{adjustment.apply_level}}</span></td>
         <td>All</td>
-        <td>See Pubs</td>
-        <td>See List</td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in adjustment.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% empty %}
+              <div>No Publications assigned</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned">See List</span>
+            <div class="custom-tooltip">
+              {% for gl in adjustment.glCodes.all %}
+              <div>{{ gl.code }}</div>
+              {% empty %}
+              <div>No GL Codes assigned</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
         <td>Active</td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
+</div>
+
+<div class="pagination">
+  {% if adjustments_page_obj.has_previous %}
+  <a href="?page={{ adjustments_page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ adjustments_page_obj.number }} of {{ adjustments_page_obj.paginator.num_pages }}</span>
+
+  {% if adjustments_page_obj.has_next %}
+  <a href="?page={{ adjustments_page_obj.next_page_number }}">Next</a>
+  {% endif %}
 </div>

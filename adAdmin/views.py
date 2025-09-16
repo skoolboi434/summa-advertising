@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section
+from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode
 from classifieds.models import Classification
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -176,7 +176,66 @@ def adminFinancial(request):
   return render(request, 'admin/financial.html')
 
 def adminPricing(request):
-  return render(request, 'admin/pricing.html')
+  if request.method == "POST":
+      # Determine which form was submitted
+          if "adjustment-name" in request.POST:
+            name = request.POST.get("adjustment-name")
+            code = request.POST.get("adjustment-code")
+            apply_level = request.POST.get("adjustment-apply-level")
+            section_id = request.POST.get("adjustment-section")
+            value_type = request.POST.get("adjustment-value-type")
+            value = request.POST.get("adjustment-value")
+            prompt_for_value = request.POST.get("value-prompt")
+            type = request.POST.get("adjustment-pay-type")
+            gl_code_id = request.POST.get("adjustment-assigned-gl")
+
+            # Resolve FK instances
+            section_instance = Section.objects.get(id=section_id) if section_id else None
+            gl_code_instance = GLCode.objects.get(id=gl_code_id) if gl_code_id else None
+
+            # Create adjustment
+            adjustment = AdminAdjustment.objects.create(
+                name=name,
+                code=code,
+                apply_level=apply_level,
+                section=section_instance,
+                value_type=value_type,
+                value=float(value or 0),
+                prompt_for_value=(prompt_for_value == "on"),
+                type=type,
+                gl_code=gl_code_instance,
+                status="active",
+                created_by=request.user
+            )
+
+            # Many-to-Many: multiple GL codes
+            glCodes = request.POST.getlist("glCodes")
+            if glCodes:
+                glCodes = [int(gid) for gid in glCodes]  # ensure integers
+                adjustment.glCodes.set(glCodes)
+
+            # Many-to-Many: publications
+            publications = request.POST.getlist("publications")
+            if publications:
+                publications = [int(pid) for pid in publications]
+                adjustment.publications.set(publications)
+
+            return redirect("adminPricing")
+
+
+  adjustments = AdminAdjustment.objects.all().order_by('-date_created')
+  adjustments_paginator = Paginator(adjustments, 10)
+  adjustment_page_number = request.GET.get('page')
+  adjustments_page_obj = adjustments_paginator.get_page(adjustment_page_number)
+
+  publications = Publication.objects.all()
+  glCodes = GLCode.objects.all()
+
+  return render(request, 'admin/pricing.html', {
+    'adjustments_page_obj': adjustments_page_obj,
+    'publications': publications,
+    'glCodes': glCodes,
+  })
 
 # Admin Account Routes
 

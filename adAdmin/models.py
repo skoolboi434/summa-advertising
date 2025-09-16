@@ -245,6 +245,8 @@ class Account(models.Model):
         )
         db_table = 'advertising_account'
 
+# Pricing Models
+
 class Rate(models.Model):
     name = models.CharField(max_length=100, unique=True)
     pricing = models.BooleanField(default=False)
@@ -286,6 +288,59 @@ class Rate(models.Model):
         )
 
         db_table = 'advertising_rate'
+
+class AdminAdjustment(models.Model):
+    code = models.CharField(max_length=100, default=None)
+    name = models.CharField(max_length=255, default=None)
+    apply_level = models.CharField(max_length=50)  # ['order', 'insertion']
+    value_type = models.CharField(max_length=50)  # ['amount', 'percentage']
+    value = models.FloatField(default=0.00)
+    date_created = models.DateTimeField(auto_now=True, null=True)
+    date_updated = models.DateTimeField(auto_now_add=True, null=True)
+    updated_by = models.CharField(max_length=100)  # username
+    type = models.CharField(max_length=20)  # ['credit', 'debit']
+    status = models.CharField(max_length=100, default="Active")
+    prompt_for_value = models.BooleanField(default=False)
+
+    # ForeignKey: optional “default” or “primary” GLCode
+    gl_code = models.ForeignKey(
+        'GLCode',
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        blank=True,
+        related_name="primary_adjustments"
+    )
+
+    # ManyToMany: allow multiple GLCodes to be linked
+    glCodes = models.ManyToManyField(
+        'GLCode',
+        related_name="adjustments",
+        blank=True
+    )
+
+    # Many-to-many relationship to Publication
+    publications = models.ManyToManyField(
+        'Publication', 
+        related_name="adjustments", 
+        blank=True
+    )
+
+    section = models.ForeignKey('Section', on_delete=models.CASCADE, default=None, null=True, blank=True)
+
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="adjustments"
+    )
+
+    class Meta:
+        db_table = 'advertising_adminadjustment'
+
+
+# Financial Models
 
 class GLCode(models.Model):
     code = models.CharField(max_length=4, unique=True)
