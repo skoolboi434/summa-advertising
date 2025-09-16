@@ -245,7 +245,7 @@ class Account(models.Model):
         )
         db_table = 'advertising_account'
 
-# Pricing Models
+# Admin Pricing Models
 
 class Rate(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -338,6 +338,57 @@ class AdminAdjustment(models.Model):
 
     class Meta:
         db_table = 'advertising_adminadjustment'
+
+class RateGroup(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(null=True)
+    status = models.CharField(max_length=100, default="Active")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        permissions = (
+            ("can_deactivate_rate", "Can deactivate rate"),
+            ("can_reactivate_rate", "Can reactivate rate"),
+            ("can_view_hidden_rates", "Can view hidden rates"),
+            ("can_lock_rates", "Can lock rates"),
+            ('can_create_rates', "Can create rates")
+        )
+
+        db_table = 'advertising_rategroup'
+
+class AdminTax(models.Model):
+    name = models.TextField()
+    description = models.TextField(null=True)
+    format = models.CharField(max_length=255)
+    assigned_gl = models.CharField(max_length=255)
+    amount = models.FloatField(default=0)
+    gl_code = models.ForeignKey('GLCode', on_delete=models.CASCADE, default=None)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    status = models.CharField(max_length=100, default="Active")
+    created_at = models.DateTimeField(default=timezone.now)
+
+    glCodes = models.ManyToManyField(
+        'GLCode',
+        related_name="taxes",
+        blank=True
+    )
+
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="taxes"
+    )
+
+    class Meta:
+        db_table = 'advertising_tax'
+
+    def __str__(self):
+        return self.description
 
 
 # Financial Models

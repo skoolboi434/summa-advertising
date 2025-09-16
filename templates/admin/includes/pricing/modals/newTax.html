@@ -1,0 +1,119 @@
+<div class="modal fade" id="newTaxModal" tabindex="-1" aria-labelledby="newTaxModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">New Tax</h3>
+        </div>
+
+        <form id="tax-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="w-75 mx-auto mb-4">
+            <div class="form-group mb-4">
+              <label for="tax-name">Name:</label>
+              <input type="text" name="tax-name" id="tax-name" class="form-control" />
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="tax-start-date">Start Date:</label>
+                  <input class="form-control" type="date" name="tax-start-date" id="tax-start-date" />
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="tax-end-date">End Date:</label>
+                  <input class="form-control" type="date" name="tax-end-date" id="tax-end-date" />
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="tax-format">Format:</label>
+                  <div class="pill-group">
+                    <input type="radio" class="btn-check" name="taxFormat" id="flat-rate" autocomplete="off" value="Flat" checked />
+                    <label class="pill" for="flat-rate">Flat Rate</label>
+
+                    <input type="radio" class="btn-check" name="taxFormat" id="dynamic-rate" autocomplete="off" value="Dynamic" />
+                    <label class="pill" for="dynamic-rate">Dynamic</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="tax-assigned-gl">Assigned GL:</label>
+                  <div class="pill-group">
+                    <input type="radio" class="btn-check" name="taxGLAssign" id="default" autocomplete="off" checked value="Default" />
+                    <label class="pill" for="default">Default</label>
+
+                    <input type="radio" class="btn-check" name="taxGLAssign" id="override" autocomplete="off" value="Override" />
+                    <label class="pill" for="override">Override</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="tax-amount">Amount:</label>
+                  <input type="text" name="tax-amount" id="tax-amount" class="form-control" />
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <label for="adjustment-assigned-gl">Assign GL Code (optional):</label>
+                  <select name="glCodes" id="tax-override-gl" class="form-select" multiple>
+                    {% for code in glCodes %}
+                    <option value="{{ code.id }}">{{ code.code }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="tax-description" class="form-label">Description:</label>
+              <textarea class="form-control" id="tax-description" name="tax-description" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-tax" type="submit" class="btn btn-secondary">Create Tax</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const defaultRadio = document.getElementById('default');
+  const overrideRadio = document.getElementById('override');
+  const overrideSelect = document.getElementById('tax-override-gl');
+
+  function toggleDisable() {
+    if (overrideRadio.checked) {
+      overrideSelect.disabled = false;
+    } else {
+      overrideSelect.disabled = true;
+    }
+  }
+
+  defaultRadio.addEventListener('change', toggleDisable);
+  overrideRadio.addEventListener('change', toggleDisable);
+
+  // Initialize on page load
+  toggleDisable();
+</script>

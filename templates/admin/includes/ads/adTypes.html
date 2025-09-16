@@ -34,6 +34,8 @@
             <div class="custom-tooltip">
               {% for pub in adType.publications.all %}
               <div>{{ pub.name }}</div>
+              {% empty %}
+              <div>No Publications assigned</div>
               {% endfor %}
             </div>
           </div>

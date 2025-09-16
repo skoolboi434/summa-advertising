@@ -22,11 +22,12 @@
       <button class="nav-link-custom active" id="pills-adjustments-tab" data-bs-toggle="pill" data-bs-target="#pills-adjustments" type="button" role="tab" aria-controls="pills-adjustments" aria-selected="true">Adjustments</button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link-custom" id="pills-rates-tab" data-bs-toggle="pill" data-bs-target="#pills-rates" type="button" role="tab" aria-controls="pills-rates" aria-selected="false">Rates</button>
-    </li>
-    <li class="nav-item" role="presentation">
       <button class="nav-link-custom" id="pills-rate-groups-tab" data-bs-toggle="pill" data-bs-target="#pills-rate-groups" type="button" role="tab" aria-controls="pills-rate-groups" aria-selected="false">Rate Groups</button>
     </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link-custom" id="pills-rates-tab" data-bs-toggle="pill" data-bs-target="#pills-rates" type="button" role="tab" aria-controls="pills-rates" aria-selected="false">Rates</button>
+    </li>
+
     <li class="nav-item" role="presentation">
       <button class="nav-link-custom" id="pills-tax-tab" data-bs-toggle="pill" data-bs-target="#pills-tax" type="button" role="tab" aria-controls="pills-tax" aria-selected="false">Tax</button>
     </li>
@@ -34,8 +35,8 @@
 
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active pt-5" id="pills-adjustments" role="tabpanel" aria-labelledby="pills-adjustments-tab" data-heading="Adjustments">{% include 'admin/includes/pricing/adjustments.html'%}</div>
-    <div class="tab-pane fade pt-5" id="pills-rates" role="tabpanel" aria-labelledby="pills-rates-tab" data-heading="Rates">{% include 'admin/includes/pricing/rates.html'%}</div>
     <div class="tab-pane fade pt-5" id="pills-rate-groups" role="tabpanel" aria-labelledby="pills-rate-groups-tab" data-heading="Rate Groups">{% include 'admin/includes/pricing/rateGroups.html'%}</div>
+    <div class="tab-pane fade pt-5" id="pills-rates" role="tabpanel" aria-labelledby="pills-rates-tab" data-heading="Rates">{% include 'admin/includes/pricing/rates.html'%}</div>
     <div class="tab-pane fade pt-5" id="pills-tax" role="tabpanel" aria-labelledby="pills-tax-tab" data-heading="Tax">{% include 'admin/includes/pricing/tax.html'%}</div>
   </div>
 </div>
@@ -43,7 +44,14 @@
 <!-- New Adjustment Modal -->
 {% include 'admin/includes/pricing/modals/newAdjustment.html'%}
 
+<!-- New Rate Group Modal -->
+{% include 'admin/includes/pricing/modals/newRateGroup.html'%}
+
+<!-- New Tax Modal -->
+{% include 'admin/includes/pricing/modals/newTax.html'%}
+
 <script src="{% static 'js/multistep.js' %}"></script>
+<script src="{% static 'js/stepform/stepform.js' %}"></script>
 
 <script>
   // 🔑 Before submitting, force all options in lstBox2 to be selected

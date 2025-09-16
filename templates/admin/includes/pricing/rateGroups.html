@@ -26,14 +26,16 @@
       </tr>
     </thead>
     <tbody>
+      {% for rateGroup in rateGroups_page_obj %}
       <tr>
-        <td>0001</td>
-        <td>Rate Group Name Example</td>
-        <td>Brief description example here allows<br />the user to write some info on what<br />this group of rates is...</td>
+        <td>{{rateGroup.id}}</td>
+        <td>{{rateGroup.name}}</td>
+        <td>{{rateGroup.description}}</td>
         <td>See assigned</td>
-        <td>Active</td>
+        <td>{{rateGroup.status}}</td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

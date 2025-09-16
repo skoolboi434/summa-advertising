@@ -25,17 +25,43 @@
       </tr>
     </thead>
     <tbody>
+      {% for tax in adminTaxes_page_obj %}
       <tr>
-        <td>0001</td>
-        <td>Tax01</td>
-        <td>See description</td>
-        <td>00/00/0000</td>
-        <td>00/00/0000</td>
-        <td>Percentage</td>
-        <td>Default</td>
-        <td>Active</td>
+        <td>{{tax.id}}</td>
+        <td>{{tax.name}}</td>
+        <td>{{tax.description}}</td>
+        <td>{{tax.start_date}}</td>
+        <td>{{tax.end_date}}</td>
+        <td>{{tax.format}}</td>
+        <td>
+          {% if tax.assigned_gl == "override" %}
+          <div class="tooltip-wrapper">
+            <span class="see-assigned">See List</span>
+            <div class="custom-tooltip">
+              {% for gl in tax.glCodes.all %}
+              <div>{{ gl.code }}</div>
+              {% endfor %}
+            </div>
+          </div>
+          {% else %} {{ tax.assigned_gl }} {% endif %}
+        </td>
+
+        <td><span class="text-capitalize">{{tax.status}}</span></td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
+</div>
+
+<div class="pagination">
+  {% if adminTaxes_page_obj.has_previous %}
+  <a href="?page={{ adminTaxes_page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ adminTaxes_page_obj.number }} of {{ adminTaxes_page_obj.paginator.num_pages }}</span>
+
+  {% if adminTaxes_page_obj.has_next %}
+  <a href="?page={{ adminTaxes_page_obj.next_page_number }}">Next</a>
+  {% endif %}
 </div>

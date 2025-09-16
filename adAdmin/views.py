@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode
+from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax
 from classifieds.models import Classification
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -222,11 +222,52 @@ def adminPricing(request):
 
             return redirect("adminPricing")
 
+          elif "tax-name" in request.POST:
+            # Market Code form
+            name = request.POST.get("tax-name")
+            description = request.POST.get("tax-description")
+            start_date = request.POST.get("tax-start-date")
+            end_date = request.POST.get("tax-end-date")
+            amount = request.POST.get("tax-amount")
+            format = request.POST.get("taxFormat")
+            assigned_gl = request.POST.get("taxGLAssign")
+            gl_code_id = request.POST.get("tax-gl-code")  # replace with the correct input name
+            gl_code_instance = GLCode.objects.get(id=gl_code_id) if gl_code_id else None
+
+            adTax = AdminTax.objects.create(
+                name=name,
+                description=description,
+                start_date=start_date,
+                end_date=end_date,
+                amount=amount,
+                format=format,
+                assigned_gl=assigned_gl,
+                gl_code=gl_code_instance,
+                status="active",
+                created_by=request.user
+            )
+
+            glCodes = request.POST.getlist("glCodes")
+            if glCodes:
+                glCodes = [int(gid) for gid in glCodes]  # ensure integers
+                adTax.glCodes.set(glCodes)
+            return redirect("adminPricing")
+
 
   adjustments = AdminAdjustment.objects.all().order_by('-date_created')
   adjustments_paginator = Paginator(adjustments, 10)
   adjustment_page_number = request.GET.get('page')
   adjustments_page_obj = adjustments_paginator.get_page(adjustment_page_number)
+
+  rateGroups = RateGroup.objects.all()
+  rateGroups_paginator = Paginator(rateGroups, 10)
+  rateGroup_page_number = request.GET.get('page')
+  rateGroups_page_obj = rateGroups_paginator.get_page(rateGroup_page_number)
+
+  adminTaxes = AdminTax.objects.all().order_by('-created_at')
+  adminTaxes_paginator = Paginator(adminTaxes, 10)
+  adminTaxe_page_number = request.GET.get('page')
+  adminTaxes_page_obj = adminTaxes_paginator.get_page(adminTaxe_page_number)
 
   publications = Publication.objects.all()
   glCodes = GLCode.objects.all()
@@ -234,7 +275,9 @@ def adminPricing(request):
   return render(request, 'admin/pricing.html', {
     'adjustments_page_obj': adjustments_page_obj,
     'publications': publications,
+    'adminTaxes_page_obj': adminTaxes_page_obj,
     'glCodes': glCodes,
+    'rateGroups_page_obj': rateGroups_page_obj
   })
 
 # Admin Account Routes
