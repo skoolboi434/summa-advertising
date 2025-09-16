@@ -189,15 +189,33 @@ def adminFinancial(request):
                 created_by=request.user
             )
 
-            return redirect("adminPricing")
+            return redirect("adminFinancial")
+
+          elif "glcode-code" in request.POST:
+            # Market Code form
+            code = request.POST.get("glcode-code")
+            code_type = request.POST.get("glcode-type")
+            description = request.POST.get("glcode-description")
+
+            glCode = GLCode.objects.create(
+                code=code,
+                code_type=code_type,
+                description=description,
+                status="active",
+                created_by=request.user
+            )
+            return redirect("adminFinancial")
   
   fiscalYears = FiscalYear.objects.all().order_by('-created_at')
   fiscalYears_paginator = Paginator(fiscalYears, 10)
   fiscalYear_page_number = request.GET.get('page')
   fiscalYears_page_obj = fiscalYears_paginator.get_page(fiscalYear_page_number)
 
+  glCodes = GLCode.objects.all().order_by('-date_created')
+
   return render(request, 'admin/financial.html', {
-    "fiscalYears_page_obj":fiscalYears_page_obj
+    "fiscalYears_page_obj":fiscalYears_page_obj,
+    "glCodes":glCodes,
   })
 
 def adminPricing(request):

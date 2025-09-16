@@ -1,0 +1,45 @@
+<div class="modal fade" id="newCodeModal" tabindex="-1" aria-labelledby="newCodeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
+          <h3 class="mb-1">New Code</h3>
+        </div>
+        <form id="code-form" action="" method="POST">
+          {% csrf_token %}
+
+          <div class="w-50 mx-auto mb-4">
+            <div class="form-group mb-4">
+              <label for="glcode-code">Code:</label>
+              <input type="text" class="form-control" name="glcode-code" id="glcode-code" />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="glcode-type">Type:</label>
+              <select name="glcode-type" id="glcode-type" class="form-select">
+                <option>Select</option>
+                <option value="Company">Company</option>
+                <option value="Location">Location</option>
+                <option value="Department">Department</option>
+                <option value="Profit">Profit</option>
+                <option value="GL">GL</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="glcode-description">Description:</label>
+              <textarea name="glcode-description" id="glcode-description" class="form-control" rows="5"></textarea>
+            </div>
+          </div>
+
+          <div class="btn-container text-center">
+            <button id="submit-code" type="submit" class="btn btn-secondary">Create Code</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
