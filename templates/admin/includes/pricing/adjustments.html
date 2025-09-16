@@ -38,7 +38,7 @@
         <td>All</td>
         <td>
           <div class="tooltip-wrapper">
-            <span class="see-assigned">See assigned</span>
+            <span class="see-assigned text-decoration-underline">See assigned</span>
             <div class="custom-tooltip">
               {% for pub in adjustment.publications.all %}
               <div>{{ pub.name }}</div>
@@ -50,7 +50,7 @@
         </td>
         <td>
           <div class="tooltip-wrapper">
-            <span class="see-assigned">See List</span>
+            <span class="see-assigned text-decoration-underline">See List</span>
             <div class="custom-tooltip">
               {% for gl in adjustment.glCodes.all %}
               <div>{{ gl.code }}</div>

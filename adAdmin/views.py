@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax
+from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax, FiscalYear
 from classifieds.models import Classification
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -173,7 +173,32 @@ def adminAds(request):
 
 
 def adminFinancial(request):
-  return render(request, 'admin/financial.html')
+  if request.method == "POST":
+      # Determine which form was submitted
+          if "fiscal-year-name" in request.POST:
+            name = request.POST.get("fiscal-year-name")
+            startDate = request.POST.get("fiscal-year-start-date")
+            endDate = request.POST.get("fiscal-year-end-date")
+
+            # Create Fiscal Year
+            fiscalYear = FiscalYear.objects.create(
+                name=name,
+                startDate=startDate,
+                endDate=endDate,
+                status="active",
+                created_by=request.user
+            )
+
+            return redirect("adminPricing")
+  
+  fiscalYears = FiscalYear.objects.all().order_by('-created_at')
+  fiscalYears_paginator = Paginator(fiscalYears, 10)
+  fiscalYear_page_number = request.GET.get('page')
+  fiscalYears_page_obj = fiscalYears_paginator.get_page(fiscalYear_page_number)
+
+  return render(request, 'admin/financial.html', {
+    "fiscalYears_page_obj":fiscalYears_page_obj
+  })
 
 def adminPricing(request):
   if request.method == "POST":

@@ -397,11 +397,18 @@ class GLCode(models.Model):
     code = models.CharField(max_length=4, unique=True)
     description = models.CharField(max_length=100)
     # company = models.ForeignKey('Company', on_delete=models.CASCADE)
-    pl_type = models.CharField(max_length=100)
+    code_type = models.CharField(max_length=100)
     last_updated = models.DateTimeField(auto_now=True)
-    created_by = models.CharField(max_length=100)
     date_created = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=True)
+    status = models.CharField(max_length=100, default="Active")
+    
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="GLCodes"
+    )
 
     def __str__(self):
         return self.code
@@ -416,6 +423,24 @@ class GLCode(models.Model):
 
     class Meta:
         db_table = 'advertising_glcode'
+
+class FiscalYear(models.Model):
+    name = models.CharField(max_length=100, default=None)
+    startDate = models.DateField(default=None)
+    endDate = models.DateField(default=None)
+    #account = models.ForeignKey('Account', on_delete=CASCADE)
+    status = models.CharField(max_length=100, default="Active")
+    created_at = models.DateTimeField(default=timezone.now)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="fiscalYears"
+    )
+
+    class Meta:
+        db_table = 'advertising_fiscalyear'
 
 class SalesPerson(models.Model):
     first_name = models.CharField(max_length=100)

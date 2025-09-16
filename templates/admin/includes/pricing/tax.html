@@ -32,18 +32,18 @@
         <td>{{tax.description}}</td>
         <td>{{tax.start_date}}</td>
         <td>{{tax.end_date}}</td>
-        <td>{{tax.format}}</td>
+        <td><span class="text-capitalize">{{tax.format}}</span></td>
         <td>
           {% if tax.assigned_gl == "override" %}
           <div class="tooltip-wrapper">
-            <span class="see-assigned">See List</span>
+            <span class="see-assigned text-decoration-underline">See List</span>
             <div class="custom-tooltip">
               {% for gl in tax.glCodes.all %}
               <div>{{ gl.code }}</div>
               {% endfor %}
             </div>
           </div>
-          {% else %} {{ tax.assigned_gl }} {% endif %}
+          {% else %} <span class="text-capitalize">{{ tax.assigned_gl }}</span> {% endif %}
         </td>
 
         <td><span class="text-capitalize">{{tax.status}}</span></td>
