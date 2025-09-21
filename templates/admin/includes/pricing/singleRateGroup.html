@@ -1,0 +1,91 @@
+{% extends 'base.html' %}{% load static %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading mb-3">#{{ rateGroup.id }} - {{ rateGroup.name }}</h3>
+</div>
+
+<nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'adminPortal' %}">Admin Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'adminPortal' %}">Admin Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Library</li>
+  </ol>
+</nav>
+
+<div class="border rounded border-dark p-3 bg-white shadow">
+  <div class="border-bottom border-dark mb-3 d-flex align-items-center">
+    <div class="heading-container me-5">
+      <h2 class="">Rate Group Overview</h2>
+    </div>
+
+    <div class="btn-container">
+      <button class="btn btn-secondary"><i class="fa fa-solid fa-pen"></i> Manage Rate Group</button>
+    </div>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-md-12 col-lg-6">
+      <div class="d-flex mb-3">
+        <div class="w-25">
+          <p class="mb-0 text-secondary">#ID:</p>
+          <p>#{{ rateGroup.id }}</p>
+        </div>
+
+        <div class="w-50">
+          <p class="mb-0 text-secondary">Group Name:</p>
+          <p>{{ rateGroup.name }}</p>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <p class="mb-0 text-secondary">Status:</p>
+        <p class="text-capitalize">{{ rateGroup.status }}</p>
+      </div>
+
+      <div>
+        <p class="mb-0 text-secondary">Description:</p>
+        <p class="text-capitalize">{{ rateGroup.description }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+      <div class="border-bottom border-dark mb-3">
+        <h3>Pubs Associated With This Rate Group.</h3>
+      </div>
+
+      <div class="border border-dark rounded p-2">
+        {% for pub in rateGroup.publications.all %}
+        <div>{{ pub.name }}</div>
+        {% empty %}
+        <div>No Publications assigned</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="border-bottom border-dark mb-3">
+    <div class="heading-container">
+      <h2 class="">Rates In The Group</h2>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Rate Name</th>
+          <th scope="col">Unit Type</th>
+          <th scope="col">Pricing</th>
+          <th scope="col">GL Code</th>
+          <th scope="col">Tax Category</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+
+{% endblock%}

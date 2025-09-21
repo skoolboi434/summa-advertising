@@ -30,7 +30,7 @@
       {% for rateGroup in rateGroups_page_obj %}
       <tr>
         <td>{{rateGroup.id}}</td>
-        <td><a href="{% url 'singleRateGroup' rateGroup.id %}">{{rateGroup.name}}</a></td>
+        <td><a href="{% url 'singleRateGroup' rateGroup.id %}" target="_blank">{{rateGroup.name}}</a></td>
         <td>{{rateGroup.description}}</td>
         <td>
           <div class="tooltip-wrapper">
