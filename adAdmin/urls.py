@@ -14,5 +14,6 @@ urlpatterns = [
   path('new-user/', views.createUser, name='createUser'),
   path('new-style/', views.createAdminStyle, name='createAdminStyle'),
   path('admingeneral/new-magazine/', views.newMagazine, name='newMagazine'),
+  path('rate-groups/<int:id>/', views.singleRateGroup, name='singleRateGroup'),
   
 ]

@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax, FiscalYear
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax, FiscalYear, RateGroup
 from classifieds.models import Classification
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -295,6 +295,26 @@ def adminPricing(request):
                 glCodes = [int(gid) for gid in glCodes]  # ensure integers
                 adTax.glCodes.set(glCodes)
             return redirect("adminPricing")
+          
+          elif "rate-group-name" in request.POST:
+            # Market Code form
+            name = request.POST.get("rate-group-name")
+            description = request.POST.get("rate-group-description")
+
+            rateGroup = RateGroup.objects.create(
+                name=name,
+                description=description,
+                status="active",
+                created_by=request.user
+            )
+
+            # Many-to-Many: publications
+            publications = request.POST.getlist("publications")
+            if publications:
+                publications = [int(pid) for pid in publications]
+                rateGroup.publications.set(publications)
+                
+            return redirect("adminPricing")
 
 
   adjustments = AdminAdjustment.objects.all().order_by('-date_created')
@@ -302,7 +322,7 @@ def adminPricing(request):
   adjustment_page_number = request.GET.get('page')
   adjustments_page_obj = adjustments_paginator.get_page(adjustment_page_number)
 
-  rateGroups = RateGroup.objects.all()
+  rateGroups = RateGroup.objects.all().order_by('-created_at')
   rateGroups_paginator = Paginator(rateGroups, 10)
   rateGroup_page_number = request.GET.get('page')
   rateGroups_page_obj = rateGroups_paginator.get_page(rateGroup_page_number)
@@ -321,6 +341,13 @@ def adminPricing(request):
     'adminTaxes_page_obj': adminTaxes_page_obj,
     'glCodes': glCodes,
     'rateGroups_page_obj': rateGroups_page_obj
+  })
+
+def singleRateGroup(request, id):
+  rateGroup = get_object_or_404(RateGroup, id=id)
+  return render(request, 'admin/includes/pricing/singleRateGroup.html', {
+    'rateGroup': rateGroup,
+
   })
 
 # Admin Account Routes

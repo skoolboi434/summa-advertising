@@ -343,6 +343,22 @@ class RateGroup(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True)
     status = models.CharField(max_length=100, default="Active")
+    created_at = models.DateTimeField(default=timezone.now)
+
+    # Many-to-many relationship to Publication
+    publications = models.ManyToManyField(
+        'Publication', 
+        related_name="rategroups", 
+        blank=True
+    )
+
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="rategroups"
+    )
 
     def __str__(self):
         return self.name

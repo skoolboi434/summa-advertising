@@ -22,6 +22,7 @@
         <th scope="col">Description</th>
         <th scope="col">Publications</th>
         <th scope="col">Status</th>
+        <th scope="col">Created By</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -29,10 +30,22 @@
       {% for rateGroup in rateGroups_page_obj %}
       <tr>
         <td>{{rateGroup.id}}</td>
-        <td>{{rateGroup.name}}</td>
+        <td><a href="{% url 'singleRateGroup' rateGroup.id %}">{{rateGroup.name}}</a></td>
         <td>{{rateGroup.description}}</td>
-        <td>See assigned</td>
-        <td>{{rateGroup.status}}</td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned text-decoration-underline">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in rateGroup.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% empty %}
+              <div>No Publications assigned</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
+        <td><span class="text-capitalize">{{rateGroup.status}}</span></td>
+        <td>{% if rateGroup.created_by %} <span class="text-capitalize">{{ rateGroup.created_by.get_full_name|default:rateGroup.created_by.username }}</span> {% else %} - {% endif %}</td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
       {% endfor %}

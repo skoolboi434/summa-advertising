@@ -12,94 +12,15 @@
         <form id="rate-group-form" action="" method="POST">
           {% csrf_token %}
 
-          <div class="w-75 mx-auto mb-4">
-            <div class="row mb-4">
-              <div class="col-md-12 col-lg-6">
-                <div class="form-group">
-                  <label for="adjustment-name">Name:</label>
-                  <input type="text" name="adjustment-name" id="adjustment-name" class="form-control" />
-                </div>
-              </div>
-
-              <div class="col-md-12 col-lg-6">
-                <div class="form-group">
-                  <label for="adjustment-code">Code:</label>
-                  <input type="text" name="adjustment-code" id="adjustment-code" class="form-control" />
-                </div>
-              </div>
+          <div class="w-75 mx-auto">
+            <div class="form-group mb-4">
+              <label for="rate-group-name">Group Name:</label>
+              <input type="text" name="rate-group-name" id="rate-group-name" class="form-control" />
             </div>
 
-            <div class="row mb-4">
-              <div class="col-md-12 col-lg-6">
-                <div class="form-group">
-                  <label for="adjustment-apply-level">Apply Level:</label>
-                  <select name="adjustment-apply-level" id="adjustment-apply-level" class="form-select">
-                    <option value="">Select</option>
-                    <option value="order">Order</option>
-                    <option value="insertion">Insertion</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-12 col-lg-6">
-                <div class="form-group">
-                  <label for="adjustment-section">Section (optional):</label>
-                  <select name="adjustment-section" id="adjustment-section" class="form-select">
-                    <option value="">Select</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mb-4">
-              <div class="col-md-12 col-lg-6">
-                <div class="form-group">
-                  <label for="adjustment-value-type">Value Type:</label>
-                  <select name="adjustment-value-type" id="adjustment-value-type" class="form-select">
-                    <option value="">Select</option>
-                    <option value="amount">Amount</option>
-                    <option value="percentage">Percentage</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-12 col-lg-6">
-                <div class="d-flex justify-content-between">
-                  <div class="form-group w-50">
-                    <label for="adjustment-value">Value:</label>
-                    <input type="text" name="adjustment-value" id="adjustment-value" class="form-control" />
-                  </div>
-
-                  <div class="form-check d-flex align-items-end">
-                    <input class="form-check-input" type="checkbox" name="value-prompt" value="" id="value-prompt" />
-                    <label class="form-check-label" for="value-prompt">Prompt For Value?</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12 col-lg-6">
-                <div class="form-group">
-                  <label for="adjustment-pay-type">Credit/Debit</label>
-                  <select name="adjustment-pay-type" id="adjustment-pay-type" class="form-select">
-                    <option value="">Select</option>
-                    <option value="credit">Credit</option>
-                    <option value="debit">Debit</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-12 col-lg-6">
-                <div class="form-group">
-                  <label for="adjustment-assigned-gl">Assign GL Code (optional):</label>
-                  <select name="glCodes" id="glCodes" class="form-select" multiple>
-                    {% for code in glCodes %}
-                    <option value="{{ code.id }}">{{ code.code }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
+            <div class="form-group mb-4">
+              <label for="rate-group-description" class="form-label">Description</label>
+              <textarea class="form-control" name="rate-group-description" id="rate-group-description" rows="3"></textarea>
             </div>
           </div>
 
@@ -127,7 +48,7 @@
           </div>
 
           <div class="btn-container text-center">
-            <button id="submit-adjustment" type="submit" class="btn btn-secondary">Create Adjustment</button>
+            <button id="submit-adjustment" type="submit" class="btn btn-secondary">Create Rate Group</button>
           </div>
         </form>
       </div>
