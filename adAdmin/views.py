@@ -428,13 +428,54 @@ def createUser(request):
     })
 
 def adminClassifieds(request):
-    classification_list = Classification.objects.all()
-    category_paginator = Paginator(classification_list, 15)
+    if request.method == "POST":
+        if "category-name" in request.POST:
+            name = request.POST.get("category-name")
+            self_service = request.POST.get("selfService")
+            is_subcategory = request.POST.get("isSubcategory")
+            assigned_gl = request.POST.get("isGl-override")
+            gl_code_id = request.POST.get("category-override-gl")
 
-    page_number = request.GET.get('page')
-    page_obj = category_paginator.get_page(page_number)
+            gl_code_instance = GLCode.objects.get(id=gl_code_id) if gl_code_id else None
+            main_category_id = request.POST.get("main-category-select")
+            parent_instance = Classification.objects.get(id=main_category_id) if main_category_id else None
 
-    return render(request, 'admin/classifieds.html', {'page_obj': page_obj})
+            classification = Classification.objects.create(
+                name=name,
+                self_service=self_service,
+                is_subcategory=is_subcategory,
+                assigned_gl=assigned_gl,
+                status="active",
+                parent=parent_instance
+            )
+
+
+            # Many-to-Many: GL Codes
+            glCodes = request.POST.getlist("glCodes")
+            if glCodes:
+                glCodes = [int(gid) for gid in glCodes]  # ensure integers
+                classification.glCodes.set(glCodes)      # <-- FIXED
+
+            # Many-to-Many: Publications
+            publications = request.POST.getlist("publications")
+            if publications:
+                publications = [int(pid) for pid in publications]
+                classification.publications.set(publications)  # <-- FIXED
+
+            return redirect("adminClassifieds")
+
+    glCodes = GLCode.objects.all()
+    publications = Publication.objects.all()
+    classifications = Classification.objects.all().order_by('-created_at')
+    classifications_paginator = Paginator(classifications, 10)
+    classification_page_number = request.GET.get('page')
+    classifications_page_obj = classifications_paginator.get_page(classification_page_number)
+
+    return render(request, 'admin/classifieds.html', {
+        'classifications_page_obj': classifications_page_obj,
+        'glCodes': glCodes,
+        'publications': publications,
+    })
 
 def createAdminStyle(request):
 

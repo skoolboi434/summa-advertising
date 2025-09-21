@@ -14,40 +14,8 @@
           <div class="row w-75 mx-auto mb-4">
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
-                <label for="category-name">ID:</label>
-                <input type="text" id="category-id" name="category-id" class="form-control" />
-              </div>
-            </div>
-
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
                 <label for="category-name"><span class="asterisk">*</span>Category Name:</label>
                 <input type="text" id="category-name" name="category-name" class="form-control" />
-              </div>
-            </div>
-          </div>
-
-          <div class="row mb-4 w-75 mx-auto mb-4">
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="classified-start-date"><span class="asterisk">*</span>Start Date:</label>
-                <input class="form-control" type="date" name="classified-start-date" id="classified-start-date" />
-              </div>
-            </div>
-
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="classified-end-date"><span class="asterisk">*</span>End Date:</label>
-                <input class="form-control" type="date" name="classified-end-date" id="classified-end-date" />
-              </div>
-            </div>
-          </div>
-
-          <div class="row w-75 mx-auto mb-4">
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="category-status">Status:</label>
-                <select name="category-status" id="category-status" class="form-select"></select>
               </div>
             </div>
 
@@ -56,10 +24,10 @@
                 <label for="category-self-service" class="d-block mb-2"> <span class="asterisk">*</span>Available in Self-Service Portal? </label>
 
                 <div class="pill-group">
-                  <input type="radio" class="btn-check" name="selfService" id="category-self-service-yes" autocomplete="off" checked />
+                  <input type="radio" class="btn-check" name="selfService" id="category-self-service-yes" value="yes" autocomplete="off" checked />
                   <label class="pill" for="category-self-service-yes">Yes</label>
 
-                  <input type="radio" class="btn-check" name="selfService" id="category-self-service-no" autocomplete="off" />
+                  <input type="radio" class="btn-check" name="selfService" id="category-self-service-no" value="no" autocomplete="off" />
                   <label class="pill" for="category-self-service-no">No</label>
                 </div>
               </div>
@@ -68,46 +36,48 @@
 
           <div class="row mb-4 w-75 mx-auto">
             <div class="col-md-12 col-lg-6">
-              <div class="form-group">
+              <div class="form-group mb-3">
                 <label for="category-subcategory" class="d-block mb-2"> <span class="asterisk">*</span>Is this a Sub-category? </label>
 
                 <div class="pill-group">
-                  <input type="radio" class="btn-check" name="isSubcategory" id="subcategory-yes" autocomplete="off" checked />
+                  <input type="radio" class="btn-check toggle-radio" name="isSubcategory" id="subcategory-yes" data-target="main-category-select" value="yes" checked />
                   <label class="pill" for="subcategory-yes">Yes</label>
 
-                  <input type="radio" class="btn-check" name="isSubcategory" id="subcategory-no" autocomplete="off" />
+                  <input type="radio" class="btn-check toggle-radio" name="isSubcategory" id="subcategory-no" data-target="main-category-select" value="no" />
                   <label class="pill" for="subcategory-no">No</label>
                 </div>
               </div>
+
+              <div class="form-group">
+                <label for="main-category-select">Select main category:</label>
+                <select name="main-category-select" id="main-category-select" class="form-select">
+                  {% for category in classifications_page_obj %}
+                  <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
-              <div class="form-group">
+              <div class="form-group mb-3">
                 <label for="category-gl-override" class="d-block mb-2"> <span class="asterisk">*</span>GL Override?</label>
 
                 <div class="pill-group">
-                  <input type="radio" class="btn-check" name="isGl-override" id="gl-override-yes" autocomplete="off" checked />
+                  <input type="radio" class="btn-check toggle-radio" name="isGl-override" id="gl-override-yes" data-target="category-override-gl" value="yes" checked />
                   <label class="pill" for="gl-override-yes">Yes</label>
 
-                  <input type="radio" class="btn-check" name="isGl-override" id="gl-override-no" autocomplete="off" />
+                  <input type="radio" class="btn-check toggle-radio" name="isGl-override" id="gl-override-no" data-target="category-override-gl" value="no" />
                   <label class="pill" for="gl-override-no">No</label>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="row mb-4 w-75 mx-auto">
-            <div class="col-md-12 col-lg-6">
               <div class="form-group">
-                <label for="main-category-select">Select main category:</label>
-                <select name="main-category-select" id="main-category-select" class="form-select"></select>
-              </div>
-            </div>
-
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="classified-gl-code"><span class="asterisk">*</span>Select GL Code:</label>
-                <select name="classified-gl-code" id="classified-gl-code" class="form-select"></select>
+                <label for="category-assigned-gl"><span class="asterisk">*</span>Select GL Code</label>
+                <select name="glCodes" id="category-override-gl" class="form-select" multiple>
+                  {% for code in glCodes %}
+                  <option value="{{ code.id }}">{{ code.code }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </div>
           </div>
@@ -115,18 +85,23 @@
           <div class="item-select-container mb-4">
             <div class="available-pubs">
               Available Publications:<br />
-              <select multiple="multiple" id="lstBox1" class="form-select">
-                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
-                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              <select multiple="multiple" id="lstBox1" class="from-list form-select">
+                {% for pub in publications %}
+                <option value="{{ pub.id }}">{{ pub.name }}</option>
+                {% endfor %}
               </select>
             </div>
-            <div class="transferBtns">
-              <input class="mb-2" type="button" id="btnRight" value="  >  " />
-              <br /><input type="button" id="btnLeft" value="  <  " />
+            <div class="transferBtns d-flex flex-column align-items-center mx-3">
+              <button type="button" class="btn-all-right mb-2" id="btnAllRight">&gt;&gt;</button>
+              <button type="button" class="btn-right mb-2" id="btnRight">&gt;</button>
+              <button type="button" class="btn-left mb-2" id="btnLeft">&lt;</button>
+
+              <button type="button" class="btn-all-left" id="btnAllLeft">&lt;&lt;</button>
             </div>
+
             <div class="selected-pubs">
               Selected Publications:<br />
-              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+              <select multiple="multiple" id="lstBox2" name="publications" class="to-list form-select"></select>
             </div>
           </div>
 
@@ -138,3 +113,27 @@
     </div>
   </div>
 </div>
+
+<script>
+  function toggleGroup(radio) {
+    const targetId = radio.dataset.target;
+    const targetInput = document.getElementById(targetId);
+
+    if (!targetInput) return;
+
+    if (radio.value === 'yes' && radio.checked) {
+      targetInput.disabled = false;
+      targetInput.classList.remove('disabled');
+    } else if (radio.value === 'no' && radio.checked) {
+      targetInput.disabled = true;
+      targetInput.classList.add('disabled');
+    }
+  }
+
+  // Attach listeners
+  document.querySelectorAll('.toggle-radio').forEach(radio => {
+    radio.addEventListener('change', () => toggleGroup(radio));
+    // run once on page load
+    if (radio.checked) toggleGroup(radio);
+  });
+</script>

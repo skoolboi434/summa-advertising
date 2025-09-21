@@ -23,17 +23,63 @@
       </tr>
     </thead>
     <tbody>
-      {% for type in page_obj %}
+      {% for category in classifications_page_obj %}
       <tr>
-        <td>{{ type.id }}</td>
-        <td>{{ type.name }}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{ type.code }}</td>
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned text-decoration-underline">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in category.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% empty %}
+              <div>No Publications assigned</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
+        <td>
+          <span class="text-capitalize">
+            {% if category.is_subcategory == "yes" and category.parent %}
+            <div class="tooltip-wrapper">
+              <span class="see-assigned text-decoration-underline">See Parent</span>
+              <div class="custom-tooltip">
+                <div>{{ category.parent.name }}</div>
+              </div>
+            </div>
+            {% else %} {{ category.is_subcategory }} {% endif %}
+          </span>
+        </td>
+
+        <td><span class="text-capitalize">{{ category.status }}</span></td>
+        <td><span class="text-capitalize">{{ category.self_service}}</span></td>
+        <td>
+          {% if category.assigned_gl == "yes" %}
+          <div class="tooltip-wrapper">
+            <span class="see-assigned text-decoration-underline">See List</span>
+            <div class="custom-tooltip">
+              {% for gl in category.glCodes.all %}
+              <div>{{ gl.code }}</div>
+              {% endfor %}
+            </div>
+          </div>
+          {% else %} <span class="text-capitalize">{{ category.assigned_gl }}</span> {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+</div>
+
+<div class="pagination">
+  {% if classifications_page_obj.has_previous %}
+  <a href="?page={{ classifications_page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ classifications_page_obj.number }} of {{ classifications_page_obj.paginator.num_pages }}</span>
+
+  {% if classifications_page_obj.has_next %}
+  <a href="?page={{ classifications_page_obj.next_page_number }}">Next</a>
+  {% endif %}
 </div>

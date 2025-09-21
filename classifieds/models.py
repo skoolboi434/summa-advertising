@@ -1,6 +1,7 @@
 from django.db import models
-from adAdmin.models import Account, Publication, Rate, AdminAdType
+from adAdmin.models import Account, Publication, Rate, AdminAdType, GLCode
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 #from adAdmin.models import AdminAdType
 
@@ -70,15 +71,36 @@ class ClassifiedCampaignSummary(models.Model):
     campaign_detail = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
 
+    
+
     class Meta:
         db_table = "advertising_campaign_summary"
 
   
 
 class Classification(models.Model):
-    code = models.CharField(max_length=100)
     name = models.CharField(max_length=255)
-    active = models.BooleanField(default=True)
+    code = models.CharField(max_length=100)
+    self_service = models.CharField(max_length=100)
+    is_subcategory = models.CharField(max_length=100)
+    assigned_gl = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default="active")
+    created_at = models.DateTimeField(default=timezone.now)
+
+    glCodes = models.ManyToManyField(
+        'adAdmin.GLCode',
+        related_name="classifications",
+        blank=True
+    )
+
+    # Self-referential relationship
+    parent = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,  # null allowed if it has no parent
+        null=True,
+        blank=True,
+        related_name="child_categories"
+    )
 
     class Meta:
         db_table = 'advertising_classification'
