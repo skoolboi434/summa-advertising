@@ -14,24 +14,8 @@
           <div class="row mb-4 w-75 mx-auto">
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
-                <label for="measurement-id">#ID:</label>
-                <input class="form-control" type="number" name="measurement-id" id="measurement-id" />
-              </div>
-            </div>
-
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
                 <label for="measurement-name">Measurement Name:</label>
                 <input class="form-control" type="text" name="measurement-name" id="measurement-name" />
-              </div>
-            </div>
-          </div>
-
-          <div class="row w-75 mx-auto mb-4">
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="status">Status:</label>
-                <select name="status" id="status" class="form-select"></select>
               </div>
             </div>
 
@@ -54,7 +38,11 @@
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="fold-orientation">Fold Orientation:</label>
-                <select name="fold-orientation" id="fold-orientation" class="form-select"></select>
+                <select name="fold-orientation" id="fold-orientation" class="form-select">
+                  <option>Select</option>
+                  <option value="horizontal">Horizontal</option>
+                  <option value="vertical">Vertical</option>
+                </select>
               </div>
             </div>
 
@@ -63,7 +51,7 @@
                 <label for="measurement-size">Size:</label>
                 <div class="d-flex justify-content-between mb-3">
                   <div class="">
-                    <input type="number" id="inches" class="form-control" placeholder="Enter inches" />
+                    <input type="number" id="measurement-width" name="measurement-width" class="form-control" placeholder="Enter inches" />
                   </div>
 
                   <div class="d-flex justify-content-center align-items-center mx-2">
@@ -71,7 +59,7 @@
                   </div>
 
                   <div class="">
-                    <input type="number" id="height" class="form-control" placeholder="Enter height" />
+                    <input type="number" id="measurement-height" name="measurement-height" class="form-control" placeholder="Enter height" />
                   </div>
                 </div>
                 <!-- 
@@ -86,14 +74,14 @@
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="columns-per-page">Columns Per Page: (optional)</label>
-                <input type="text" name="columns-per-page" id="columns-per-page" class="form-control" />
+                <input type="number" name="columns-per-page" id="columns-per-page" class="form-control" />
               </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="column-width">Column Width: (optional)</label>
-                <input type="text" name="column-width" id="column-width" class="form-control" />
+                <input type="number" name="column-width" id="column-width" class="form-control" />
               </div>
             </div>
           </div>
@@ -102,14 +90,14 @@
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="page-width">Page Width: (optional)</label>
-                <input type="text" name="page-width" id="page-width" class="form-control" />
+                <input type="number" name="page-width" id="page-width" class="form-control" />
               </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="page-height">Page Height: (optional)</label>
-                <input type="text" name="page-height" id="page-height" class="form-control" />
+                <input type="number" name="page-height" id="page-height" class="form-control" />
               </div>
             </div>
           </div>
@@ -118,14 +106,18 @@
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="page-border">Page Border: (optional)</label>
-                <select name="page-border" id="page-border" class="form-select"></select>
+                <select name="page-border" id="page-border" class="form-select">
+                  <option>Select</option>
+                  <option value="box">Box</option>
+                  <option value="shadow">Shadow</option>
+                </select>
               </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
-                <label for="gutter-size">Page Height: (optional)</label>
-                <input class="form-control" type="text" name="gutter-size" id="gutter-size" class="form-control" />
+                <label for="gutter-size">Gutter Size: (optional)</label>
+                <input class="form-control" type="number" name="gutter-size" id="gutter-size" class="form-control" />
               </div>
             </div>
           </div>
@@ -133,18 +125,23 @@
           <div class="item-select-container mb-4">
             <div class="available-pubs">
               Available Publications:<br />
-              <select multiple="multiple" id="lstBox1" class="form-select">
-                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
-                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              <select multiple="multiple" id="lstBox1" class="from-list form-select">
+                {% for pub in publications %}
+                <option value="{{ pub.id }}">{{ pub.name }}</option>
+                {% endfor %}
               </select>
             </div>
-            <div class="transferBtns">
-              <input class="mb-2" type="button" id="btnRight" value="  >  " />
-              <br /><input type="button" id="btnLeft" value="  <  " />
+            <div class="transferBtns d-flex flex-column align-items-center mx-3">
+              <button type="button" class="btn-all-right mb-2" id="btnAllRight">&gt;&gt;</button>
+              <button type="button" class="btn-right mb-2" id="btnRight">&gt;</button>
+              <button type="button" class="btn-left mb-2" id="btnLeft">&lt;</button>
+
+              <button type="button" class="btn-all-left" id="btnAllLeft">&lt;&lt;</button>
             </div>
+
             <div class="selected-pubs">
               Selected Publications:<br />
-              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+              <select multiple="multiple" id="lstBox2" name="publications" class="to-list form-select"></select>
             </div>
           </div>
 

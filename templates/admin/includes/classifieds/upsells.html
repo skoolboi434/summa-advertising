@@ -65,3 +65,15 @@
     </tbody>
   </table>
 </div>
+
+<div class="pagination">
+  {% if upsells_page_obj.has_previous %}
+  <a href="?page={{ upsells_page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ upsells_page_obj.number }} of {{ upsells_page_obj.paginator.num_pages }}</span>
+
+  {% if upsells_page_obj.has_next %}
+  <a href="?page={{ upsells_page_obj.next_page_number }}">Next</a>
+  {% endif %}
+</div>

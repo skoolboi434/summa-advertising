@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax, FiscalYear, RateGroup
-from classifieds.models import Classification, ClassifiedUpsell, ClassifiedAddon
+from classifieds.models import Classification, ClassifiedUpsell, ClassifiedAddon, ClassifiedMeasurement
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
 from django.utils.timezone import now
@@ -531,6 +531,47 @@ def adminClassifieds(request):
 
           return redirect("adminClassifieds")
 
+        elif "measurement-name" in request.POST:
+          # Market Code form
+          name = request.POST.get("measurement-name")
+          orientation = request.POST.get("fold-orientation")
+          width = request.POST.get("measurement-width")
+          height = request.POST.get("measurement-height")
+          page_columns = request.POST.get("columns-per-page")
+          column_width = request.POST.get("column-width")
+          page_width = request.POST.get("page-width")
+          page_height = request.POST.get("page-height")
+          page_border = request.POST.get("page-border")
+          gutter_size = request.POST.get("gutter-size")
+          self_service = request.POST.get("measurement-selfService")
+          price = request.POST.get("addon-pricing")
+
+          # Create measurement record
+          measurement = ClassifiedMeasurement.objects.create(
+              name=name,
+              orientation=orientation,
+              width=width,
+              height=height,
+              page_columns=page_columns,
+              column_width=column_width,
+              page_width=page_width,
+              page_height=page_height,
+              page_border=page_border,
+              gutter_size=gutter_size,
+              self_service=self_service,
+              status="active",
+              created_by=request.user,
+          )
+
+
+          # Attach publications
+          publications = request.POST.getlist("publications")
+          if publications:
+              publications = [int(pid) for pid in publications]
+              measurement.publications.set(publications)
+
+          return redirect("adminClassifieds")
+
 
 
     glCodes = GLCode.objects.all()
@@ -542,12 +583,17 @@ def adminClassifieds(request):
     classification_page_number = request.GET.get('page')
     classifications_page_obj = classifications_paginator.get_page(classification_page_number)
 
+    measurements = ClassifiedMeasurement.objects.all().order_by('-created_at')
+    measurements_paginator = Paginator(measurements, 10)
+    measurement_page_number = request.GET.get('page')
+    measurements_page_obj = measurements_paginator.get_page(measurement_page_number)
+
     upsells = ClassifiedUpsell.objects.all().order_by('-created_at')
     upsells_paginator = Paginator(upsells, 10)
     upsell_page_number = request.GET.get('page')
     upsells_page_obj = upsells_paginator.get_page(classification_page_number)
 
-    addons = ClassifiedAddon.objects.all().order_by('-created_at')
+    addons = ClassifiedMeasurement.objects.all().order_by('-created_at')
     addons_paginator = Paginator(addons, 10)
     addon_page_number = request.GET.get('page')
     addons_page_obj = addons_paginator.get_page(classification_page_number)
@@ -556,6 +602,7 @@ def adminClassifieds(request):
         'classifications_page_obj': classifications_page_obj,
         'upsells_page_obj': upsells_page_obj,
         'addons_page_obj': addons_page_obj,
+        'measurements_page_obj': measurements_page_obj,
         'glCodes': glCodes,
         'publications': publications,
         'classifications_select': classifications_select

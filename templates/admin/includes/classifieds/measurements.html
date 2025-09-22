@@ -25,16 +25,42 @@
       </tr>
     </thead>
     <tbody>
+      {% for measurement in measurements_page_obj %}
       <tr>
-        <td>00001</td>
-        <td>Obit1</td>
-        <td>Hampstead Observer</td>
-        <td>Horizontal</td>
-        <td>12 In</td>
-        <td>8 In</td>
-        <td>Active</td>
-        <td>Yes</td>
+        <td>{{measurement.id}}</td>
+        <td><span class="text-capitalize">{{measurement.name}}</span></td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned text-decoration-underline">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in measurement.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% empty %}
+              <div>No Publications assigned</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
+        <td><span class="text-capitalize">{{measurement.orientation}}</span></td>
+        <td><span class="text-capitalize">{{measurement.height}}</span> In</td>
+        <td><span class="text-capitalize">{{measurement.width}}</span> In</td>
+        <td><span class="text-capitalize">{{measurement.status}}</span></td>
+        <td><span class="text-capitalize">{{measurement.self_service}}</span></td>
+        <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
+</div>
+
+<div class="pagination">
+  {% if measurements_page_obj.has_previous %}
+  <a href="?page={{ measurements_page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ measurements_page_obj.number }} of {{ measurements_page_obj.paginator.num_pages }}</span>
+
+  {% if measurements_page_obj.has_next %}
+  <a href="?page={{ measurements_page_obj.next_page_number }}">Next</a>
+  {% endif %}
 </div>

@@ -108,6 +108,39 @@ class Classification(models.Model):
     def __str__(self):
         return self.name
 
+class ClassifiedMeasurement(models.Model):
+    name = models.CharField(max_length=100)
+    orientation = models.CharField(max_length=100)
+    height = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    width = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    page_columns = models.IntegerField()
+    column_width = models.IntegerField()
+    page_width = models.IntegerField()
+    page_height = models.IntegerField()
+    page_border = models.CharField(max_length=100, default="none")
+    gutter_size = models.IntegerField()
+    self_service = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default="active")
+    created_at = models.DateTimeField(default=timezone.now)
+
+    # Many-to-many relationship to Publication
+    publications = models.ManyToManyField(
+        'adAdmin.Publication', 
+        related_name="measurements", 
+        blank=True
+    )
+
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="measurements"
+    )
+
+    class Meta:
+        db_table = 'advertising_classified_measurements'
+
 class ClassifiedUpsell(models.Model):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)

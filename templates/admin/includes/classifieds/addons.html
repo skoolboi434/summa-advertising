@@ -48,3 +48,15 @@
     </tbody>
   </table>
 </div>
+
+<div class="pagination">
+  {% if addons_page_obj.has_previous %}
+  <a href="?page={{ addons_page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ addons_page_obj.number }} of {{ addons_page_obj.paginator.num_pages }}</span>
+
+  {% if addons_page_obj.has_next %}
+  <a href="?page={{ addons_page_obj.next_page_number }}">Next</a>
+  {% endif %}
+</div>
