@@ -108,6 +108,39 @@ class Classification(models.Model):
     def __str__(self):
         return self.name
 
+class ClassifiedUpsell(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    assigned_gl = models.CharField(max_length=100)
+    assigned_rate = models.CharField(max_length=100)
+    self_service = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default="active")
+    created_at = models.DateTimeField(default=timezone.now)
+
+    # Many-to-many relationship to Publication
+    publications = models.ManyToManyField(
+        'adAdmin.Publication', 
+        related_name="upsells", 
+        blank=True
+    )
+
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="upsells"
+    )
+
+    glCodes = models.ManyToManyField(
+        'adAdmin.GLCode',
+        related_name="upsells",
+        blank=True
+    )
+
+    class Meta:
+        db_table = 'advertising_classified_upsells'
+
 
 class ProductAddon(models.Model):
     ADDON_TYPE_CHOICES = [
@@ -164,3 +197,4 @@ class ClassifiedSubcategory(models.Model):
 
     def __str__(self):
         return self.name
+

@@ -51,7 +51,7 @@
               <div class="form-group">
                 <label for="main-category-select">Select main category:</label>
                 <select name="main-category-select" id="main-category-select" class="form-select">
-                  {% for category in classifications_page_obj %}
+                  {% for category in classifications_select %}
                   <option value="{{ category.id }}">{{ category.name }}</option>
                   {% endfor %}
                 </select>

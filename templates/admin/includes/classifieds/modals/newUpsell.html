@@ -12,22 +12,13 @@
         <div class="text-center w-75 mx-auto">
           <p>Fill out the form below.<br />This will then be sent to management to get confirmed<br />and applied to the system</p>
         </div>
-        <form id="classified-measurement-form" action="" method="POST">
+        <form id="classified-upsell-form" action="" method="POST">
           {% csrf_token %}
 
-          <div class="row mb-4 w-75 mx-auto">
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="upsell-name">Upsell Name:</label>
-                <input class="form-control" type="text" name="upsell-name" id="upsell-name" />
-              </div>
-            </div>
-
-            <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="status">Status:</label>
-                <select name="upsell-status" id="upsell-status" class="form-select"></select>
-              </div>
+          <div class="mb-4 w-75 mx-auto">
+            <div class="form-group">
+              <label for="upsell-name">Upsell Name:</label>
+              <input class="form-control" type="text" name="upsell-name" id="upsell-name" />
             </div>
           </div>
 
@@ -38,30 +29,44 @@
 
           <div class="row mb-4 w-75 mx-auto">
             <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="upsell-self-service" class="d-block mb-2"> <span class="asterisk">*</span>Assigned Rate:</label>
+              <div class="form-group mb-3">
+                <label for="assigned-rate" class="d-block mb-2">Assigned Rate:</label>
 
                 <div class="pill-group">
-                  <input type="radio" class="btn-check" name="upsell-sefl-service" id="upsell-sefl-service-default" autocomplete="off" checked />
-                  <label class="pill" for="upsell-sefl-service-default">Use Default</label>
+                  <input type="radio" class="btn-check toggle-radio" name="isAssignedRate" id="assigned-rate-default" data-target="upsell-rate-select" value="default" checked />
+                  <label class="pill" for="assigned-rate-default">Default</label>
 
-                  <input type="radio" class="btn-check" name="upsell-sefl-service" id="upsell-sefl-service-override" autocomplete="off" />
-                  <label class="pill" for="upsell-sefl-service-override">Override</label>
+                  <input type="radio" class="btn-check toggle-radio" name="isAssignedRate" id="assigned-rate-override" data-target="upsell-rate-select" value="override" />
+                  <label class="pill" for="assigned-rate-override">Override</label>
                 </div>
+              </div>
+
+              <div class="form-group">
+                <label for="upsell-rate-select">Available Rates:</label>
+                <select name="upsell-rate-select" id="upsell-rate-select" class="form-select"></select>
               </div>
             </div>
 
             <div class="col-md-12 col-lg-6">
-              <div class="form-group">
-                <label for="upsell-self-service" class="d-block mb-2">Assigned GL:</label>
+              <div class="form-group mb-3">
+                <label for="upsell-gl-override" class="d-block mb-2"> <span class="asterisk">*</span>GL Override?</label>
 
                 <div class="pill-group">
-                  <input type="radio" class="btn-check" name="upsell-gl" id="upsell-gl-default" autocomplete="off" checked />
-                  <label class="pill" for="upsell-gl-default">Use Default</label>
+                  <input type="radio" class="btn-check toggle-radio" name="isGlOverride" id="gl-override-default" data-target="upsell-override-gl" value="default" checked />
+                  <label class="pill" for="gl-override-default">Default</label>
 
-                  <input type="radio" class="btn-check" name="upsell-gl" id="upsell-gl-override" autocomplete="off" />
-                  <label class="pill" for="upsell-gl-override">Override</label>
+                  <input type="radio" class="btn-check toggle-radio" name="isGlOverride" id="gl-override-override" data-target="upsell-override-gl" value="override" />
+                  <label class="pill" for="gl-override-override">Override</label>
                 </div>
+              </div>
+
+              <div class="form-group">
+                <label for="upsell-assigned-gl"><span class="asterisk">*</span>Select GL Code</label>
+                <select name="upsell-override-gl" id="upsell-override-gl" class="form-select" multiple>
+                  {% for code in glCodes %}
+                  <option value="{{ code.id }}">{{ code.code }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </div>
           </div>
@@ -69,18 +74,23 @@
           <div class="item-select-container mb-4">
             <div class="available-pubs">
               Available Publications:<br />
-              <select multiple="multiple" id="lstBox1" class="form-select">
-                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
-                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              <select multiple="multiple" id="lstBox1" class="from-list form-select">
+                {% for pub in publications %}
+                <option value="{{ pub.id }}">{{ pub.name }}</option>
+                {% endfor %}
               </select>
             </div>
-            <div class="transferBtns">
-              <input class="mb-2" type="button" id="btnRight" value="  >  " />
-              <br /><input type="button" id="btnLeft" value="  <  " />
+            <div class="transferBtns d-flex flex-column align-items-center mx-3">
+              <button type="button" class="btn-all-right mb-2" id="btnAllRight">&gt;&gt;</button>
+              <button type="button" class="btn-right mb-2" id="btnRight">&gt;</button>
+              <button type="button" class="btn-left mb-2" id="btnLeft">&lt;</button>
+
+              <button type="button" class="btn-all-left" id="btnAllLeft">&lt;&lt;</button>
             </div>
+
             <div class="selected-pubs">
               Selected Publications:<br />
-              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+              <select multiple="multiple" id="lstBox2" name="publications" class="to-list form-select"></select>
             </div>
           </div>
 
@@ -90,10 +100,10 @@
 
               <div class="pill-group">
                 <input type="radio" class="btn-check" name="upsell-self-service" id="upsell-self-service-yes" autocomplete="off" checked />
-                <label class="pill" for="upsell-self-service-yes">Yes</label>
+                <label class="pill" for="upsell-self-service-yes" value="yes">Yes</label>
 
                 <input type="radio" class="btn-check" name="upsell-self-service" id="upsell-self-service-no" autocomplete="off" />
-                <label class="pill" for="upsell-self-service-no">No</label>
+                <label class="pill" for="upsell-self-service-no" value="no">No</label>
               </div>
             </div>
           </div>
@@ -106,3 +116,39 @@
     </div>
   </div>
 </div>
+
+<script>
+  function toggleGroup(radio) {
+    const targetId = radio.dataset.target;
+    const targetInput = document.getElementById(targetId);
+
+    if (!targetInput) return;
+
+    // Handle yes/no toggles
+    if (radio.value === 'yes' && radio.checked) {
+      targetInput.disabled = false;
+      targetInput.classList.remove('disabled');
+    }
+    if (radio.value === 'no' && radio.checked) {
+      targetInput.disabled = true;
+      targetInput.classList.add('disabled');
+    }
+
+    // Handle default/override toggles
+    if (radio.value === 'default' && radio.checked) {
+      targetInput.disabled = true;
+      targetInput.classList.add('disabled');
+    }
+    if (radio.value === 'override' && radio.checked) {
+      targetInput.disabled = false; // ✅ allow override to enable the select
+      targetInput.classList.remove('disabled');
+    }
+  }
+
+  // Attach listeners
+  document.querySelectorAll('.toggle-radio').forEach(radio => {
+    radio.addEventListener('change', () => toggleGroup(radio));
+    // run once on page load
+    if (radio.checked) toggleGroup(radio);
+  });
+</script>

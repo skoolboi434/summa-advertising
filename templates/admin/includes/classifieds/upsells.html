@@ -24,26 +24,44 @@
       </tr>
     </thead>
     <tbody>
+      {% for upsell in upsells_page_obj %}
       <tr>
-        <td>00001</td>
-        <td>Bold Line</td>
-        <td>None</td>
-        <td>Default</td>
-        <td>Yes</td>
-        <td>Hampstead Observer</td>
-        <td>Active</td>
+        <td>{{upsell.id}}</td>
+        <td><span class="text-capitalize">{{upsell.name}}</span></td>
+        <td><span class="text-capitalize">{{ upsell.assigned_rate }}</span></td>
+        <td>
+          <span class="text-capitalize">
+            {% if upsell.assigned_gl == "override" %}
+            <div class="tooltip-wrapper">
+              <span class="see-assigned text-decoration-underline">See List</span>
+              <div class="custom-tooltip">
+                {% for code in upsell.glCodes.all %}
+                <div>{{ code.code }}</div>
+                {% empty %}
+                <div>No GL codes assigned</div>
+                {% endfor %}
+              </div>
+            </div>
+            {% else %} {{ upsell.assigned_gl }} {% endif %}
+          </span>
+        </td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned text-decoration-underline">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in upsell.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% empty %}
+              <div>No Publications assigned</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
+        <td><span class="text-capitalize">{{upsell.self_service}}</span></td>
+        <td><span class="text-capitalize">{{upsell.status}}</span></td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
-      <tr>
-        <td>00002</td>
-        <td>Flash Video</td>
-        <td>None</td>
-        <td>Default</td>
-        <td>Yes</td>
-        <td>Hampstead Observer</td>
-        <td>Active</td>
-        <td><i class="fa fa-solid fa-pen"></i></td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax, FiscalYear, RateGroup
-from classifieds.models import Classification
+from classifieds.models import Classification, ClassifiedUpsell
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
 from django.utils.timezone import now
@@ -464,17 +464,69 @@ def adminClassifieds(request):
 
             return redirect("adminClassifieds")
 
+        elif "upsell-name" in request.POST:
+          # Market Code form
+          name = request.POST.get("upsell-name")
+          description = request.POST.get("upsell-description")
+
+          # Assigned Rate radio
+          assigned_rate = request.POST.get("isAssignedRate")  # "default" or "override"
+
+          # GL override radio
+          gl_override_mode = request.POST.get("isGlOverride")  # "default" or "override"
+
+          assigned_gl = gl_override_mode
+
+          self_service = request.POST.get("upsell-self-service")
+
+          # Create upsell record
+          upsell = ClassifiedUpsell.objects.create(
+              name=name,
+              description=description,
+              assigned_rate=assigned_rate,   # store correct value
+              assigned_gl=assigned_gl,
+              self_service=self_service,
+              status="active",
+              created_by=request.user,
+          )
+
+          # Attach GL codes only if override is selected
+          if gl_override_mode == "override":
+              glCodes = request.POST.getlist("upsell-override-gl")
+              if glCodes:
+                  glCodes = [int(gid) for gid in glCodes]  # ensure integers
+                  upsell.glCodes.set(glCodes)
+
+          # Attach publications
+          publications = request.POST.getlist("publications")
+          if publications:
+              publications = [int(pid) for pid in publications]
+              upsell.publications.set(publications)
+
+          return redirect("adminClassifieds")
+
+
+
     glCodes = GLCode.objects.all()
     publications = Publication.objects.all()
+    classifications_select = Classification.objects.all().order_by('-created_at')
+
     classifications = Classification.objects.all().order_by('-created_at')
     classifications_paginator = Paginator(classifications, 10)
     classification_page_number = request.GET.get('page')
     classifications_page_obj = classifications_paginator.get_page(classification_page_number)
 
+    upsells = ClassifiedUpsell.objects.all().order_by('-created_at')
+    upsells_paginator = Paginator(upsells, 10)
+    upsell_page_number = request.GET.get('page')
+    upsells_page_obj = upsells_paginator.get_page(classification_page_number)
+
     return render(request, 'admin/classifieds.html', {
         'classifications_page_obj': classifications_page_obj,
+        'upsells_page_obj': upsells_page_obj,
         'glCodes': glCodes,
         'publications': publications,
+        'classifications_select': classifications_select
     })
 
 def createAdminStyle(request):

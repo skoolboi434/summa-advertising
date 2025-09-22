@@ -2,10 +2,10 @@ document.querySelectorAll('.item-select-container').forEach(function (container)
   const from = container.querySelector('.from-list');
   const to = container.querySelector('.to-list');
 
-  container.querySelector('.btn-right').addEventListener('click', () => moveSelected(from, to));
-  container.querySelector('.btn-left').addEventListener('click', () => moveSelected(to, from));
-  container.querySelector('.btn-all-right').addEventListener('click', () => moveAll(from, to));
-  container.querySelector('.btn-all-left').addEventListener('click', () => moveAll(to, from));
+  const btnRight = container.querySelector('.btn-right');
+  const btnLeft = container.querySelector('.btn-left');
+  const btnAllRight = container.querySelector('.btn-all-right');
+  const btnAllLeft = container.querySelector('.btn-all-left');
 
   function moveSelected(fromList, toList) {
     Array.from(fromList.selectedOptions).forEach(option => {
@@ -21,8 +21,14 @@ document.querySelectorAll('.item-select-container').forEach(function (container)
     });
   }
 
+  // Attach listeners only if the buttons exist
+  if (btnRight) btnRight.addEventListener('click', () => moveSelected(from, to));
+  if (btnLeft) btnLeft.addEventListener('click', () => moveSelected(to, from));
+  if (btnAllRight) btnAllRight.addEventListener('click', () => moveAll(from, to));
+  if (btnAllLeft) btnAllLeft.addEventListener('click', () => moveAll(to, from));
+
   const form = container.closest('form');
-  if (form) {
+  if (form && to) {
     form.addEventListener('submit', function () {
       Array.from(to.options).forEach(opt => (opt.selected = true));
     });
