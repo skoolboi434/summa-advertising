@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import ClassifiedAd, Classification, ProductAddon, ClassifiedSubcategory
+from .models import ClassifiedAd, Classification, ClassifiedAddon, ClassifiedSubcategory
 from adAdmin.models import Publication, SalesPerson, Customer
 from django.core.paginator import Paginator
 from django.http import JsonResponse

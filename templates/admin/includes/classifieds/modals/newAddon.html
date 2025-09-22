@@ -6,10 +6,10 @@
       </div>
       <div class="modal-body">
         <div class="border-bottom border-dark mb-3 text-center w-75 mx-auto">
-          <h3 class="mb-1">New Addon</h3>
+          <h3 class="mb-1">New Classifieds Addon</h3>
         </div>
 
-        <form id="classified-measurement-form" action="" method="POST">
+        <form id="classified-addon-form" action="" method="POST">
           {% csrf_token %}
 
           <div class="form-group w-75 mx-auto mb-4">
@@ -23,30 +23,24 @@
           </div>
 
           <div class="row w-75 mx-auto mb-4">
-            <div class="col-md-12 col-lg-4">
+            <div class="col-md-12 col-lg-6">
               <div class="form-group">
-                <label for="addon-self-service">In the self-service:</label>
-                <select name="addon-self-service" id="addon-self-service" class="form-control">
-                  <option value="" selected>Select</option>
-                </select>
+                <label for="addon-self-service" class="d-block mb-2">Available in Self-service?</label>
+
+                <div class="pill-group">
+                  <input type="radio" class="btn-check" name="addon-self-service" id="addon-self-service-yes" autocomplete="off" checked />
+                  <label class="pill" for="addon-self-service-yes" value="yes">Yes</label>
+
+                  <input type="radio" class="btn-check" name="addon-self-service" id="addon-self-service-no" autocomplete="off" />
+                  <label class="pill" for="addon-self-service-no" value="no">No</label>
+                </div>
               </div>
             </div>
 
-            <div class="col-md-12 col-lg-4">
+            <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="addon-pricing">Pricing:</label>
-                <select name="addon-pricing" id="addon-pricing" class="form-control">
-                  <option value="" selected>Select</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-12 col-lg-4">
-              <div class="form-group">
-                <label for="addon-status">Status:</label>
-                <select name="addon-status" id="addon-status" class="form-control">
-                  <option value="" selected>Select</option>
-                </select>
+                <input type="text" class="form-control" name="addon-pricing" id="addon-pricing" />
               </div>
             </div>
           </div>
@@ -54,18 +48,23 @@
           <div class="item-select-container mb-4">
             <div class="available-pubs">
               Available Publications:<br />
-              <select multiple="multiple" id="lstBox1" class="form-select">
-                <option value="times-leader-print-edition">Times Leader - Print Edition</option>
-                <option value="times-leader-e-edition">Times Leader - E Edition</option>
+              <select multiple="multiple" id="lstBox1" class="from-list form-select">
+                {% for pub in publications %}
+                <option value="{{ pub.id }}">{{ pub.name }}</option>
+                {% endfor %}
               </select>
             </div>
-            <div class="transferBtns">
-              <input class="mb-2" type="button" id="btnRight" value="  >  " />
-              <br /><input type="button" id="btnLeft" value="  <  " />
+            <div class="transferBtns d-flex flex-column align-items-center mx-3">
+              <button type="button" class="btn-all-right mb-2" id="btnAllRight">&gt;&gt;</button>
+              <button type="button" class="btn-right mb-2" id="btnRight">&gt;</button>
+              <button type="button" class="btn-left mb-2" id="btnLeft">&lt;</button>
+
+              <button type="button" class="btn-all-left" id="btnAllLeft">&lt;&lt;</button>
             </div>
+
             <div class="selected-pubs">
               Selected Publications:<br />
-              <select multiple="multiple" id="lstBox2" class="form-select"></select>
+              <select multiple="multiple" id="lstBox2" name="publications" class="to-list form-select"></select>
             </div>
           </div>
 

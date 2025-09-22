@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax, FiscalYear, RateGroup
-from classifieds.models import Classification, ClassifiedUpsell
+from classifieds.models import Classification, ClassifiedUpsell, ClassifiedAddon
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
 from django.utils.timezone import now
@@ -505,6 +505,32 @@ def adminClassifieds(request):
 
           return redirect("adminClassifieds")
 
+        elif "addon-name" in request.POST:
+          # Market Code form
+          name = request.POST.get("addon-name")
+          description = request.POST.get("addon-description")
+          self_service = request.POST.get("addon-self-service")
+          price = request.POST.get("addon-pricing")
+
+          # Create upsell record
+          addon = ClassifiedAddon.objects.create(
+              name=name,
+              description=description,
+              self_service=self_service,
+              price=price,
+              status="active",
+              created_by=request.user,
+          )
+
+
+          # Attach publications
+          publications = request.POST.getlist("publications")
+          if publications:
+              publications = [int(pid) for pid in publications]
+              addon.publications.set(publications)
+
+          return redirect("adminClassifieds")
+
 
 
     glCodes = GLCode.objects.all()
@@ -521,9 +547,15 @@ def adminClassifieds(request):
     upsell_page_number = request.GET.get('page')
     upsells_page_obj = upsells_paginator.get_page(classification_page_number)
 
+    addons = ClassifiedAddon.objects.all().order_by('-created_at')
+    addons_paginator = Paginator(addons, 10)
+    addon_page_number = request.GET.get('page')
+    addons_page_obj = addons_paginator.get_page(classification_page_number)
+
     return render(request, 'admin/classifieds.html', {
         'classifications_page_obj': classifications_page_obj,
         'upsells_page_obj': upsells_page_obj,
+        'addons_page_obj': addons_page_obj,
         'glCodes': glCodes,
         'publications': publications,
         'classifications_select': classifications_select

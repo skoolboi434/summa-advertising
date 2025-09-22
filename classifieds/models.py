@@ -142,27 +142,37 @@ class ClassifiedUpsell(models.Model):
         db_table = 'advertising_classified_upsells'
 
 
-class ProductAddon(models.Model):
-    ADDON_TYPE_CHOICES = [
-        ('word_count', 'Word Count Increase'),
-        ('additional_publication', 'Additional Publication'),
-        # Add more types here as needed
-    ]
+class ClassifiedAddon(models.Model):
+    # ADDON_TYPE_CHOICES = [
+    #     ('word_count', 'Word Count Increase'),
+    #     ('additional_publication', 'Additional Publication'),
+    #     # Add more types here as needed
+    # ]
 
-    addon_type = models.CharField(max_length=100, choices=ADDON_TYPE_CHOICES)
-    label = models.CharField(max_length=255)  # e.g., "Increase by 35 Words" or "Anson Record"
-    publication = models.ForeignKey(Publication, on_delete=models.CASCADE, blank=True, null=True)
+    
+    name = models.CharField(max_length=255)  # e.g., "Increase by 35 Words" or "Anson Record"
+    description = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
-    is_active = models.BooleanField(default=True)
+    self_service = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, default="active")
+    created_at = models.DateTimeField(default=timezone.now)
+
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="addons"
+    )
+
+    publications = models.ManyToManyField(
+        'adAdmin.Publication', 
+        related_name="addons", 
+        blank=True
+    )
 
     class Meta:
-        db_table = "advertising_classifieds_addons"
-        verbose_name = "Product Addon"
-        verbose_name_plural = "Product Addons"
-        ordering = ['addon_type', 'label']
-
-    def __str__(self):
-        return f"{self.label} (${self.price})"
+        db_table = 'advertising_classifieds_addons'
 
 class ClassifiedImage(models.Model):
     classified_ad = models.ForeignKey(

@@ -23,15 +23,28 @@
       </tr>
     </thead>
     <tbody>
+      {% for addon in addons_page_obj %}
       <tr>
-        <td>0001</td>
-        <td>+ 30 Words</td>
-        <td>$19.99</td>
-        <td>Times Leader</td>
-        <td>Yes</td>
-        <td>Active</td>
+        <td>{{addon.id}}</td>
+        <td><span class="text-capitalize">{{addon.name}}</span></td>
+        <td>${{addon.price}}</td>
+        <td>
+          <div class="tooltip-wrapper">
+            <span class="see-assigned text-decoration-underline">See assigned</span>
+            <div class="custom-tooltip">
+              {% for pub in addon.publications.all %}
+              <div>{{ pub.name }}</div>
+              {% empty %}
+              <div>No Publications assigned</div>
+              {% endfor %}
+            </div>
+          </div>
+        </td>
+        <td><span class="text-capitalize">{{addon.self_service}}</span></td>
+        <td><span class="text-capitalize">{{addon.status}}</span></td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
