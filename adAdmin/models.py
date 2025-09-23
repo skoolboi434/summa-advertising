@@ -671,3 +671,41 @@ class AdvPubsProduct(models.Model):
     def __str__(self):
         return self.name
 
+class StandardSize(models.Model):
+    id = models.AutoField(primary_key=True)
+    type = models.IntegerField() # type == 1 == newspaper, type == 2 == magazine , type == 3 == digital
+    description = models.TextField(null=True)
+    columns = models.IntegerField()
+    height = models.FloatField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=True)
+    class Meta:
+        db_table = 'advertising_standardsize'
+    @property
+    def total_columns_in(self):
+        return self.columns * self.height
+    def __str__(self):
+        return self.description
+
+class NewspaperProduct(models.Model):
+    product_mag = models.TextField(null=True)
+    measurement_type = models.TextField(null=True)
+    fold_orientation = models.TextField(null=True)
+    height = models.IntegerField()
+    width = models.IntegerField()
+    columns = models.IntegerField()
+    column_width = models.IntegerField()
+    page_width = models.IntegerField()
+    page_height = models.IntegerField()
+    page_border = models.IntegerField()
+    gutter_size = models.IntegerField()
+    top_border = models.FloatField(default=0.0)
+    bottom_border = models.FloatField(default=0.0)
+    active = models.BooleanField(default=True)
+    status = models.IntegerField(default=1)
+
+    class Meta:
+        db_table = 'advertising_newspaper_products'
+
+    def __str__(self):
+        return self.product_mag

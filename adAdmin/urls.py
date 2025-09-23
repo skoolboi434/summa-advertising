@@ -14,6 +14,11 @@ urlpatterns = [
   path('new-user/', views.createUser, name='createUser'),
   path('new-style/', views.createAdminStyle, name='createAdminStyle'),
   path('admingeneral/new-magazine/', views.newMagazine, name='newMagazine'),
+  path('admingeneral/new-newspaper/', views.newNewspaper, name='newNewspaper'),
+
+  path("advertising/json/add/product/info/", views.newNewspaper, name="newNewspaper"),
+  path("advertising/json/add/standardsize/", views.add_standardsize, name="add_standardsize"),
+
   path('rate-groups/<int:id>/', views.singleRateGroup, name='singleRateGroup'),
   
 ]

@@ -1,149 +1,299 @@
-{% extends 'base.html' %}{% load static %} {% block content %}
+{% extends 'base.html' %} {% block content %}{% load static %}
 
-<div class="heading-container text-center my-5">
-  <h3 class="heading">New Magazine</h3>
-</div>
-
-<div class="stepform">
-  <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
-    <div class="step active">
-      <div class="text">
-        <span class="number">1</span>
-        <span class="title">Product Info</span>
-      </div>
-      <div class="arrow">
-        <i class="fa fa-solid fa-arrow-right"></i>
-      </div>
-    </div>
-    <div class="step">
-      <div class="text">
-        <span class="number">2</span>
-        <span class="title">Ad Sizes Setup</span>
-      </div>
-      <div class="arrow">
-        <i class="fa fa-solid fa-arrow-right"></i>
-      </div>
-    </div>
-    <div class="step">
-      <div class="text">
-        <span class="number">3</span>
-        <span class="title">Review</span>
-      </div>
-    </div>
+<div class="container mt-5">
+  <div class="heading-container product text-center">
+    <h3 class="heading">New Magazine Product</h3>
+    <img class="img-fluid" src="{% static 'images/Magazine.png' %}" alt="Magazine" />
   </div>
 
-  <form id="product-magazine-form" action="{% url 'newMagazine' %}" method="POST">
-    {% csrf_token %}
+  <div class="breadcrumb"><a href="">Admin Home</a></div>
+
+  <div class="stepform">
+    <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+      <div class="step active">
+        <div class="text">
+          <span class="number">1</span>
+          <span class="title">Product Info</span>
+        </div>
+        <div class="arrow">
+          <i class="fa fa-solid fa-arrow-right"></i>
+        </div>
+      </div>
+      <div class="step">
+        <div class="text">
+          <span class="number">2</span>
+          <span class="title">Ad Sizes Setup</span>
+        </div>
+        <div class="arrow">
+          <i class="fa fa-solid fa-arrow-right"></i>
+        </div>
+      </div>
+      <div class="step">
+        <div class="text">
+          <span class="number">3</span>
+          <span class="title">Review</span>
+        </div>
+      </div>
+    </div>
+
     <div class="tab">
-      <div class="row">
-        <div class="col-md-12 col-lg-6">
-          <div class="form-group mb-4">
-            <label for="magazine-product"><span class="asterisk">*</span>Magazine Product:</label>
-            <input type="text" name="magazine-product" id="magazine-product" class="form-control" />
-          </div>
-          <div class="form-group w-50 mb-4">
-            <label for="measurement-type"><span class="asterisk">*</span>Measurement Type:</label>
-            <select name="measurement-type" id="measurement-type" class="form-select">
-              <option value="Inches">Inches</option>
-            </select>
-          </div>
-
-          <div class="d-flex justify-content-between mb-4">
-            <div class="form-group w-50 me-2">
-              <label for="fold-orientation"><span class="asterisk">*</span>Fold Orientation</label>
-              <select name="fold-orientation" id="fold-orientation" class="form-select"></select>
-            </div>
-
-            <div class="form-group w-50">
-              <label for="size"><span class="asterisk">*</span>Size</label>
-              <div class="d-flex justify-content-between mb-3">
-                <div class="">
-                  <input type="number" id="height" class="form-control" placeholder="H" />
-                </div>
-
-                <div class="d-flex justify-content-center align-items-center mx-2">
-                  <span><h5 class="mb-0">X</h5></span>
-                </div>
-
-                <div class="">
-                  <input type="number" id="width" class="form-control" placeholder="W" />
-                </div>
+      <div class="row mgb-3">
+        <div class="col-lg-6 col-md-12">
+          <div class="form-group mb-5">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="product-mag" class="aster">Magazine Product:</label>
+                <input type="text" name="" placeholder="" id="product-mag" class="form-control" required />
+              </div>
+              <div class="col-md-6">
+                <label for="measurement-type" class="aster">Measurement Type:</label>
+                <select name="" id="measurement-type" class="form-control" disabled required>
+                  <option value="inch">Inch</option>
+                  <option value="cm">Cm</option>
+                </select>
               </div>
             </div>
           </div>
 
-          <div class="d-flex justify-content-between mb-4">
-            <div class="form-group me-lg-2">
-              <label for="columns-per-page"><span class="asterisk">*</span>Columns Per Page</label>
-              <input type="text" name="columns-per-page" id="columns-per-page" class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label for="column-width"><span class="asterisk">*</span>Column Width</label>
-              <input type="text" name="column-width" id="column-width" class="form-control" />
+          <div class="form-group mb-5">
+            <div class="row mb-5">
+              <div class="col-md-6">
+                <label for="orientation" class="aster">Fold Orientation:</label>
+                <select name="" id="orientation" class="form-control" required>
+                  <option value="horizontal">Horizontal</option>
+                  <option value="vertical">Vertical</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="orientation" class="aster">Size:</label>
+                <div class="double">
+                  <input type="number" name="" id="width" class="form-control" required />
+                  <strong class="px-1 font-weight-bold">X</strong>
+                  <input type="number" name="" id="height" class="form-control" required />
+                </div>
+              </div>
             </div>
           </div>
-
-          <div class="text-center">
-            <a href="">View Advanced Settings</a>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="columns">Columns Per Page: (Optional)</label>
+                <input type="number" name="" id="columns" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label for="column-width">Column Width: (Optional)</label>
+                <input type="number" step="0.01" name="" id="column-width" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row mb-5">
+              <div class="col-md-6">
+                <label for="page-width">Page Width: (Optional)</label>
+                <input type="number" name="page_width" id="page-width" step="0.01" class="form-control" value="" />
+              </div>
+              <div class="col-md-6">
+                <label for="page-height">Page Height: (Optional)</label>
+                <input type="number" name="page_height" id="page-height" step="0.01" class="form-control" value="" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="side-border">Side Border: (Optional)</label>
+                <input type="number" name="side_border" step="0.01" id="side-border" class="form-control" value="" />
+              </div>
+              <div class="col-md-6">
+                <label for="bottom-border">Bottom Border: (Optional)</label>
+                <input type="number" name="bottom-border" step="0.01" id="bottom-border" class="form-control" value="" />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="top-border">Top Border: (Optional)</label>
+                <input type="number" name="top_border" id="top-border" step="0.01" class="form-control" value="" />
+              </div>
+              <div class="col-md-6">
+                <label for="gutter-size">Gutter Size: (Optional)</label>
+                <input type="number" name="gutter_size" id="gutter-size" step="0.001" class="form-control" value="" />
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="col-md-12 col-lg-6 d-flex align-items-center">
-          <img class="img-fluid" src="{% static 'img/magazine-img.png' %}" alt="magazine-img" />
+        <div class="col-lg-6 col-md-12">
+          <div class="measurement-container text-center">
+            <img class="img-fluid" src="{% static 'img/magazine-img.png' %}" alt="magazine-img" />
+          </div>
         </div>
       </div>
-
       <div class="btn-container d-flex justify-content-end mt-5">
         <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
 
-    <!-- Ad Sizes Setup -->
     <div class="tab">
-      <div class="row">
-        <div class="col-md-12 col-lg-4">
-          <div class="border border-dark rounded p-3">
-            <div class="heading-container border-bottom border-dark text-center mb-4">
-              <h3 class="color-secondary mb-0">New Standard Ad Size</h3>
+      <div class="row mgb-3">
+        <div class="col-lg-4 col-md-12">
+          <div class="standard-size-container">
+            <div class="heading-container">
+              <h3 class="heading">New Standard Size</h3>
+              <hr />
             </div>
+            <form method="post" id="standardsize-form">
+              <div class="form-group px-3 mb-3">
+                <label for="size-description">Size Description</label>
+                <input type="text" name="description" id="size-description" class="form-control" />
+              </div>
 
-            <div class="standard-size-container">
-              <form method="post" id="standardsize-form" class="">
-                <div class="form-group px-3 mb-3">
-                  <label for="size-description">Size Description</label>
-                  <input type="text" name="description" id="size-description" class="form-control" />
-                </div>
-
-                <div class="form-group px-3 mb-4">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label for="column-num">No. of Columns</label>
-                      <input type="text" name="columns" id="column-num" class="form-control" />
-                    </div>
-                    <div class="col-md-6">
-                      <label for="height">Height</label>
-                      <input type="text" name="height" id="height" class="form-control" />
-                    </div>
+              <div class="form-group px-3 mb-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="column-num">No. of Columns</label>
+                    <input type="text" name="columns" id="column-num" class="form-control" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="height">Height</label>
+                    <input type="text" name="height" id="height" class="form-control" />
                   </div>
                 </div>
+              </div>
+            </form>
 
-                <div class="btn-container text-center w-50 mx-auto">
-                  <button class="btn btn-secondary w-100" onclick="createStandardSize()">Create</button>
-                </div>
-              </form>
+            <div class="btn-container text-center mb-3">
+              <button class="btn btn-secondary w-100" onclick="createStandardSize()">Create</button>
             </div>
           </div>
         </div>
-
-        <div class="col-md-12 col-lg-8">
-          <div class="p-3">
-            <div class="heading-container border-bottom border-dark text-center mb-4">
-              <h3 class="color-secondary mb-0">Available Standard Ad Sizes</h3>
+        <div class="col-lg-8 col-md-12">
+          <div class="created-sizes-container">
+            <div class="heading-container">
+              <h3 class="heading">Created Standard Size</h3>
+              <hr />
             </div>
 
-            <div class="table-container">
-              <table class="table">
+            <form method="post" id="magazine-standardsize-table">
+              <div class="product-table-container table-container mt-3">
+                <table class="table product-table overflow-auto">
+                  <thead>
+                    <tr>
+                      <th scope="col">Description</th>
+                      <th scope="col">No. of Columns</th>
+                      <th scope="col">Height</th>
+                      <th scope="col">Total Column In.</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="standardsize-table-body ">
+                    {% for size in standardsizes_page_obj %}
+                    <tr>
+                      <td>{{size.description}}</td>
+                      <td>{{size.columns}}</td>
+                      <td>{{size.height}}</td>
+                      <td>{{ size.total_columns_in }}</td>
+                      <td>
+                        <div class="toggle-switch-container">
+                          <div class="switch-field">
+                            <input type="radio" id="{{size.id}}-product-radio-one" name="{{size.id}}-product-switch-one" value="active" checked />
+                            <label for="{{size.id}}-product-radio-one">Active</label>
+                            <input type="radio" id="{{size.id}}-product-radio-two" name="{{size.id}}-product-switch-one" value="inactive" />
+                            <label for="{{size.id}}-product-radio-two">Inactive</label>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button" onclick="dumpMagazinePayloadToTextarea()">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <div class="tab">
+      <div class="row mgb-3">
+        <div class="col-lg-4 col-md-12" style="display: none">
+          <div class="product-info">
+            <div class="heading-container text-center">
+              <h3 class="heading">Product Info</h3>
+              <hr />
+            </div>
+
+            <div class="info-container">
+              <span>Magazine Product:</span>
+              <span class="d-block font-weight-bold review-product-mag">Mini Mag</span>
+            </div>
+
+            <div class="info-container">
+              <span>Fold Orientation: <span class="color-primary review-orientation">*</span></span>
+            </div>
+
+            <div class="info-container">
+              <span>Size: <span class="color-primary review-size">*</span></span>
+            </div>
+
+            <div class="info-container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="page-columns">
+                    <span>Columns Per Page: (optional)</span>
+                    <div class="value-container d-flex justify-content-between">
+                      <span class="value review-columns"></span>
+                      <span class="inch">In</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="page-height">
+                    <span>Page Height: (optional)</span>
+                    <div class="value-container d-flex justify-content-between">
+                      <span class="value review-page-height"></span>
+                      <span class="inch">In</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="page-border">
+                  <div>Page Border: (optional)</div>
+                  <span class="review-page-border"></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="gutter-size">
+                  <span>Gutter Size: (optional)</span>
+                  <div class="value-container d-flex justify-content-between">
+                    <span class="value review-gutter-size"></span>
+                    <span class="inch">In</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12">
+          <textarea id="json-output" style="width: 100%; height: 500px" readonly></textarea>
+
+          <div class="created-sizes-container" style="display: none">
+            <div class="heading-container">
+              <h3 class="heading">Applied Standard Size</h3>
+              <hr />
+            </div>
+
+            <div class="product-table-container mt-3">
+              <table class="table product-table">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
@@ -154,39 +304,187 @@
                     <th scope="col">Status</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>0001</td>
-                    <td>Description</td>
-                    <td>4</td>
-                    <td>8</td>
-                    <td>2.25</td>
-                    <td>Active</td>
-                  </tr>
-                </tbody>
+                <tbody id="review-standardsize-table-body"></tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
-
       <div class="btn-container d-flex justify-content-between mt-5">
         <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
 
-        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+        <button id="create-magazine-btn" data-step="final" class="btn btn-secondary step-next" type="button" onclick="create_product()">Create Product <i class="fa fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
-
-    <!-- Review -->
-    <div class="tab">
-      <div class="btn-container d-flex justify-content-between mt-5">
-        <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
-
-        <button id="create-magazine-btn" data-step="final" class="btn btn-secondary step-next" type="button">Create Product <i class="fa fa-solid fa-arrow-right"></i></button>
-      </div>
-    </div>
-  </form>
+  </div>
 </div>
-
 <script src="{% static 'js/stepform/stepform.js' %}"></script>
-{% endblock%}
+<script>
+  function createStandardSize() {
+    var description = document.getElementById('size-description').value.trim();
+    var columns = document.getElementById('column-num').value.trim();
+    var height = document.querySelector("input[name='height']").value.trim();
+
+    if (!description || !columns || !height || isNaN(columns) || isNaN(height)) {
+      alert('Please enter a description and valid numeric values for columns and height.');
+      return;
+    }
+
+    appendStandardSizeRow(description, columns, height);
+
+    document.getElementById('standard-size-form').reset();
+  }
+
+  function appendStandardSizeRow(description, columns, height) {
+    const tbody = document.getElementById('standardsize-table-body');
+    const currentIndex = tbody.children.length;
+
+    const columnsNum = parseFloat(columns);
+    const heightNum = parseFloat(height);
+    const totalColumnsIn = (columnsNum * heightNum).toFixed(2);
+
+    const row = document.createElement('tr');
+
+    row.innerHTML = `
+        <td>${description}</td>
+        <td>${columns}</td>
+        <td>${height}</td>
+        <td>${totalColumnsIn}</td>
+        <td>
+          <div class="toggle-switch-container">
+            <div class="switch-field">
+              <input type="radio" id="${currentIndex}-product-radio-one" name="${currentIndex}-product-switch-one" value="active" checked>
+              <label for="${currentIndex}-product-radio-one">Active</label>
+              <input type="radio" id="${currentIndex}-product-radio-two" name="${currentIndex}-product-switch-one" value="inactive">
+              <label for="${currentIndex}-product-radio-two">Inactive</label>
+            </div>
+          </div>
+        </td>
+      `;
+
+    tbody.appendChild(row);
+  }
+
+  function getMagazineProductPayload() {
+    // Helper to extract form data
+    function getMagazineFormData() {
+      return {
+        product_mag: document.getElementById('product-mag').value.trim(),
+        measurement_type: document.getElementById('measurement-type').value,
+        fold_orientation: document.getElementById('orientation').value,
+        width: parseFloat(document.getElementById('width').value) || null,
+        height: parseFloat(document.getElementById('height').value) || null,
+        columns: parseInt(document.getElementById('columns').value) || null,
+        column_width: parseFloat(document.getElementById('column-width').value) || null,
+        page_width: parseFloat(document.getElementById('page-width').value) || null,
+        page_height: parseFloat(document.getElementById('page-height').value) || null,
+        side_border: parseFloat(document.getElementById('side-border').value) || null,
+        bottom_border: parseFloat(document.getElementById('bottom-border').value) || null,
+        top_border: parseFloat(document.getElementById('top-border').value) || null,
+        gutter_size: parseFloat(document.getElementById('gutter-size').value) || null
+      };
+    }
+
+    // Helper to extract table data
+    function getStandardSizeTableJSON() {
+      const rows = document.querySelectorAll('#standardsize-table-body tr');
+      const data = [];
+
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const description = cells[0].textContent.trim();
+        const columns = parseFloat(cells[1].textContent.trim());
+        const height = parseFloat(cells[2].textContent.trim());
+        const total = parseFloat(cells[3].textContent.trim());
+
+        const statusInput = cells[4].querySelector("input[type='radio']:checked");
+        const nameAttr = statusInput ? statusInput.getAttribute('name') : '';
+        const id = nameAttr ? nameAttr.split('-')[0] : 'unknown';
+        const status = statusInput ? statusInput.value : 'inactive';
+
+        data.push({
+          id: id,
+          description: description,
+          columns: columns,
+          height: height,
+          total_columns_in: total,
+          status: status
+        });
+      });
+
+      return data;
+    }
+
+    // Return full payload
+    return {
+      product: getMagazineFormData(),
+      sizes: getStandardSizeTableJSON()
+    };
+  }
+
+  function dumpMagazinePayloadToTextarea() {
+    const payload = getMagazineProductPayload();
+    const textarea = document.getElementById('json-output');
+    textarea.value = JSON.stringify(payload, null, 2); // Pretty-print
+  }
+
+  function create_product() {
+    const textarea = document.getElementById('json-output');
+    let payload;
+
+    try {
+      payload = JSON.parse(textarea.value);
+    } catch (e) {
+      console.error('Invalid JSON in textarea:', e);
+      Swal.fire({
+        toast: true,
+        icon: 'error',
+        title: 'Invalid JSON. Please check your input.',
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+      });
+      return;
+    }
+
+    fetch('/advertising/json/add/product/info/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire({
+            toast: true,
+            icon: 'success',
+            title: `Product created (ID: ${data.product_id})`,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+          }).then(() => {
+            window.location.href = '/advertising/adadmin/general#products';
+          });
+        } else {
+          throw new Error(data.error || 'Unknown error');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+          toast: true,
+          icon: 'error',
+          title: `Error: ${error.message}`,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true
+        });
+      });
+  }
+</script>
+{% endblock %}

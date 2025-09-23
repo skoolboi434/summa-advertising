@@ -1,0 +1,417 @@
+{% extends 'base.html' %} {% block content %}{% load static %}
+<div class="heading-container product text-center my-5">
+  <h3 class="heading">New Newspaper Product</h3>
+</div>
+
+<div class="stepform">
+  <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+    <div class="step active">
+      <div class="text">
+        <span class="number">1</span>
+        <span class="title">Product Info</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">2</span>
+        <span class="title">Ad Sizes Setup</span>
+      </div>
+      <div class="arrow">
+        <i class="fa fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+    <div class="step">
+      <div class="text">
+        <span class="number">3</span>
+        <span class="title">Review</span>
+      </div>
+    </div>
+  </div>
+  <form id="newspaper-product-form" action="{% url 'newNewspaper' %}" method="POST">
+    {% csrf_token %}
+    <div class="tab">
+      <div class="row">
+        <div class="col-md-12 col-lg-6">
+          <div class="row mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="newspaper-product"><span class="asterisk">*</span>Newspaper Product:</label>
+                <input type="text" name="newspaper-product" id="newspaper-product" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="measurement-type"><span class="asterisk">*</span>Measurement Type:</label>
+                <select name="measurement-type" id="measurement-type" class="form-select">
+                  <option value="Inches">Inches</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="fold-orientation"><span class="asterisk">*</span>Fold Orientation</label>
+                <select name="fold-orientation" id="fold-orientation" class="form-select"></select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="size"><span class="asterisk">*</span>Size</label>
+                <div class="d-flex justify-content-between mb-3">
+                  <div class="">
+                    <input type="number" id="height" class="form-control" placeholder="H" name="height" />
+                  </div>
+
+                  <div class="d-flex justify-content-center align-items-center mx-2">
+                    <span><h5 class="mb-0">X</h5></span>
+                  </div>
+
+                  <div class="">
+                    <input type="number" id="width" class="form-control" placeholder="W" name="width" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="columns-per-page"><span class="asterisk">*</span>Columns Per Page</label>
+                <input type="text" name="columns-per-page" id="columns-per-page" class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="column-width"><span class="asterisk">*</span>Column Width</label>
+                <input type="text" name="column-width" id="column-width" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="page-width">Page Width: (Optional)</label>
+                <input type="number" name="page_width" id="page-width" step="0.01" class="form-control" value="" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="page-height">Page Height: (Optional)</label>
+                <input type="number" name="page_height" id="page-height" step="0.01" class="form-control" value="" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="side-border">Side Border: (Optional)</label>
+                <input type="number" name="side_border" step="0.01" id="side-border" class="form-control" value="" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="bottom-border">Bottom Border: (Optional)</label>
+                <input type="number" name="bottom-border" step="0.01" id="bottom-border" class="form-control" value="" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="top-border">Top Border: (Optional)</label>
+                <input type="number" name="top_border" id="top-border" step="0.01" class="form-control" value="" />
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <label for="gutter-size">Gutter Size: (Optional)</label>
+                <input type="number" name="gutter_size" id="gutter-size" step="0.001" class="form-control" value="" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-6 d-flex align-items-center">
+          <img class="img-fluid" src="{% static 'img/magazine-img.png' %}" alt="magazine-img" />
+        </div>
+      </div>
+
+      <div class="btn-container d-flex justify-content-end mt-5">
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Ad Sizes Setup -->
+    <div class="tab">
+      <div class="row">
+        <div class="col-md-12 col-lg-4">
+          <div class="border border-dark rounded p-3">
+            <div class="heading-container border-bottom border-dark text-center mb-4">
+              <h3 class="color-secondary mb-0">New Standard Ad Size</h3>
+            </div>
+
+            <div class="standard-size-container">
+              <div class="form-group px-3 mb-3">
+                <label for="size-description">Size Description</label>
+                <input type="text" id="size-description" class="form-control" />
+              </div>
+
+              <div class="form-group px-3 mb-4">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="column-num">No. of Columns</label>
+                    <input type="text" id="column-num" class="form-control" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="standardsize-height">Height</label>
+                    <input type="text" id="standardsize-height" class="form-control" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="btn-container text-center w-50 mx-auto">
+                <button type="button" id="create-standardsize-btn" class="btn btn-secondary w-100">Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-8">
+          <div class="p-3">
+            <div class="heading-container border-bottom border-dark text-center mb-4">
+              <h3 class="color-secondary mb-0">Available Standard Ad Sizes</h3>
+            </div>
+
+            <div id="standardsize-table-body" class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">No. of Columns</th>
+                    <th scope="col">Height</th>
+                    <th scope="col">Total Column In.</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="sizes-table-body">
+                  {% for size in standardsizes_page_obj %}
+                  <tr>
+                    <td>{{size.id}}</td>
+                    <td>{{size.description}}</td>
+                    <td>{{size.columns}}</td>
+                    <td>{{size.height}}</td>
+                    <td>{{ size.total_columns_in }}</td>
+                    <td>
+                      <div class="toggle-switch-container">
+                        <div class="switch-field">
+                          <input type="radio" id="{{size.id}}-product-radio-one" name="{{size.id}}-product-switch-one" value="active" checked />
+                          <label for="{{size.id}}-product-radio-one">Active</label>
+                          <input type="radio" id="{{size.id}}-product-radio-two" name="{{size.id}}-product-switch-one" value="inactive" />
+                          <label for="{{size.id}}-product-radio-two">Inactive</label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Review -->
+    <div class="tab">
+      <div class="row">
+        <div class="col-lg-4 col-md-12">
+          <div class="product-info">
+            <div class="heading-container text-center border-bottom border-dark mb-3">
+              <h3 class="color-secondary mb-1">Product Info</h3>
+            </div>
+
+            <div class="info-container mb-4">
+              <span>Magazine Product:</span>
+              <p class="fw-bold review-product-mag mb-0">Mini Mag</p>
+            </div>
+
+            <div class="d-flex justify-content-between mb-4">
+              <div class="info-container">
+                <span>Fold Orientation:</span>
+                <p class="mb-0 review-orientation"></p>
+              </div>
+
+              <div class="info-container">
+                <span>Size:</span>
+                <p class="mb-0 review-size"></p>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between mb-4">
+              <div class="info-container">
+                <span>Fold Orientation:</span>
+                <p class="mb-0 review-orientation"></p>
+              </div>
+
+              <div class="info-container">
+                <span>Size:</span>
+                <p class="mb-0 review-size"></p>
+              </div>
+            </div>
+
+            <div class="info-container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="page-columns">
+                    <span>Columns Per Page: (optional)</span>
+                    <div class="value-container d-flex justify-content-between">
+                      <span class="value review-columns"></span>
+                      <span class="inch">In</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="page-height">
+                    <span>Page Height: (optional)</span>
+                    <div class="value-container d-flex justify-content-between">
+                      <span class="value review-page-height"></span>
+                      <span class="inch">In</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="page-border">
+                  <div>Page Border: (optional)</div>
+                  <span class="review-page-border"></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="gutter-size">
+                  <span>Gutter Size: (optional)</span>
+                  <div class="value-container d-flex justify-content-between">
+                    <span class="value review-gutter-size"></span>
+                    <span class="inch">In</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 col-md-12">
+          <!-- <textarea id="json-output" style="width: 100%; height: 500px" readonly></textarea> -->
+
+          <div class="created-sizes-container">
+            <div class="heading-container text-center border-bottom border-dark">
+              <h3 class="color-secondary mb-1">Applied Standard Size</h3>
+            </div>
+
+            <div class="product-table-container mt-3">
+              <table class="table product-table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">No. of Columns</th>
+                    <th scope="col">Height</th>
+                    <th scope="col">Total Column In.</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="review-standardsize-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-container d-flex justify-content-between mt-5">
+        <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+        <button id="create-magazine-btn" data-step="final" class="btn btn-secondary step-next" type="button">Create Product <i class="fa fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="{% static 'js/stepform/stepform.js' %}"></script>
+
+<script>
+  document.getElementById('create-standardsize-btn').addEventListener('click', function () {
+    const payload = {
+      description: document.getElementById('size-description').value,
+      height: document.getElementById('standardsize-height').value,
+      columns: document.getElementById('column-num').value
+    };
+
+    fetch('{% url "add_standardsize" %}', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(size => {
+        // ✅ Add new row to table dynamically
+        const table = document.getElementById('sizes-table-body');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+      <td>${size.id}</td>
+      <td>${size.description}</td>
+      <td>${size.columns}</td>
+      <td>${size.height}</td>
+      <td>${(size.columns * size.height).toFixed(2)}</td>
+      <td>
+        <div class="toggle-switch-container">
+          <div class="switch-field">
+            <input type="radio" id="${size.id}-product-radio-one" name="${size.id}-product-switch-one" value="active" checked />
+            <label for="${size.id}-product-radio-one">Active</label>
+            <input type="radio" id="${size.id}-product-radio-two" name="${size.id}-product-switch-one" value="inactive" />
+            <label for="${size.id}-product-radio-two">Inactive</label>
+          </div>
+        </div>
+      </td>
+    `;
+        table.prepend(row); // puts new row at the top
+
+        // ✅ Clear inputs
+        document.getElementById('size-description').value = '';
+        document.getElementById('standardsize-height').value = '';
+        document.getElementById('column-num').value = '';
+
+        // Optional: Update product JSON if needed
+        if (typeof updateSelectedSizes === 'function') {
+          updateSelectedSizes();
+        }
+      })
+      .catch(err => console.error('Error creating size:', err));
+  });
+</script>
+
+{% endblock %}
