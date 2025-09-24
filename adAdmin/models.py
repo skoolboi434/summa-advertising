@@ -688,7 +688,7 @@ class StandardSize(models.Model):
         return self.description
 
 class NewspaperProduct(models.Model):
-    product_mag = models.TextField(null=True)
+    product_newspaper = models.TextField(null=True)
     measurement_type = models.TextField(null=True)
     fold_orientation = models.TextField(null=True)
     height = models.IntegerField()
@@ -702,10 +702,14 @@ class NewspaperProduct(models.Model):
     top_border = models.FloatField(default=0.0)
     bottom_border = models.FloatField(default=0.0)
     active = models.BooleanField(default=True)
-    status = models.IntegerField(default=1)
+    created_at = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=100, default="active")
+
+    # M2M relationship
+    sizes = models.ManyToManyField(StandardSize, related_name="products")
 
     class Meta:
         db_table = 'advertising_newspaper_products'
 
     def __str__(self):
-        return self.product_mag
+        return self.product_newspaper

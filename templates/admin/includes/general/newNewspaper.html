@@ -47,7 +47,8 @@
               <div class="form-group">
                 <label for="measurement-type"><span class="asterisk">*</span>Measurement Type:</label>
                 <select name="measurement-type" id="measurement-type" class="form-select">
-                  <option value="Inches">Inches</option>
+                  <option>Select</option>
+                  <option value="inches">Inches</option>
                 </select>
               </div>
             </div>
@@ -57,7 +58,11 @@
             <div class="col-md-12 col-lg-6">
               <div class="form-group">
                 <label for="fold-orientation"><span class="asterisk">*</span>Fold Orientation</label>
-                <select name="fold-orientation" id="fold-orientation" class="form-select"></select>
+                <select name="fold-orientation" id="fold-orientation" class="form-select">
+                  <option>Select</option>
+                  <option value="horizontal">Horizontal</option>
+                  <option value="vertical">Vertical</option>
+                </select>
               </div>
             </div>
 
@@ -207,6 +212,7 @@
                     <th scope="col">Height</th>
                     <th scope="col">Total Column In.</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Select</th>
                   </tr>
                 </thead>
                 <tbody id="sizes-table-body">
@@ -218,14 +224,10 @@
                     <td>{{size.height}}</td>
                     <td>{{ size.total_columns_in }}</td>
                     <td>
-                      <div class="toggle-switch-container">
-                        <div class="switch-field">
-                          <input type="radio" id="{{size.id}}-product-radio-one" name="{{size.id}}-product-switch-one" value="active" checked />
-                          <label for="{{size.id}}-product-radio-one">Active</label>
-                          <input type="radio" id="{{size.id}}-product-radio-two" name="{{size.id}}-product-switch-one" value="inactive" />
-                          <label for="{{size.id}}-product-radio-two">Inactive</label>
-                        </div>
-                      </div>
+                      <span class="text-capitalize">{{ size.status }}</span>
+                    </td>
+                    <td>
+                      <input type="checkbox" name="sizes" value="{{ size.id }}" />
                     </td>
                   </tr>
                   {% endfor %}
@@ -254,19 +256,7 @@
 
             <div class="info-container mb-4">
               <span>Magazine Product:</span>
-              <p class="fw-bold review-product-mag mb-0">Mini Mag</p>
-            </div>
-
-            <div class="d-flex justify-content-between mb-4">
-              <div class="info-container">
-                <span>Fold Orientation:</span>
-                <p class="mb-0 review-orientation"></p>
-              </div>
-
-              <div class="info-container">
-                <span>Size:</span>
-                <p class="mb-0 review-size"></p>
-              </div>
+              <p class="fw-bold review-product-mag mb-0"></p>
             </div>
 
             <div class="d-flex justify-content-between mb-4">
@@ -353,7 +343,7 @@
       <div class="btn-container d-flex justify-content-between mt-5">
         <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
 
-        <button id="create-magazine-btn" data-step="final" class="btn btn-secondary step-next" type="button">Create Product <i class="fa fa-solid fa-arrow-right"></i></button>
+        <button id="create-magazine-btn" data-step="final" class="btn btn-secondary step-next" type="submit">Create Product <i class="fa fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
   </form>
@@ -411,6 +401,61 @@
         }
       })
       .catch(err => console.error('Error creating size:', err));
+  });
+</script>
+
+<script>
+  function populateReviewTab() {
+    // --- Product Info ---
+    const productName = document.getElementById('newspaper-product').value;
+    const foldOrientation = document.getElementById('fold-orientation').value;
+    const height = document.getElementById('height').value;
+    const width = document.getElementById('width').value;
+    const columns = document.getElementById('columns-per-page').value;
+    const pageHeight = document.getElementById('page-height').value;
+    const pageBorder = document.getElementById('side-border').value;
+    const gutterSize = document.getElementById('gutter-size').value;
+
+    document.querySelector('.review-product-mag').textContent = productName;
+    document.querySelectorAll('.review-orientation').forEach(el => (el.textContent = foldOrientation));
+    document.querySelector('.review-size').textContent = `${height} x ${width}`;
+    document.querySelector('.review-columns').textContent = columns;
+    document.querySelector('.review-page-height').textContent = pageHeight;
+    document.querySelector('.review-page-border').textContent = pageBorder;
+    document.querySelector('.review-gutter-size').textContent = gutterSize;
+
+    // --- Selected Sizes ---
+    const reviewTableBody = document.getElementById('review-standardsize-table-body');
+    reviewTableBody.innerHTML = '';
+
+    document.querySelectorAll('#sizes-table-body input[type="checkbox"]:checked').forEach(cb => {
+      const row = cb.closest('tr');
+
+      // Get status
+      const status = row.querySelector('input[type="radio"]:checked')?.value || 'active';
+
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+            <td>${cb.value}</td>
+            <td>${row.cells[1].textContent}</td>
+            <td>${row.cells[2].textContent}</td>
+            <td>${row.cells[3].textContent}</td>
+            <td>${parseFloat(row.cells[3].textContent) * parseInt(row.cells[2].textContent)}</td>
+            <td>${status.charAt(0).toUpperCase() + status.slice(1)}</td>
+        `;
+      reviewTableBody.appendChild(newRow);
+    });
+  }
+
+  // Call this function whenever you go to the review tab
+  document.querySelectorAll('.step-next').forEach(button => {
+    button.addEventListener('click', function () {
+      const currentStep = this.closest('.tab');
+      const nextStep = currentStep.nextElementSibling;
+      if (nextStep && nextStep.querySelector('#review-standardsize-table-body')) {
+        populateReviewTab();
+      }
+    });
   });
 </script>
 

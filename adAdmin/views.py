@@ -139,11 +139,7 @@ def add_standardsize(request):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 def newNewspaper(request):
-    # If user not logged in, send them to login
-    if request is None or not request.user.is_authenticated:
-        return redirect(login_redirect + "/")
-
-    # If it's an AJAX JSON POST, handle creation
+    # --- Handle AJAX JSON POST for creating sizes (not product) ---
     if request.method == "POST" and request.headers.get("Content-Type") == "application/json":
         try:
             body = request.body.decode("utf-8")
@@ -151,46 +147,50 @@ def newNewspaper(request):
         except Exception as e:
             return JsonResponse({"success": False, "error": f"Invalid JSON: {e}"}, status=400)
 
-        success = True
+        # ✅ Create new StandardSize
         try:
-            # Create new NewspaperProduct
-            product_data = data.get("product", {})
-            product = NewspaperProduct.objects.create(
-                product_mag=product_data.get("product_mag"),
-                measurement_type=product_data.get("measurement_type"),
-                fold_orientation=product_data.get("fold_orientation"),
-                height=product_data.get("height"),
-                width=product_data.get("width"),
-                columns=product_data.get("columns"),
-                column_width=product_data.get("column_width"),
-                page_width=product_data.get("page_width"),
-                page_height=product_data.get("page_height"),
-                page_border=product_data.get("page_border"),
-                gutter_size=product_data.get("gutter_size"),
-                active=product_data.get("active", True),
+            size = StandardSize.objects.create(
+                description=data.get("description"),
+                height=data.get("height"),
+                columns=data.get("columns"),
             )
-
-            # Clear any old sizes (if editing) — though this is new, just in case
-            NewspaperSize.objects.filter(product=product).delete()
-
-            # Attach selected StandardSizes
-            for size_data in data.get("sizes", []):
-                size_id = size_data.get("id")
-                if size_id and size_id != "unknown":
-                    try:
-                        size = StandardSize.objects.get(pk=size_id)
-                        NewspaperSize.objects.create(product=product, size=size)
-                    except StandardSize.DoesNotExist:
-                        pass  # ignore invalid sizes
-
+            return JsonResponse({
+                "id": size.id,
+                "description": size.description,
+                "height": size.height,
+                "columns": size.columns,
+                "created_at": size.created_at.strftime("%Y-%m-%d %H:%M"),
+            })
         except Exception as e:
-            success = False
             return JsonResponse({"success": False, "error": str(e)}, status=500)
 
-        return JsonResponse({"success": success, "product_id": product.id}, status=200)
+    # --- Handle normal product creation form ---
+    if request.method == "POST":
+        newspaper = NewspaperProduct.objects.create(
+            product_newspaper=request.POST.get("newspaper-product"),
+            measurement_type=request.POST.get("measurement-type"),
+            fold_orientation=request.POST.get("fold-orientation"),
+            height=request.POST.get("height") or 0,
+            width=request.POST.get("width") or 0,
+            columns=request.POST.get("columns-per-page") or 0,
+            column_width=request.POST.get("column-width") or 0,
+            page_width=request.POST.get("page_width") or 0,
+            page_height=request.POST.get("page_height") or 0,
+            page_border=request.POST.get("page_border") or 0,
+            gutter_size=request.POST.get("gutter_size") or 0,
+            active=request.POST.get("active") == "on",
+        )
 
-    # If it's a GET (initial load), show the page with available StandardSizes
-    standardsizes = StandardSize.objects.all().order_by('-created_at')
+        # Attach selected StandardSizes
+        selected_sizes = request.POST.getlist("sizes")
+        if selected_sizes:
+            newspaper.sizes.set(selected_sizes)  # ✅ directly link M2M
+
+        return redirect("adminGeneral")
+      # 👈 send them somewhere after save
+
+    # --- GET: Render form ---
+    standardsizes = StandardSize.objects.all().order_by("-created_at")
     standardsizes_paginator = Paginator(standardsizes, 8)
     standardsize_page_number = request.GET.get("page")
     standardsizes_page_obj = standardsizes_paginator.get_page(standardsize_page_number)
