@@ -11,16 +11,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     showTab(currentTab);
 
+    if (document.getElementById('selected-advertisers')) {
+      document.getElementById('selected-advertisers').value = JSON.stringify(window.selectedAdvertisers || []);
+    }
+    if (document.getElementById('selected-products')) {
+      document.getElementById('selected-products').value = JSON.stringify(window.selectedProducts || []);
+    }
+
     // 👉 STEP BUTTONS
     container.querySelectorAll('.step-next').forEach(btn => {
       btn.addEventListener('click', function () {
         const isFinal = btn.dataset.step === 'final';
 
         if (isFinal) {
-          // Let the fetch() logic handle advertiser creation
-          document.getElementById('selected-advertisers').value = JSON.stringify(window.selectedAdvertisers || []);
-          document.getElementById('selected-products').value = JSON.stringify(window.selectedProducts || []);
-          return; // ❌ Do not move forward here
+          const advInput = document.getElementById('selected-advertisers');
+          const prodInput = document.getElementById('selected-products');
+
+          if (advInput) advInput.value = JSON.stringify(window.selectedAdvertisers || []);
+          if (prodInput) prodInput.value = JSON.stringify(window.selectedProducts || []);
+
+          return; // ❌ Do not move forward
         } else {
           nextPrev(1); // Normal next
         }

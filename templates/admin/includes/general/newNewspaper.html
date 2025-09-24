@@ -343,7 +343,7 @@
       <div class="btn-container d-flex justify-content-between mt-5">
         <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
 
-        <button id="create-magazine-btn" data-step="final" class="btn btn-secondary step-next" type="submit">Create Product <i class="fa fa-solid fa-arrow-right"></i></button>
+        <button id="create-newspaper-btn" data-step="final" class="btn btn-secondary step-next" type="submit">Create Product <i class="fa fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
   </form>
@@ -378,14 +378,7 @@
       <td>${size.height}</td>
       <td>${(size.columns * size.height).toFixed(2)}</td>
       <td>
-        <div class="toggle-switch-container">
-          <div class="switch-field">
-            <input type="radio" id="${size.id}-product-radio-one" name="${size.id}-product-switch-one" value="active" checked />
-            <label for="${size.id}-product-radio-one">Active</label>
-            <input type="radio" id="${size.id}-product-radio-two" name="${size.id}-product-switch-one" value="inactive" />
-            <label for="${size.id}-product-radio-two">Inactive</label>
-          </div>
-        </div>
+        ${size.status}
       </td>
     `;
         table.prepend(row); // puts new row at the top

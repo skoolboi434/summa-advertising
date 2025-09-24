@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax, FiscalYear, RateGroup, StandardSize, NewspaperProduct
+from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax, FiscalYear, RateGroup, StandardSize, NewspaperProduct, MagazineProduct, DigitalProduct
 from classifieds.models import Classification, ClassifiedUpsell, ClassifiedAddon, ClassifiedMeasurement
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -46,9 +46,23 @@ def adminGeneral(request):
     regions_paginator = Paginator(regions, 10)
     region_page_number = request.GET.get('page')
     regions_page_obj = regions_paginator.get_page(region_page_number)
-    
 
-    products = AdvPubsProduct.objects.all()
+    magazines = MagazineProduct.objects.all().order_by('-created_at')
+    magazines_paginator = Paginator(magazines, 10)
+    magazine_page_number = request.GET.get('page')
+    magazines_page_obj = magazines_paginator.get_page(magazine_page_number)
+    
+    newspapers = NewspaperProduct.objects.all().order_by('-created_at')
+    newspapers_paginator = Paginator(newspapers, 10)
+    newspaper_page_number = request.GET.get('page')
+    newspapers_page_obj = newspapers_paginator.get_page(newspaper_page_number)
+
+    digitals = DigitalProduct.objects.all().order_by('-created_at')
+    digitals_paginator = Paginator(digitals, 10)
+    digital_page_number = request.GET.get('page')
+    digitals_page_obj = digitals_paginator.get_page(digital_page_number)
+    
+    products = AdvPubsProduct.objects.all().order_by('-created_at')
     products_paginator = Paginator(products, 10)
     page_number = request.GET.get('page')
     page_obj = products_paginator.get_page(page_number)
@@ -61,64 +75,14 @@ def adminGeneral(request):
         'page_obj': page_obj,
         "company": company,
         "regions_page_obj": regions_page_obj,
+        'newspapers_page_obj': newspapers_page_obj,
+        'magazines_page_obj': magazines_page_obj,
+        "digitals_page_obj": digitals_page_obj
         
     })
 
 
 # Admin Products
-def newMagazine(request):
-  # Check if user is logged in, if not, redirect  to login screen
-  if request is None or not request.user.is_authenticated:
-    return redirect(login_redirect + "/")
-  # body = request.body.decode("utf-8")
-  # data = json.loads(body)
-  # product = NewspaperProduct()
-  # success = True
-
-  # if "status_only" in data:
-  #   product.active = data["active"]
-  #   try:
-  #       product.save()
-  #   except Exception as e:
-  #       success = False
-  # else:
-  #     product_data = data.get("product", {})
-  #     product.product_mag = product_data.get("product_mag")
-  #     product.measurement_type = product_data.get("measurement_type")
-  #     product.fold_orientation = product_data.get("fold_orientation")
-  #     product.height = product_data.get("height")
-  #     product.width = product_data.get("width")
-  #     product.columns = product_data.get("columns")
-  #     product.column_width = product_data.get("column_width")
-  #     product.page_width = product_data.get("page_width")
-  #     product.page_height = product_data.get("page_height")
-  #     product.page_border = product_data.get("page_border")
-  #     product.gutter_size = product_data.get("gutter_size")
-
-  #     try:
-  #         product.save()
-  #         sizes = NewspaperSize.objects.filter(product=product)
-  #         for size in sizes:
-  #             size.delete()
-  #         for size_data in data.get("sizes", []):
-  #             size_id = size_data.get("id")
-  #             if size_id and size_id != "unknown":
-  #                 size = StandardSize.objects.get(pk=size_id)
-  #                 NewspaperSize.objects.create(product=product, size=size)
-
-  #     except Exception as e:
-  #         success = False
-  #     return JsonResponse({"success": success}, status=200)
-
-  standardsizes = StandardSize.objects.all()
-  standardsizes_paginator = Paginator(standardsizes, 8)
-  standardsize_page_number = request.GET.get('page')
-  standardsizes_page_obj = standardsizes_paginator.get_page(standardsize_page_number)
-  return render(request, 'admin/includes/general/newMagazine.html', {
-    "standardsizes_page_obj": standardsizes_page_obj
-  })
-
-
 def add_standardsize(request):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -137,6 +101,70 @@ def add_standardsize(request):
 
 
     return JsonResponse({"error": "Invalid request method"}, status=405)
+
+def newMagazine(request):
+    # --- Handle AJAX JSON POST for creating sizes (not product) ---
+    if request.method == "POST" and request.headers.get("Content-Type") == "application/json":
+        try:
+            body = request.body.decode("utf-8")
+            data = json.loads(body)
+        except Exception as e:
+            return JsonResponse({"success": False, "error": f"Invalid JSON: {e}"}, status=400)
+
+        # ✅ Create new StandardSize
+        try:
+            size = StandardSize.objects.create(
+                description=data.get("description"),
+                height=data.get("height"),
+                columns=data.get("columns"),
+            )
+            return JsonResponse({
+                "id": size.id,
+                "description": size.description,
+                "height": size.height,
+                "columns": size.columns,
+                "created_at": size.created_at.strftime("%Y-%m-%d %H:%M"),
+            })
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
+
+    # --- Handle normal product creation form ---
+    if request.method == "POST":
+        magazine = MagazineProduct.objects.create(
+            product_mag=request.POST.get("product-mag"),
+            measurement_type=request.POST.get("measurement-type"),
+            fold_orientation=request.POST.get("fold-orientation"),
+            height=request.POST.get("height") or 0,
+            width=request.POST.get("width") or 0,
+            columns=request.POST.get("columns-per-page") or 0,
+            column_width=request.POST.get("column-width") or 0,
+            page_width=request.POST.get("page_width") or 0,
+            page_height=request.POST.get("page_height") or 0,
+            page_border=request.POST.get("page_border") or 0,
+            gutter_size=request.POST.get("gutter_size") or 0,
+            active=request.POST.get("active") == "on",
+        )
+
+        # Attach selected StandardSizes
+        selected_sizes = request.POST.getlist("sizes")
+        if selected_sizes:
+            magazine.sizes.set(selected_sizes)  # ✅ directly link M2M
+
+        return redirect("adminGeneral")
+      # 👈 send them somewhere after save
+
+    # --- GET: Render form ---
+    standardsizes = StandardSize.objects.all().order_by("-created_at")
+    standardsizes_paginator = Paginator(standardsizes, 8)
+    standardsize_page_number = request.GET.get("page")
+    standardsizes_page_obj = standardsizes_paginator.get_page(standardsize_page_number)
+
+    return render(request, "admin/includes/general/newMagazine.html", {
+        "standardsizes_page_obj": standardsizes_page_obj
+    })
+
+
+
 
 def newNewspaper(request):
     # --- Handle AJAX JSON POST for creating sizes (not product) ---
@@ -197,6 +225,66 @@ def newNewspaper(request):
 
     return render(request, "admin/includes/general/newNewspaper.html", {
         "standardsizes_page_obj": standardsizes_page_obj
+    })
+
+def newDigital(request):
+    # --- Handle AJAX JSON POST for creating sizes (not product) ---
+    if request.method == "POST" and request.headers.get("Content-Type") == "application/json":
+        try:
+            body = request.body.decode("utf-8")
+            data = json.loads(body)
+        except Exception as e:
+            return JsonResponse({"success": False, "error": f"Invalid JSON: {e}"}, status=400)
+
+        # ✅ Create new StandardSize
+        try:
+            size = StandardSize.objects.create(
+                description=data.get("description"),
+                height=data.get("height"),
+                columns=data.get("columns"),
+            )
+            return JsonResponse({
+                "id": size.id,
+                "description": size.description,
+                "height": size.height,
+                "columns": size.columns,
+                "created_at": size.created_at.strftime("%Y-%m-%d %H:%M"),
+            })
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)}, status=500)
+
+    # --- Handle normal product creation form ---
+    if request.method == "POST":
+        selected_ad_type_id = request.POST.get("ad-type")
+        selected_ad_type = AdminAdType.objects.get(id=selected_ad_type_id)
+
+        digital = DigitalProduct.objects.create(
+            product_mag=request.POST.get("product-mag"),   # ✅ match your form field
+            format=request.POST.get("format"),
+            height=request.POST.get("height") or 0,
+            width=request.POST.get("width") or 0,
+            adminadtype=selected_ad_type,   # ✅ assign FK object
+            active=request.POST.get("active") == "on",
+        )
+
+        # Attach selected StandardSizes
+        selected_sizes = request.POST.getlist("sizes")
+        if selected_sizes:
+            digital.sizes.set(selected_sizes)  # ✅ correct model reference
+
+        return redirect("adminGeneral")  # 👈 adjust redirect if needed
+
+    # --- GET: Render form ---
+    standardsizes = StandardSize.objects.all().order_by("-created_at")
+    standardsizes_paginator = Paginator(standardsizes, 8)
+    standardsize_page_number = request.GET.get("page")
+    standardsizes_page_obj = standardsizes_paginator.get_page(standardsize_page_number)
+
+    adTypes = AdminAdType.objects.all()
+
+    return render(request, "admin/includes/general/newDigital.html", {
+        "standardsizes_page_obj": standardsizes_page_obj,
+        "adTypes": adTypes,
     })
 
 def adminPubSetup(request):

@@ -671,6 +671,15 @@ class AdvPubsProduct(models.Model):
     def __str__(self):
         return self.name
 
+class BaseProduct(models.Model):
+    product_type = models.CharField(max_length=50)
+    fold_orientation = models.CharField(max_length=50)
+    name = models.TextField(null=True)
+
+    class Meta:
+        abstract = True
+
+
 class StandardSize(models.Model):
     id = models.AutoField(primary_key=True)
     type = models.IntegerField() # type == 1 == newspaper, type == 2 == magazine , type == 3 == digital
@@ -704,12 +713,56 @@ class NewspaperProduct(models.Model):
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=100, default="active")
+    media_channel = models.CharField(max_length=100, default="newspaper")
 
     # M2M relationship
-    sizes = models.ManyToManyField(StandardSize, related_name="products")
+    sizes = models.ManyToManyField(StandardSize, related_name="newspaperProducts")
 
     class Meta:
         db_table = 'advertising_newspaper_products'
 
     def __str__(self):
         return self.product_newspaper
+
+class MagazineProduct(models.Model):
+    product_mag = models.TextField(null=True)
+    measurement_type = models.TextField(null=True)
+    fold_orientation = models.TextField(null=True)
+    height = models.IntegerField()
+    width = models.IntegerField()
+    columns = models.IntegerField()
+    column_width = models.IntegerField()
+    page_width = models.IntegerField()
+    page_height = models.IntegerField()
+    page_border = models.IntegerField()
+    gutter_size = models.IntegerField()
+    active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=100, default="active")
+    media_channel = models.CharField(max_length=100, default="magazine")
+
+    # M2M relationship
+    sizes = models.ManyToManyField(StandardSize, related_name="magazineProducts")
+
+    class Meta:
+        db_table = 'advertising_magazine_products'
+
+    def __str__(self):
+        return self.code
+
+class DigitalProduct(models.Model):
+    product_mag = models.TextField(null=True)
+    format = models.TextField(null=True)
+    adminadtype = models.ForeignKey('AdminAdType', on_delete=models.CASCADE)
+    height = models.IntegerField()
+    width = models.IntegerField()
+    active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=100, default="active")
+    media_channel = models.CharField(max_length=100, default="digital")
+
+    # M2M relationship
+    sizes = models.ManyToManyField(StandardSize, related_name="digital")
+
+    class Meta:
+        db_table = 'advertising_digital_products'

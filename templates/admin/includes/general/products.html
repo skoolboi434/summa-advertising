@@ -20,7 +20,7 @@
       </a>
     </div>
     <div class="col-md-3 d-flex justify-content-center">
-      <a href="" target="_blank" class="product-box">
+      <a href="{% url 'newDigital' %}" target="_blank" class="product-box">
         <i class="fa fa-solid fa-laptop"></i>
         <span>New Digital Product</span>
       </a>
@@ -35,53 +35,194 @@
   </div>
 </div>
 
-<div class="actions-container d-flex justify-content-between mb-3">
-  <div class="filters ps-3 d-flex align-items-center"><a href="" class="active">Active</a>&nbsp;|&nbsp;<a href="">Inactive</a>&nbsp;|&nbsp;<a href="">Archived</a></div>
-  <div class="has-search">
-    <input type="text" class="form-control" placeholder="Search" />
+<!-- Product Table Tabs -->
+
+<ul class="nav nav-pills mb-3 d-flex justify-content-center" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="pills-magazines-tab" data-bs-toggle="pill" data-bs-target="#pills-magazines" type="button" role="tab" aria-controls="pills-magazines" aria-selected="true">Magazines</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pills-newspapers-tab" data-bs-toggle="pill" data-bs-target="#pills-newspapers" type="button" role="tab" aria-controls="pills-newspapers" aria-selected="false">Newspapers</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pills-digital-tab" data-bs-toggle="pill" data-bs-target="#pills-digital" type="button" role="tab" aria-controls="pills-digital" aria-selected="false">Digital</button>
+  </li>
+</ul>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-magazines" role="tabpanel" aria-labelledby="pills-magazines-tab">
+    
+    <div class="actions-container d-flex justify-content-between mb-3">
+      <div class="filters ps-3 d-flex align-items-center"><a href="" class="active">Active</a>&nbsp;|&nbsp;<a href="">Inactive</a>&nbsp;|&nbsp;<a href="">Archived</a></div>
+      <div class="has-search">
+        <input type="text" class="form-control" placeholder="Search" />
+      </div>
+    </div>
+    <div class="table-container mb-5">
+      <table id="productsTable" class="table display">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Name</th>
+            <th>Fold Orientation</th>
+            <th>Media Channel</th>
+            <th>Dimensions</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in magazines_page_obj %}
+          <tr>
+            <td>{{product.id}}</td>
+            <td><span class="text-capitalize">{{product.product_mag}}</span></td>
+            <td><span class="text-capitalize">{{product.fold_orientation}}</span></td>
+            <td><span class="text-capitalize">{{product.media_channel}}</span></td>
+            <td><div class="tooltip-wrapper">
+            <span class="see-assigned text-decoration-underline">See full specs</span>
+            <div class="custom-tooltip">
+              
+            </div>
+          </div></td>
+            <td><span class="text-capitalize">{{product.status}}</span><td>
+              <a href="">
+                <i class="fa fa-solid fa-pen me-3 color-secondary"></i>
+              </a>
+            </td></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      {% if magazines_page_obj.has_previous %}
+      <a href="?page={{ magazines_page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      <span>Page {{ magazines_page_obj.number }} of {{ magazines_page_obj.paginator.num_pages }}</span>
+
+      {% if magazines_page_obj.has_next %}
+      <a href="?page={{ magazines_page_obj.next_page_number }}">Next</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pills-newspapers" role="tabpanel" aria-labelledby="pills-newspapers-tab">
+    <div class="actions-container d-flex justify-content-between mb-3">
+      <div class="filters ps-3 d-flex align-items-center"><a href="" class="active">Active</a>&nbsp;|&nbsp;<a href="">Inactive</a>&nbsp;|&nbsp;<a href="">Archived</a></div>
+      <div class="has-search">
+        <input type="text" class="form-control" placeholder="Search" />
+      </div>
+    </div>
+
+    <div class="table-container mb-5">
+      <table id="productsTable" class="table display">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Name</th>
+            <th>Fold Orientation</th>
+            <th>Media Channel</th>
+            <th>Dimensions</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in newspapers_page_obj %}
+          <tr>
+            <td>{{product.id}}</td>
+            <td><span class="text-capitalize">{{product.product_newspaper}}</span></td>
+            <td><span class="text-capitalize">{{product.fold_orientation}}</span></td>
+            <td><span class="text-capitalize">{{product.media_channel}}</span></td>
+            <td><div class="tooltip-wrapper">
+            <span class="see-assigned text-decoration-underline">See full specs</span>
+            <div class="custom-tooltip">
+              
+            </div>
+          </div></td>
+            <td><span class="text-capitalize">{{product.status}}</span><td>
+              <a href="">
+                <i class="fa fa-solid fa-pen me-3 color-secondary"></i>
+              </a>
+            </td></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      {% if newspapers_page_obj.has_previous %}
+      <a href="?page={{ newspapers_page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      <span>Page {{ newspapers_page_obj.number }} of {{ newspapers_page_obj.paginator.num_pages }}</span>
+
+      {% if newspapers_page_obj.has_next %}
+      <a href="?page={{ newspapers_page_obj.next_page_number }}">Next</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pills-digital" role="tabpanel" aria-labelledby="pills-digital-tab">
+    <div class="actions-container d-flex justify-content-between mb-3">
+      <div class="filters ps-3 d-flex align-items-center"><a href="" class="active">Active</a>&nbsp;|&nbsp;<a href="">Inactive</a>&nbsp;|&nbsp;<a href="">Archived</a></div>
+      <div class="has-search">
+        <input type="text" class="form-control" placeholder="Search" />
+      </div>
+    </div>
+    <div class="table-container mb-5">
+      <table id="productsTable" class="table display">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Format</th>
+            <th>Media Channel</th>
+            <th>Dimensions</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in digitals_page_obj %}
+          <tr>
+            <td>{{product.id}}</td>
+            <td><span class="text-capitalize">{{product.product_mag}}</span></td>
+            <td><span class="text-capitalize">{{product.format}}</span></td>
+            <td><span class="text-capitalize">{{product.media_channel}}</span></td>
+            <td><div class="tooltip-wrapper">
+            <span class="see-assigned text-decoration-underline">See full specs</span>
+            <div class="custom-tooltip">
+              
+            </div>
+          </div></td>
+            <td><span class="text-capitalize">{{product.status}}</span><td>
+              <a href="">
+                <i class="fa fa-solid fa-pen me-3 color-secondary"></i>
+              </a>
+            </td></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      {% if digitals_page_obj.has_previous %}
+      <a href="?page={{ digitals_page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      <span>Page {{ digitals_page_obj.number }} of {{ digitals_page_obj.paginator.num_pages }}</span>
+
+      {% if digitals_page_obj.has_next %}
+      <a href="?page={{ digitals_page_obj.next_page_number }}">Next</a>
+      {% endif %}
+    </div>
   </div>
 </div>
 
-<div class="table-container mb-5">
-  <table id="productsTable" class="table display">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Product Type</th>
-        <th>Fold Orientation</th>
-        <th>Media Channel</th>
-        <th>Dimensions</th>
-        <th>Status</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in page_obj %}
-      <tr>
-        <td>{{product.name}}</td>
-        <td><span class="text-capitalize">{{product.product_type}}</span></td>
-        <td><span class="text-capitalize">{{product.fold_orientation}}</span></td>
-        <td>-</td>
-        <td>-</td>
-        <td><td>
-          <a href="">
-            <i class="fa fa-solid fa-pen me-3 color-secondary"></i>
-          </a>
-        </td></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
 
-<div class="pagination">
-  {% if page_obj.has_previous %}
-  <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-  {% endif %}
 
-  <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
 
-  {% if page_obj.has_next %}
-  <a href="?page={{ page_obj.next_page_number }}">Next</a>
-  {% endif %}
-</div>
+
