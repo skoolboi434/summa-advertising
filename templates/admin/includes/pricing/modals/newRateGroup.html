@@ -47,6 +47,28 @@
             </div>
           </div>
 
+          <div class="w-75 mx-auto mb-4">
+            <ul class="list-group">
+              {% for rate in rates %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="info">
+                  <p class="fw-bold mb-0">{{ rate.name }}</p>
+                  <span class="me-3">ID: #{{ rate.id }}</span>
+                  <span>Unit Type: {{ rate.measurement_type }}</span>
+                </div>
+
+                <div class="price">
+                  <p class="fw-bold mb-0">${{ rate.base_cost }}</p>
+                </div>
+
+                <div class="add-to-group">
+                  <input type="checkbox" name="rates" value="{{ rate.id }}" />
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
           <div class="btn-container text-center">
             <button id="submit-adjustment" type="submit" class="btn btn-secondary">Create Rate Group</button>
           </div>
@@ -55,3 +77,29 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const labels = document.querySelectorAll('.add-to-group label');
+
+    labels.forEach(label => {
+      const checkbox = document.getElementById(label.getAttribute('for'));
+
+      label.addEventListener('click', () => {
+        // Toggle the checked state
+        checkbox.checked = !checkbox.checked;
+
+        // Toggle the styling
+        if (checkbox.checked) {
+          label.textContent = 'Added';
+          label.classList.remove('btn-outline-primary');
+          label.classList.add('btn-success');
+        } else {
+          label.textContent = 'Add';
+          label.classList.remove('btn-success');
+          label.classList.add('btn-outline-primary');
+        }
+      });
+    });
+  });
+</script>

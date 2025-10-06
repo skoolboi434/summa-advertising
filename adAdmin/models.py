@@ -352,6 +352,13 @@ class RateGroup(models.Model):
         blank=True
     )
 
+    # Many-to-many relationship to Rate
+    rates = models.ManyToManyField(
+        'Rate', 
+        related_name="rategroups", 
+        blank=True
+    )
+
     created_by = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,

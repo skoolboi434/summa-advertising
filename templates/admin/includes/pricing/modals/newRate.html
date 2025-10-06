@@ -198,10 +198,10 @@
                     <div class="form-group mb-3">
                       <label for="lines-charge-for">Charge For:</label>
                       <div class="pill-group">
-                        <input type="radio" class="btn-check toggle-radio" name="linesChargeFor" id="lines-charge-all" data-target="main-category-select" value="all" checked />
+                        <input type="radio" class="btn-check toggle-radio" name="linesChargeFor" id="lines-charge-all" data-target="lines-charge-for-insertions" value="all" checked />
                         <label class="pill" for="lines-charge-all">All</label>
 
-                        <input type="radio" class="btn-check toggle-radio" name="linesChargeFor" id="lines-free-after" data-target="main-category-select" value="lines-free-after" />
+                        <input type="radio" class="btn-check toggle-radio" name="linesChargeFor" id="lines-free-after" data-target="lines-charge-for-insertions" value="lines-free-after" />
                         <label class="pill" for="lines-free-after">Free After</label>
                       </div>
                     </div>
@@ -209,7 +209,7 @@
                     <div class="form-group">
                       <label for="lines-charge-for-insertions">Enter number of insertions here</label>
                       <div class="input-group">
-                        <input type="text" name="lines-charge-for-insertions" id="lines-charge-for-insertions" class="form-control" />
+                        <input type="text" name="lines-charge-for-insertions" id="lines-charge-for-insertions" class="form-control" disabled />
                         <span class="input-group-text">Insertions</span>
                       </div>
                     </div>
@@ -577,11 +577,11 @@
 <!-- Insertions toggle -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const radios = document.querySelectorAll('input[name="isInsertions"]');
-    const minInput = document.getElementById('min');
-    const maxInput = document.getElementById('max');
-    const minLabel = document.querySelector('label[for="min"]');
-    const maxLabel = document.querySelector('label[for="max"]');
+    const radios = document.querySelectorAll('input[name="isLinesInsertions"]');
+    const minInput = document.getElementById('lines-min');
+    const maxInput = document.getElementById('lines-max');
+    const minLabel = document.querySelector('label[for="lines-min"]');
+    const maxLabel = document.querySelector('label[for="lines-max"]');
 
     function toggleInsertions(enabled) {
       [minInput, maxInput].forEach(input => {
@@ -605,7 +605,7 @@
     }
 
     // Initialize on load
-    toggleInsertions(document.getElementById('insertions-on').checked);
+    toggleInsertions(document.getElementById('lines-insertions-on').checked);
 
     radios.forEach(radio => {
       radio.addEventListener('change', function () {
@@ -618,31 +618,36 @@
 <!-- Charge for toggle -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const radios = document.querySelectorAll('input[name="chargeFor"]');
-    const chargeInput = document.getElementById('charge-for-insertions');
-    const chargeLabel = document.querySelector('label[for="charge-for-insertions"]');
+    const radios = document.querySelectorAll('.toggle-radio');
 
-    function toggleInsertions(enabled) {
-      if (enabled) {
-        chargeInput.removeAttribute('disabled');
-        chargeInput.classList.remove('disabled-field');
-        chargeLabel.classList.remove('disabled-label');
-      } else {
-        chargeInput.setAttribute('disabled', 'disabled');
-        chargeInput.value = ''; // clear value
-        chargeInput.classList.add('disabled-field');
-        chargeLabel.classList.add('disabled-label');
+    function toggleInput(radio) {
+      const targetId = radio.dataset.target;
+      const input = document.getElementById(targetId);
+      const label = document.querySelector(`label[for="${targetId}"]`);
+
+      if (!input) return;
+
+      if (radio.value.includes('free-after') && radio.checked) {
+        input.removeAttribute('disabled');
+        input.classList.remove('disabled-field');
+        label?.classList.remove('disabled-label');
+      } else if (radio.checked) {
+        input.setAttribute('disabled', 'disabled');
+        input.value = ''; // clear value
+        input.classList.add('disabled-field');
+        label?.classList.add('disabled-label');
       }
     }
 
     // Initialize on page load
-    const freeAfterRadio = document.getElementById('free-after');
-    toggleInsertions(freeAfterRadio && freeAfterRadio.checked);
+    radios.forEach(radio => toggleInput(radio));
 
     // Watch for changes
     radios.forEach(radio => {
-      radio.addEventListener('change', function () {
-        toggleInsertions(this.id === 'free-after');
+      radio.addEventListener('change', () => {
+        // Toggle all radios in the same group
+        const groupName = radio.name;
+        document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => toggleInput(r));
       });
     });
   });

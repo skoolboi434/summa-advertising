@@ -522,6 +522,7 @@ def adminPricing(request):
             # Market Code form
             name = request.POST.get("rate-group-name")
             description = request.POST.get("rate-group-description")
+            selected_rates = request.POST.getlist("rates")
 
             rateGroup = RateGroup.objects.create(
                 name=name,
@@ -529,6 +530,10 @@ def adminPricing(request):
                 status="active",
                 created_by=request.user
             )
+
+            if selected_rates:
+              selected_rate_ids = [int(rid) for rid in selected_rates]
+              rateGroup.rates.set(selected_rate_ids)
 
             # Many-to-Many: publications
             publications = request.POST.getlist("publications")
@@ -660,6 +665,7 @@ def adminPricing(request):
     'glCodes': glCodes,
     'rateGroups_page_obj': rateGroups_page_obj,
     "rates_page_obj": rates_page_obj,
+    'rates': rates
   })
 
 def singleRateGroup(request, id):

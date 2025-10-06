@@ -84,6 +84,25 @@
           <th scope="col">Status</th>
         </tr>
       </thead>
+      <tbody>
+        {% for rate in rateGroup.rates.all %}
+        <tr>
+          <td>{{ rate.id }}</td>
+          <td><span class="text-capitalize">{{ rate.name }}</span></td>
+          <td><span class="text-capitalize">{{ rate.measurement_type }}</span></td>
+          <td><span class="text-capitalize">{{ rate.pricing }}</span></td>
+          <td><span class="text-capitalize">Default</span></td>
+          <td><span class="text-capitalize">{{ rate.tax_category }}</span></td>
+          <td>{{ rate.start_date|date:"M. j, Y" }}</td>
+          <td>{{ rate.start_date|date:"M. j, Y" }}</td>
+          <td><span class="text-capitalize">{{ rate.status }}</span></td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="9" class="text-center">No rates attached.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
   </div>
 </div>
