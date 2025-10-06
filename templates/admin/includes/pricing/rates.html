@@ -20,24 +20,24 @@
         <th scope="col">GL Code</th>
         <th scope="col">Tax Category</th>
         <th scope="col">Start Date</th>
-        <th scope="col">End Date</th>
         <th scope="col">Status</th>
         <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
+      {% for rate in rates_page_obj %}
       <tr>
-        <td>0001</td>
-        <td>RateName_example</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>00/00/0000</td>
-        <td>00/00/0000</td>
-        <td>Active</td>
+        <td>{{rate.id}}</td>
+        <td><span class="text-capitalize">{{rate.name}}</span></td>
+        <td><span class="text-capitalize">{{rate.measurement_type}}</span></td>
+        <td><span class="text-capitalize">{{rate.pricing}}</span></td>
+        <td><span class="text-capitalize">Default</span></td>
+        <td>{{rate.tax_category}}</td>
+        <td>{{ rate.start_date|date:"M. j, Y" }}</td>
+        <td><span class="text-capitalize">{{rate.status}}</span></td>
         <td><i class="fa fa-solid fa-pen"></i></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

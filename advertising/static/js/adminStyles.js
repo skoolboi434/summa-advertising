@@ -41,6 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
     fontSelect.appendChild(option);
   });
 
+  // Function to change font family
+  function changeFont() {
+    const selectedOptions = Array.from(fontSelect.selectedOptions).map(option => option.textContent);
+    // sampleText.style.fontFamily = selectedOptions.join(',');
+    fontPreview.style.fontFamily = selectedOptions.join(',');
+    updateSelectedFonts(selectedOptions);
+  }
+
+  // Event listener for font change
+  fontSelect.addEventListener('change', changeFont);
+
   // Handle selection
   fontSelect.addEventListener('change', function () {
     const selectedOptions = Array.from(fontSelect.selectedOptions).map(opt => opt.textContent);

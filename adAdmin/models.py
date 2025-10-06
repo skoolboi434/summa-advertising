@@ -247,47 +247,47 @@ class Account(models.Model):
 
 # Admin Pricing Models
 
-class Rate(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    pricing = models.BooleanField(default=False)
-    measurement_type = models.CharField(max_length=100)
-    extra_groups = models.CharField(max_length=100)
-    tax_category = models.CharField(max_length=100, default="No Tax")
-    override_privileges= models.BooleanField(default=True)
-    active = models.BooleanField(default=True)
-    assigned_groups = models.BooleanField(default=True)
-    ad_type_id = models.CharField(max_length=255, null=True, blank=True)
-    start_date = models.DateField()
-    end_date = models.DateField(null=True,blank=True)
-    insertion_min = models.CharField(max_length=255)
-    insertion_max = models.CharField(max_length=255)
-    line_for_ad_min = models.CharField(max_length=255)
-    line_for_ad_max = models.CharField(max_length=255)
-    insertion_count = models.IntegerField()
-    base_cost = models.CharField(max_length=100)
-    base_count = models.CharField(max_length=100)
-    additional_cost = models.CharField(max_length=100)
-    additional_count = models.CharField(max_length=100)
-    charge_for = models.BooleanField()
-    account = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True)
-    date_created = models.DateTimeField(auto_now_add=True)
-    default_gl_code = models.ForeignKey('GLCode', on_delete=models.CASCADE)
-    status = models.IntegerField(default=1)
-    product = models.CharField(max_length=255)
+# class Rate(models.Model):
+#     name = models.CharField(max_length=100, unique=True)
+#     pricing = models.CharField(max_length=100)
+#     measurement_type = models.CharField(max_length=100)
+#     extra_groups = models.CharField(max_length=100)
+#     tax_category = models.CharField(max_length=100, default="No Tax")
+#     override_privileges= models.CharField(max_length=100)
+#     # active = models.BooleanField(default=True)
+#     assigned_groups = models.BooleanField(default=True)
+#     ad_type_id = models.CharField(max_length=255, null=True, blank=True)
+#     start_date = models.DateField()
+#     end_date = models.DateField(null=True,blank=True)
+#     insertion_min = models.CharField(max_length=255)
+#     insertion_max = models.CharField(max_length=255)
+#     line_for_ad_min = models.CharField(max_length=255)
+#     line_for_ad_max = models.CharField(max_length=255)
+#     insertion_count = models.IntegerField()
+#     base_cost = models.CharField(max_length=100)
+#     base_count = models.CharField(max_length=100)
+#     additional_cost = models.CharField(max_length=100)
+#     additional_count = models.CharField(max_length=100)
+#     charge_for = models.BooleanField()
+#     account = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True)
+#     date_created = models.DateTimeField(auto_now_add=True)
+#     default_gl_code = models.ForeignKey('GLCode', on_delete=models.CASCADE)
+#     status = models.CharField(max_length=100, default="Active")
+#     product = models.CharField(max_length=255)
     
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-    class Meta:
-        permissions = (
-            ("can_deactivate_rate", "Can deactivate rate"),
-            ("can_reactivate_rate", "Can reactivate rate"),
-            ("can_view_hidden_rates", "Can view hidden rates"),
-            ("can_lock_rates", "Can lock rates"),
-            ('can_create_rates', "Can create rates")
-        )
+#     class Meta:
+#         permissions = (
+#             ("can_deactivate_rate", "Can deactivate rate"),
+#             ("can_reactivate_rate", "Can reactivate rate"),
+#             ("can_view_hidden_rates", "Can view hidden rates"),
+#             ("can_lock_rates", "Can lock rates"),
+#             ('can_create_rates', "Can create rates")
+#         )
 
-        db_table = 'advertising_rate'
+#         db_table = 'advertising_rate'
 
 class AdminAdjustment(models.Model):
     code = models.CharField(max_length=100, default=None)
@@ -373,6 +373,83 @@ class RateGroup(models.Model):
         )
 
         db_table = 'advertising_rategroup'
+
+class Rate(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    pricing = models.CharField(max_length=100)
+    measurement_type = models.CharField(
+        max_length=50,
+        choices=[
+            ("lines", "Lines"),
+            ("words", "Words"),
+            ("units", "Units"),
+            ("inches", "Inches"),
+            ("digital", "Digital"),
+        ]
+    )
+    # extra_groups = models.CharField(max_length=100)
+    tax_category = models.CharField(max_length=100, blank=True, null=True)
+    override_privileges = models.CharField(max_length=100)
+    assigned_groups = models.CharField(max_length=100, default="No")
+    # ad_type_id = models.CharField(max_length=255, null=True, blank=True)
+
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+
+    description = models.TextField(blank=True)
+
+    insertion_min = models.CharField(max_length=255)
+    insertion_max = models.CharField(max_length=255)
+    lines_for_ad_min = models.CharField(max_length=255)
+    lines_for_ad_max = models.CharField(max_length=255)
+
+    base_cost = models.CharField(max_length=100)
+    base_count = models.CharField(max_length=100)
+    additional_cost = models.CharField(max_length=100)
+    additional_count = models.CharField(max_length=100)
+    charge_for = models.CharField(max_length=100, default="All")
+    
+    insertion_count = models.CharField(max_length=100, default="None")
+
+    # account = models.ForeignKey('Account', on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    # default_gl_code = models.ForeignKey('GLCode', on_delete=models.CASCADE, default="None")
+
+    status = models.CharField(max_length=100, default="Active")
+    # product = models.CharField(max_length=255)
+
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="rates"
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        permissions = (
+            ("can_deactivate_rate", "Can deactivate rate"),
+            ("can_reactivate_rate", "Can reactivate rate"),
+            ("can_view_hidden_rates", "Can view hidden rates"),
+            ("can_lock_rates", "Can lock rates"),
+            ('can_create_rates', "Can create rates")
+        )
+        db_table = 'advertising_rates'
+
+class InchesRateDetail(models.Model):
+    rate = models.OneToOneField(Rate, on_delete=models.CASCADE, related_name="inches_detail")
+    default_cost_per_col_inch = models.IntegerField()
+    modular_override = models.CharField(max_length=100, default="No")
+
+class DigitalRateDetail(models.Model):
+    rate = models.OneToOneField(Rate, on_delete=models.CASCADE, related_name="digital_detail")
+    impression = models.CharField(max_length=100)
+    default_flat_rate = models.IntegerField()
+    modular_override = models.CharField(max_length=100, default="No")
+
 
 class AdminTax(models.Model):
     name = models.TextField()

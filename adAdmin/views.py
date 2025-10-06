@@ -538,6 +538,96 @@ def adminPricing(request):
                 
             return redirect("adminPricing")
 
+          elif "rate-name" in request.POST:
+            name = request.POST.get("rate-name")
+            measurement_type = request.POST.get("ad-criteria")
+            pricing = request.POST.get("isPricing")
+            
+            # Handle tax safely
+            tax_category_id = request.POST.get("tax-category")
+            if tax_category_id:
+                tax_name = AdminTax.objects.get(id=tax_category_id).name
+            else:
+                tax_name = ""
+            
+            override_privileges = request.POST.get("overridePriveledges")
+            assigned_groups = request.POST.get("rateGroupAssign") == "true"
+            start_date = request.POST.get("rate-start-date")
+            end_date = request.POST.get("rate-end-date") or None
+            description = request.POST.get("rate-description")
+
+            # Shared computation fields
+            insertion_min = (
+                request.POST.get("lines-min")
+                or request.POST.get("words-min")
+                or request.POST.get("units-min")
+            )
+            insertion_max = (
+                request.POST.get("lines-max")
+                or request.POST.get("words-max")
+                or request.POST.get("units-max")
+            )
+            base_cost = (
+                request.POST.get("lines-base-cost")
+                or request.POST.get("words-base-cost")
+                or request.POST.get("units-base-cost")
+            )
+            base_count = (
+                request.POST.get("lines-num-of-lines")
+                or request.POST.get("words-num-of-words")
+                or request.POST.get("units-num-of-units")
+            )
+            additional_cost = request.POST.get("extra-charge")
+            additional_count = (
+                request.POST.get("lines-extra-charge-num-of-lines")
+                or request.POST.get("words-extra-charge-num-of-words")
+                or request.POST.get("units-extra-charge-num-of-units")
+            )
+
+            charge_for = (
+                request.POST.get("linesChargeFor")
+                or request.POST.get("wordsChargeFor")
+                or request.POST.get("unitsChargeFor")
+            )
+
+            # Create Rate safely
+            rate = Rate.objects.create(
+                name=name,
+                pricing=pricing,
+                measurement_type=measurement_type,
+                tax_category=tax_name,  # <-- safe, can be None
+                override_privileges=override_privileges,
+                assigned_groups=assigned_groups,
+                start_date=start_date,
+                end_date=end_date,
+                description=description,
+                insertion_min=insertion_min or "0",
+                insertion_max=insertion_max or "0",
+                base_cost=base_cost or "0",
+                base_count=base_count or "0",
+                additional_cost=additional_cost or "0",
+                additional_count=additional_count or "0",
+                charge_for=charge_for,
+                created_by=request.user,
+            )
+
+
+            # Type-specific detail models
+            # if measurement_type == "inches":
+            #     InchesRateDetail.objects.create(
+            #         rate=rate,
+            #         default_cost_per_col_inch=request.POST.get("inches-width", 0),
+            #         height=request.POST.get("inches-height", 0),
+            #     )
+
+            # elif measurement_type == "digital":
+            #     DigitalRateDetail.objects.create(
+            #         rate=rate,
+            #         impressions=request.POST.get("digital-impressions", 0),
+            #         clicks=request.POST.get("digital-clicks", 0),
+            #     )
+
+
 
   adjustments = AdminAdjustment.objects.all().order_by('-date_created')
   adjustments_paginator = Paginator(adjustments, 10)
@@ -551,18 +641,25 @@ def adminPricing(request):
 
   adminTaxes = AdminTax.objects.all().order_by('-created_at')
   adminTaxes_paginator = Paginator(adminTaxes, 10)
-  adminTaxe_page_number = request.GET.get('page')
-  adminTaxes_page_obj = adminTaxes_paginator.get_page(adminTaxe_page_number)
+  adminTax_page_number = request.GET.get('page')
+  adminTaxes_page_obj = adminTaxes_paginator.get_page(adminTax_page_number)
+
+  rates = Rate.objects.all().order_by('-created_at')
+  rates_paginator = Paginator(rates, 10)
+  rate_page_number = request.GET.get('page')
+  rates_page_obj = rates_paginator.get_page(rate_page_number)
 
   publications = Publication.objects.all()
   glCodes = GLCode.objects.all()
+  
 
   return render(request, 'admin/pricing.html', {
     'adjustments_page_obj': adjustments_page_obj,
     'publications': publications,
     'adminTaxes_page_obj': adminTaxes_page_obj,
     'glCodes': glCodes,
-    'rateGroups_page_obj': rateGroups_page_obj
+    'rateGroups_page_obj': rateGroups_page_obj,
+    "rates_page_obj": rates_page_obj,
   })
 
 def singleRateGroup(request, id):

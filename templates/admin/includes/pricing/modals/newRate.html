@@ -1,0 +1,700 @@
+<div class="modal fade" id="newRateModal" tabindex="-1" aria-labelledby="newRateModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content stepform">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="">
+          <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+            <div class="step active">
+              <div class="text">
+                <span class="number">1</span>
+                <span class="title">General Info</span>
+              </div>
+              <div class="arrow">
+                <i class="fa fa-solid fa-arrow-right"></i>
+              </div>
+            </div>
+            <div class="step">
+              <div class="text">
+                <span class="number">2</span>
+                <span class="title">Computation</span>
+              </div>
+            </div>
+          </div>
+
+          <form id="new-rate-form" action="{% url 'adminPricing' %}" method="POST">
+            {% csrf_token %}
+
+            <!-- General Info -->
+            <div class="tab">
+              <div class="tab-description text-center mb-5">
+                <p>Fill out the general information of the<br />rate below then proceed to step 2</p>
+              </div>
+
+              <div class="w-75 mx-auto">
+                <div class="form-group mb-4">
+                  <label for="rate-name">Rate Name:</label>
+                  <input type="text" class="form-control" name="rate-name" id="rate-name" />
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="ad-criteria">Ad Criteria</label>
+                      <select name="ad-criteria" id="ad-criteria" class="form-select">
+                        <option>Select</option>
+                        <option value="lines">Lines</option>
+                        <option value="words">Words</option>
+                        <option value="units">Units</option>
+                        <option value="inches">Inches</option>
+                        <option value="digital">Digital</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="default-gl-code">Default GL Code (optional):</label>
+                      <input type="text" name="default-gl-code" id="default-gl-code" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="rate-start-date">Start Date:</label>
+                      <input type="date" name="rate-start-date" id="rate-start-date" class="form-control" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="rate-end-date">End Date:</label>
+                      <input type="date" name="rate-end-date" id="rate-end-date" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="pricing">Pricing:</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="isPricing" id="pricing-standard" data-target="main-category-select" value="standard" checked />
+                        <label class="pill" for="pricing-standard">Standard</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="isPricing" id="pricing-customary" data-target="main-category-select" value="customary" />
+                        <label class="pill" for="pricing-customary">Customary</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                      <label for="tax-category">Tax Category:</label>
+                      <select name="tax-category" id="tax-category" class="form-control">
+                        <option value="">-- No Tax --</option>
+                        <!-- important -->
+                        {% for tax in adminTaxes_page_obj %}
+                        <option value="{{ tax.id }}">{{ tax.name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-4">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="override-privileges">Override Privileges:</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="overridePriveledges" id="override-yes" value="yes" checked />
+                        <label class="pill" for="override-yes">Yes</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="overridePriveledges" id="override-no" value="no" />
+                        <label class="pill" for="override-no">No</label>
+                      </div>
+                    </div>
+
+                    <span>With Override Privileges, a user can request an override from their adminstrator</span>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="rategroup-assign">Assign rate to rate groups?:</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="rateGroupAssign" id="assign-yes" data-target="main-category-select" value="yes" />
+                        <label class="pill" for="assign-yes">Yes</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="rateGroupAssign" id="assign-no" data-target="main-category-select" value="no" checked />
+                        <label class="pill" for="assign-no">No</label>
+                      </div>
+                    </div>
+
+                    <select id="rate-groups" name="rate-groups" class="form-select" multiple disabled>
+                      <option selected>Open this select menu</option>
+                      {% for rateGroup in rateGroups_page_obj %}
+                      <option value="{{ rateGroup.id }}">{{ rateGroup.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="rate-description">Description (optional):</label>
+                  <textarea name="rate-description" id="rate-description" class="form-control" cols="5"></textarea>
+                </div>
+              </div>
+
+              <div class="btn-container d-flex justify-content-end mt-5">
+                <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+              </div>
+            </div>
+
+            <!-- Computation -->
+            <div class="tab">
+              <!-- Lines Input Fields -->
+
+              <div id="lines-inputs" class="">
+                <div class="tab-description text-center mb-5">
+                  <p>Finally, setup the insertions, pricing<br />and details for the rate</p>
+                </div>
+
+                <div class="row mb-5">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="lines-insertions">Insertions:</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="isLinesInsertions" id="lines-insertions-on" data-target="main-category-select" value="on" checked />
+                        <label class="pill" for="lines-insertions-on">On</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="isLinesInsertions" id="lines-insertions-off" data-target="main-category-select" value="off" />
+                        <label class="pill" for="lines-insertions-off">Off</label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="lines-min">Min:</label>
+                          <input type="number" name="lines-min" id="lines-min" class="form-control" />
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="lines-max">Max:</label>
+                          <input type="number" name="lines-max" id="lines-max" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="lines-charge-for">Charge For:</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="linesChargeFor" id="lines-charge-all" data-target="main-category-select" value="all" checked />
+                        <label class="pill" for="lines-charge-all">All</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="linesChargeFor" id="lines-free-after" data-target="main-category-select" value="lines-free-after" />
+                        <label class="pill" for="lines-free-after">Free After</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="lines-charge-for-insertions">Enter number of insertions here</label>
+                      <div class="input-group">
+                        <input type="text" name="lines-charge-for-insertions" id="lines-charge-for-insertions" class="form-control" />
+                        <span class="input-group-text">Insertions</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="number-of-lines">Number of lines for an ad (optional):</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="lineNumber" id="line-numbers-on" data-target="main-category-select" value="on" checked />
+                        <label class="pill" for="line-numbers-on">On</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="lineNumber" id="line-numbers-off" data-target="main-category-select" value="off" />
+                        <label class="pill" for="line-numbers-off">Off</label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="lines-number-min">Min:</label>
+                          <input type="number" name="lines-number-min" id="lines-number-min" class="form-control" />
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="lines-number-max">Max:</label>
+                          <input type="number" name="lines-number-max" id="lines-number-max" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="lines-base-cost">Base Cost:</label>
+                      <div class="d-flex align-items-center">
+                        <input type="number" name="lines-base-cost" id="lines-base-cost" class="form-control w-25" />
+                        <span class="mx-3">For</span>
+                        <div class="input-group">
+                          <input type="number" name="lines-num-of-lines" id="lines-num-of-lines" class="form-control" />
+                          <span class="input-group-text">Lines</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="extra-charge">Charge extra (optional):</label>
+                      <div class="d-flex align-items-center">
+                        <input type="number" name="extra-charge" id="extra-charge" class="form-control w-25" />
+                        <span class="mx-3">For</span>
+                        <div class="input-group">
+                          <input type="number" name="lines-extra-charge-num-of-lines" id="lines-extra-charge-num-of-lines" class="form-control" />
+                          <span class="input-group-text">Lines</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Words Input Fields -->
+
+              <div id="words-inputs" class="">
+                <div class="tab-description text-center mb-5">
+                  <p>Finally, setup the insertions, pricing<br />and details for the rate</p>
+                </div>
+
+                <div class="row mb-5">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="words-insertions">Insertions:</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="isWordsInsertions" id="words-insertions-on" data-target="main-category-select" value="on" checked />
+                        <label class="pill" for="words-insertions-on">On</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="isWordsInsertions" id="words-insertions-off" data-target="main-category-select" value="off" />
+                        <label class="pill" for="words-insertions-off">Off</label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="words-min">Min:</label>
+                          <input type="number" name="words-min" id="words-min" class="form-control" />
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="words-max">Max:</label>
+                          <input type="number" name="words-max" id="words-max" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="words-charge-for">Charge For:</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="wordsChargeFor" id="words-charge-all" data-target="main-category-select" value="all" checked />
+                        <label class="pill" for="words-charge-all">All</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="wordsChargeFor" id="words-free-after" data-target="main-category-select" value="words-free-after" />
+                        <label class="pill" for="words-free-after">Free After</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="words-charge-for-insertions">Enter number of insertions here</label>
+                      <div class="input-group">
+                        <input type="text" name="words-charge-for-insertions" id="words-charge-for-insertions" class="form-control" />
+                        <span class="input-group-text">Insertions</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="number-of-words">Number of words for an ad (optional):</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="wordNumber" id="word-numbers-on" data-target="main-category-select" value="on" checked />
+                        <label class="pill" for="word-numbers-on">On</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="wordNumber" id="word-numbers-off" data-target="main-category-select" value="off" />
+                        <label class="pill" for="word-numbers-off">Off</label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="words-number-min">Min:</label>
+                          <input type="number" name="words-number-min" id="words-number-min" class="form-control" />
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="words-number-max">Max:</label>
+                          <input type="number" name="words-number-max" id="words-number-max" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="words-base-cost">Base Cost:</label>
+                      <div class="d-flex align-items-center">
+                        <input type="number" name="words-base-cost" id="words-base-cost" class="form-control w-25" />
+                        <span class="mx-3">For</span>
+                        <div class="input-group">
+                          <input type="number" name="words-num-of-words" id="words-num-of-words" class="form-control" />
+                          <span class="input-group-text">words</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="extra-charge">Charge extra (optional):</label>
+                      <div class="d-flex align-items-center">
+                        <input type="number" name="extra-charge" id="extra-charge" class="form-control w-25" />
+                        <span class="mx-3">For</span>
+                        <div class="input-group">
+                          <input type="number" name="words-extra-charge-num-of-words" id="words-extra-charge-num-of-words" class="form-control" />
+                          <span class="input-group-text">Words</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Units Input Fields -->
+
+              <div id="units-inputs" class="">
+                <div class="tab-description text-center mb-5">
+                  <p>Finally, setup the insertions, pricing<br />and details for the rate</p>
+                </div>
+
+                <div class="row mb-5">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="units-insertions">Insertions:</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="isUnitsInsertions" id="units-insertions-on" data-target="main-category-select" value="on" checked />
+                        <label class="pill" for="units-insertions-on">On</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="isUnitsInsertions" id="units-insertions-off" data-target="main-category-select" value="off" />
+                        <label class="pill" for="units-insertions-off">Off</label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="units-min">Min:</label>
+                          <input type="number" name="units-min" id="units-min" class="form-control" />
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="units-max">Max:</label>
+                          <input type="number" name="units-max" id="units-max" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="units-charge-for">Charge For:</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="unitsChargeFor" id="units-charge-all" data-target="main-category-select" value="all" checked />
+                        <label class="pill" for="units-charge-all">All</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="unitsChargeFor" id="units-free-after" data-target="main-category-select" value="units-free-after" />
+                        <label class="pill" for="units-free-after">Free After</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="units-charge-for-insertions">Enter number of insertions here</label>
+                      <div class="input-group">
+                        <input type="text" name="units-charge-for-insertions" id="units-charge-for-insertions" class="form-control" />
+                        <span class="input-group-text">Insertions</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="number-of-units">Number of units for an ad (optional):</label>
+                      <div class="pill-group">
+                        <input type="radio" class="btn-check toggle-radio" name="unitNumber" id="unit-numbers-on" data-target="main-category-select" value="on" checked />
+                        <label class="pill" for="unit-numbers-on">On</label>
+
+                        <input type="radio" class="btn-check toggle-radio" name="unitNumber" id="unit-numbers-off" data-target="main-category-select" value="off" />
+                        <label class="pill" for="unit-numbers-off">Off</label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="units-number-min">Min:</label>
+                          <input type="number" name="units-number-min" id="units-number-min" class="form-control" />
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="units-number-max">Max:</label>
+                          <input type="number" name="units-number-max" id="units-number-max" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="units-base-cost">Base Cost:</label>
+                      <div class="d-flex align-items-center">
+                        <input type="number" name="units-base-cost" id="units-base-cost" class="form-control w-25" />
+                        <span class="mx-3">For</span>
+                        <div class="input-group">
+                          <input type="number" name="units-num-of-units" id="units-num-of-units" class="form-control" />
+                          <span class="input-group-text">units</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="extra-charge">Charge extra (optional):</label>
+                      <div class="d-flex align-items-center">
+                        <input type="number" name="extra-charge" id="extra-charge" class="form-control w-25" />
+                        <span class="mx-3">For</span>
+                        <div class="input-group">
+                          <input type="number" name="units-extra-charge-num-of-units" id="units-extra-charge-num-of-units" class="form-control" />
+                          <span class="input-group-text">Units</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Inches Input Fields -->
+
+              <div id="inches-inputs">Inches</div>
+
+              <!-- Digital Input Fields -->
+
+              <div id="digital-inputs">Digital</div>
+
+              <div class="btn-container d-flex justify-content-between mt-5">
+                <button class="btn btn-gray step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+                <button id="create-rate-btn" data-step="final" class="btn btn-secondary step-next" type="submit">Create <i class="fa fa-solid fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const select = document.getElementById('ad-criteria');
+    const inputDivs = {
+      lines: document.getElementById('lines-inputs'),
+      words: document.getElementById('words-inputs'),
+      units: document.getElementById('units-inputs'),
+      inches: document.getElementById('inches-inputs'),
+      digital: document.getElementById('digital-inputs')
+    };
+
+    // Hide all at the start
+    Object.values(inputDivs).forEach(div => (div.style.display = 'none'));
+
+    select.addEventListener('change', function () {
+      // Hide all first
+      Object.values(inputDivs).forEach(div => (div.style.display = 'none'));
+
+      const selected = select.value;
+      if (inputDivs[selected]) {
+        inputDivs[selected].style.display = 'block'; // Show the selected one
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const radios = document.querySelectorAll('input[name="rateGroupAssign"]');
+    const select = document.getElementById('rate-groups');
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        if (this.value === 'yes') {
+          select.removeAttribute('disabled');
+        } else {
+          // disable + clear all selected options
+          select.setAttribute('disabled', 'disabled');
+          Array.from(select.options).forEach(opt => (opt.selected = false));
+        }
+      });
+    });
+  });
+</script>
+
+<!-- Insertions toggle -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const radios = document.querySelectorAll('input[name="isInsertions"]');
+    const minInput = document.getElementById('min');
+    const maxInput = document.getElementById('max');
+    const minLabel = document.querySelector('label[for="min"]');
+    const maxLabel = document.querySelector('label[for="max"]');
+
+    function toggleInsertions(enabled) {
+      [minInput, maxInput].forEach(input => {
+        if (enabled) {
+          input.removeAttribute('disabled');
+          input.classList.remove('disabled-field');
+        } else {
+          input.setAttribute('disabled', 'disabled');
+          input.value = ''; // clear value
+          input.classList.add('disabled-field');
+        }
+      });
+
+      [minLabel, maxLabel].forEach(label => {
+        if (enabled) {
+          label.classList.remove('disabled-label');
+        } else {
+          label.classList.add('disabled-label');
+        }
+      });
+    }
+
+    // Initialize on load
+    toggleInsertions(document.getElementById('insertions-on').checked);
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        toggleInsertions(this.value === 'on');
+      });
+    });
+  });
+</script>
+
+<!-- Charge for toggle -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const radios = document.querySelectorAll('input[name="chargeFor"]');
+    const chargeInput = document.getElementById('charge-for-insertions');
+    const chargeLabel = document.querySelector('label[for="charge-for-insertions"]');
+
+    function toggleInsertions(enabled) {
+      if (enabled) {
+        chargeInput.removeAttribute('disabled');
+        chargeInput.classList.remove('disabled-field');
+        chargeLabel.classList.remove('disabled-label');
+      } else {
+        chargeInput.setAttribute('disabled', 'disabled');
+        chargeInput.value = ''; // clear value
+        chargeInput.classList.add('disabled-field');
+        chargeLabel.classList.add('disabled-label');
+      }
+    }
+
+    // Initialize on page load
+    const freeAfterRadio = document.getElementById('free-after');
+    toggleInsertions(freeAfterRadio && freeAfterRadio.checked);
+
+    // Watch for changes
+    radios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        toggleInsertions(this.id === 'free-after');
+      });
+    });
+  });
+</script>
+
+<!-- Number of lines toggle -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const radios = document.querySelectorAll('input[name="lineNumber"]');
+    const minInput = document.getElementById('lines-number-min');
+    const maxInput = document.getElementById('lines-number-max');
+    const minLabel = document.querySelector('label[for="lines-number-min"]');
+    const maxLabel = document.querySelector('label[for="lines-number-max"]');
+
+    function toggleInsertions(enabled) {
+      [minInput, maxInput].forEach(input => {
+        if (enabled) {
+          input.removeAttribute('disabled');
+          input.classList.remove('disabled-field');
+        } else {
+          input.setAttribute('disabled', 'disabled');
+          input.value = ''; // clear value
+          input.classList.add('disabled-field');
+        }
+      });
+
+      [minLabel, maxLabel].forEach(label => {
+        if (enabled) {
+          label.classList.remove('disabled-label');
+        } else {
+          label.classList.add('disabled-label');
+        }
+      });
+    }
+
+    // Initialize on load
+    toggleInsertions(document.getElementById('line-numbers-on').checked);
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', function () {
+        toggleInsertions(this.value === 'on');
+      });
+    });
+  });
+</script>
+
+<style>
+  .disabled-field {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+  }
+  .disabled-label {
+    color: #6c757d; /* Bootstrap’s gray-600 */
+  }
+</style>
