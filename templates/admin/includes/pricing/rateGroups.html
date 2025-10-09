@@ -52,3 +52,15 @@
     </tbody>
   </table>
 </div>
+
+<div class="pagination">
+  {% if rateGroups_page_obj.has_previous %}
+  <a href="?page={{ rateGroups_page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ rateGroups_page_obj.number }} of {{ rateGroups_page_obj.paginator.num_pages }}</span>
+
+  {% if rateGroups_page_obj.has_next %}
+  <a href="?page={{ rateGroups_page_obj.next_page_number }}">Next</a>
+  {% endif %}
+</div>

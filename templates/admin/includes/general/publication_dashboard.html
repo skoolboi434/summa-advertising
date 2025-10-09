@@ -1,0 +1,61 @@
+{% extends 'base.html' %}{% load static %} {% block content %}
+
+<div class="heading-container text-center my-5">
+  <h3 class="heading mb-3">Publication Dashboard</h3>
+</div>
+
+<div class="container">
+  <div class="rounded shadow p-3 bg-white">
+    <div class="heading d-flex mb-3">
+      <h3 class="heading mb-0 color-secondary me-5">Publication Overview</h3>
+      <button class="btn btn-secondary"><i class="fa fa-solid fa-pencil"></i> Edit Info</button>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 col-lg-6">
+        <div class="row mb-3">
+          <div class="col-md-12 col-lg-4">
+            <span>#ID:</span>
+            <p class="mb-0 fw-bold">{{publication.id}}</p>
+          </div>
+
+          <div class="col-md-12 col-lg-4">
+            <span>Status:</span>
+            <p class="mb-0 fw-bold">{{publication.status}}</p>
+          </div>
+        </div>
+
+        <div class="pub-name mb-3">
+          <span>Publication Name:</span>
+          <p class="mb-0 fw-bold">{{publication.name}}</p>
+        </div>
+
+        <div class="pub-address mb-3">
+          <span>Address:</span>
+          <p class="mb-0 fw-bold">{{publication.address}}</p>
+          <p class="mb-0 fw-bold">{{publication.city}}, {{publication.state}} {{publication.zip_code}}</p>
+        </div>
+
+        <div class="parent-pub mb-3">
+          <span>Parent Publication:</span>
+          <p class="mb-0 fw-bold">No</p>
+        </div>
+
+        <div class="row">
+          {% if company_code %}
+          <div class="glcode-section mb-3 col-lg-12 col-md-4">
+            <span>Company GL:</span>
+            <p class="mb-0 fw-bold">{{ company_code.gl_code.code }}</p>
+          </div>
+          {% endif %} {% if location_code %}
+          <div class="glcode-section mb-3 col-lg-12 col-md-4"><strong>Location Code:</strong> {{ location_code.gl_code.code }} - {{ location_code.gl_code.description }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-md-12 col-lg-6"></div>
+    </div>
+  </div>
+</div>
+
+{% endblock%}

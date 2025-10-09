@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Role, Region, Rate, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, RateGroup, AdminTax, FiscalYear, RateGroup, StandardSize, NewspaperProduct, MagazineProduct, DigitalProduct
+from .models import Role, Region, Rate, AllStates, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, PublicationGLCode, RateGroup, AdminTax, FiscalYear, RateGroup, StandardSize, NewspaperProduct, MagazineProduct, DigitalProduct
 from classifieds.models import Classification, ClassifiedUpsell, ClassifiedAddon, ClassifiedMeasurement
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -17,29 +17,70 @@ def index(request):
 
 from django.shortcuts import redirect
 
+
 def adminGeneral(request):
     if request.method == "POST":
-        name = request.POST.get("region-name")
-        code = request.POST.get("region-code")
-        publications = request.POST.getlist("publications")  # list of IDs
-
-        region = Region.objects.create(
-            name=name,
-            code=code,
-            status="active",  # or whatever you want as default
-            created_by=request.user 
-        )
-        if publications:
-            region.publications.set(publications)  # save M2M relation
-
-        if request.method == "POST":
+        # --- Region form ---
+        if "region-name" in request.POST:
+            name = request.POST.get("region-name")
+            code = request.POST.get("region-code")
             publications = request.POST.getlist("publications")
-            print("DEBUG publications:", publications)
 
+            region = Region.objects.create(
+                name=name,
+                code=code,
+                status="active",
+                created_by=request.user
+            )
+            if publications:
+                region.publications.set(publications)
 
-        return redirect("adminGeneral")  # redirect to same page after submit
+            return redirect("adminGeneral")
 
+        # --- Publication form ---
+        elif "publication-name" in request.POST:
+            name = request.POST.get("publication-name")
+            address_lines = request.POST.getlist("publication-address[]")
+            city = request.POST.get("city")
+            state_id = request.POST.get("state")
+            zip_code = request.POST.get("zip_code")
+            is_parent = request.POST.get("parent_id")
+
+            state_instance = AllStates.objects.get(id=state_id) if state_id else None
+            # parent_instance = Publication.objects.get(id=parent_id) if parent_id else None
+
+            publication = Publication.objects.create(
+                name=name,
+                address=" | ".join(address_lines),
+                city=city,
+                state=state_instance.name if state_instance else "",
+                zip_code=zip_code,
+                is_parent=is_parent
+            )
+
+            company_code_id = request.POST.get("company_gl_code")
+            location_code_id = request.POST.get("location_gl_code")
+
+            if company_code_id:
+                PublicationGLCode.objects.create(
+                    publication=publication,
+                    gl_code_id=int(company_code_id),
+                    code_type="Company"
+                )
+
+            if location_code_id:
+                PublicationGLCode.objects.create(
+                    publication=publication,
+                    gl_code_id=int(location_code_id),
+                    code_type="Location"
+                )
+
+            return redirect(reverse('publication-dashboard', args=[publication.id]))
+
+    # --- GET request ---
     publications = Publication.objects.all()
+    all_states = AllStates.objects.all()
+    glCodes = GLCode.objects.all()
     
     advertiser_list = Account.objects.all().order_by('-created_at')
     regions = Region.objects.all().order_by('-created_at')
@@ -77,10 +118,27 @@ def adminGeneral(request):
         "regions_page_obj": regions_page_obj,
         'newspapers_page_obj': newspapers_page_obj,
         'magazines_page_obj': magazines_page_obj,
-        "digitals_page_obj": digitals_page_obj
-        
+        "digitals_page_obj": digitals_page_obj,
+        'all_states': all_states,
+        'glCodes': glCodes
     })
 
+def publication_dashboard(request, pk):
+    # Fetch the publication
+    publication = get_object_or_404(Publication, pk=pk)
+    
+    # Fetch related GL Codes
+    gl_codes = PublicationGLCode.objects.filter(publication=publication)
+    
+    company_code = gl_codes.filter(code_type="Company").first()
+    location_code = gl_codes.filter(code_type="Location").first()
+    
+    return render(request, 'admin/includes/general/publication_dashboard.html', {
+        'publication': publication,
+        'gl_codes': gl_codes,
+        'company_code': company_code,
+        'location_code': location_code,
+    })
 
 # Admin Products
 def add_standardsize(request):
@@ -545,7 +603,7 @@ def adminPricing(request):
 
           elif "rate-name" in request.POST:
             name = request.POST.get("rate-name")
-            measurement_type = request.POST.get("ad-criteria")
+            measurement_type = request.POST.get("unit_type")
             pricing = request.POST.get("isPricing")
             
             # Handle tax safely

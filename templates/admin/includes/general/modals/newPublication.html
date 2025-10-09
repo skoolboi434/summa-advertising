@@ -1,0 +1,192 @@
+<div class="modal fade" id="newPublicationModal" tabindex="-1" aria-labelledby="newPublicationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="tab-description text-center mb-5">
+        <p>Fill out the information below to create your publication.</p>
+      </div>
+
+      <div class="container">
+        <form method="post" id="add-publication-info-form">
+          {% csrf_token %}
+          <div class="row px-2">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group mb-3 center-block text-left">
+                <label for="publication-name"><span class="asterisk">*</span> Publication Name:</label>
+                <input type="text" name="publication-name" id="publication-name" class="form-control" />
+              </div>
+
+              <div class="form-group mb-3 center-block text-left" id="address-container">
+                <label for="publication-address">Address Line 1:</label>
+                <div class="address-line d-flex align-items-center mb-2">
+                  <input type="text" name="publication-address[]" class="form-control me-2" placeholder="Address Line 1" />
+                </div>
+                <a href="#" id="add-address-line">Add another address line</a>
+              </div>
+
+              <div class="row mb-3 center-block">
+                <div class="col-md-12 col-lg-6 pl-0">
+                  <div class="form-group text-left">
+                    <label for="city">City:</label>
+                    <input type="text" name="city" id="city" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-6 pr-0">
+                  <div class="form-group text-left">
+                    <label for="state">State:</label>
+                    <select name="state" id="state" class="form-control">
+                      <option value="">Select</option>
+                      {% for state in all_states %}
+                      <option value="{{state.id}}">{{state.name}} - {{state.abbreviation}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3 center-block">
+                <div class="col-md-12 col-lg-6 pl-0">
+                  <div class="form-group mb-3 text-left">
+                    <label for="city">Zip Code:</label>
+                    <input type="text" name="zip_code" id="zip-code" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-6 ml-4">
+                  <div class="form-group text-left">
+                    <label for="country">Country:</label>
+                    <select name="country" id="country" class="form-control">
+                      <option value="">Select Country</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group text-left">
+                <label for="parent_id">Parent Publication (optional):</label>
+                <select name="parent_id" id="parent_id" class="form-control">
+                  <option value="">Select</option>
+                  {% for publication in publications %}
+                  <option value="{{publication.id}}">{{publication.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="glcode-controls mb-3">
+                <button type="button" class="btn btn-outline-primary toggle-dropdown" data-target="company-gl-group">Add Company Code</button>
+                <button type="button" class="btn btn-outline-primary toggle-dropdown" data-target="location-gl-group">Add Location Code</button>
+              </div>
+
+              <div id="company-gl-group" class="form-group mb-3 d-none">
+                <label for="company-gl-code">Company GL Code</label>
+                <select name="company_gl_code" id="company-gl-code" class="form-select">
+                  <option value="">Select a Company Code</option>
+                  {% for code in glCodes %} {% if code.code_type == "Company" %}
+                  <option value="{{ code.id }}">{{ code.code }}</option>
+                  {% endif %} {% endfor %}
+                </select>
+              </div>
+
+              <div id="location-gl-group" class="form-group mb-3 d-none">
+                <label for="location-gl-code">Location GL Code</label>
+                <select name="location_gl_code" id="location-gl-code" class="form-select">
+                  <option value="">Select a Location Code</option>
+                  {% for code in glCodes %} {% if code.code_type == "Location" %}
+                  <option value="{{ code.id }}">{{ code.code }}</option>
+                  {% endif %} {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-container text-center my-5">
+            <button type="submit" class="btn btn-secondary">Create</button>
+          </div>
+          <input type="hidden" name="form_type" value="publication" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .fade-section {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .fade-section.showing {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const container = document.getElementById('address-container');
+    const addLink = document.getElementById('add-address-line');
+    let addressCount = 1;
+
+    addLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      addressCount++;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'address-line mb-2';
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.name = 'publication-address[]';
+      input.className = 'form-control me-2';
+      input.placeholder = `Address Line ${addressCount}`;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'btn btn-sm btn-outline-danger';
+      removeBtn.textContent = 'Remove';
+
+      removeBtn.addEventListener('click', function () {
+        wrapper.remove();
+      });
+
+      wrapper.appendChild(input);
+      wrapper.appendChild(removeBtn);
+      container.insertBefore(wrapper, addLink);
+    });
+  });
+</script>
+
+<!-- GL Code Toggle -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleButtons = document.querySelectorAll('.toggle-dropdown');
+
+    toggleButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-target');
+        const target = document.getElementById(targetId);
+        if (!target) return;
+
+        const isHidden = target.classList.contains('d-none');
+
+        if (isHidden) {
+          // Show with fade-in
+          target.classList.remove('d-none');
+          requestAnimationFrame(() => target.classList.add('showing'));
+          this.textContent = this.textContent.replace('Add', 'Remove');
+          this.classList.add('active');
+        } else {
+          // Fade out smoothly
+          target.classList.remove('showing');
+          this.textContent = this.textContent.replace('Remove', 'Add');
+          this.classList.remove('active');
+          setTimeout(() => target.classList.add('d-none'), 300);
+          const select = target.querySelector('select');
+          if (select) select.selectedIndex = 0;
+        }
+      });
+    });
+  });
+</script>

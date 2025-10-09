@@ -119,6 +119,13 @@ class Section(models.Model):
     def __str__(self):
         return self.name
 
+class AllStates(models.Model):
+	name = models.TextField()
+	abbreviation = models.TextField()
+
+	class Meta:
+		db_table = 'all_states'
+
 
 
 class Status(models.Model):
@@ -130,20 +137,41 @@ class Status(models.Model):
     def __str__(self):
         return self.name
 
+class PublicationGLCode(models.Model):
+    publication = models.ForeignKey('Publication', on_delete=models.CASCADE, related_name='publication_gl_codes')
+    gl_code = models.ForeignKey('GLCode', on_delete=models.CASCADE)
+    code_type = models.CharField(max_length=100)  # e.g., "Company", "Location"
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'advertising_publication_gl_codes'
+        unique_together = ('publication', 'code_type')  # ensures one code per type per publication
+
+    def __str__(self):
+        return f"{self.publication.name} - {self.code_type}: {self.gl_code.code}"
+
 class Publication(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
+    address_2 = models.CharField(max_length=100, default="None")
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=20)
-    spot_color = models.CharField(max_length=50)
-    charge_tax = models.BooleanField(default=False)
-    credit_memo = models.TextField(default=None)
+    is_parent = models.CharField(max_length=100, default="None")
+    status = models.CharField(max_length=100, default="Active")
+    created_at = models.DateTimeField(auto_now_add=True)
 
     # Many-to-many field to classifications
     classifications = models.ManyToManyField(
         'classifieds.Classification',   # app_label.ModelName
         related_name="publications",
+        blank=True
+    )
+
+    gl_codes = models.ManyToManyField(
+        'GLCode',
+        through='PublicationGLCode',
+        related_name='publications',
         blank=True
     )
 

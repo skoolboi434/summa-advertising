@@ -17,6 +17,9 @@ urlpatterns = [
   path('admingeneral/new-newspaper/', views.newNewspaper, name='newNewspaper'),
   path('admingeneral/new-digital/', views.newDigital, name='newDigital'),
 
+  path('publication/<int:pk>/', views.publication_dashboard, name='publication-dashboard'),
+
+
   
   path("advertising/json/add/standardsize/", views.add_standardsize, name="add_standardsize"),
 
