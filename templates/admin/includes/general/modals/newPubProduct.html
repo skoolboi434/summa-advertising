@@ -1,0 +1,292 @@
+<div class="modal fade" id="newPubProductModal" tabindex="-1" aria-labelledby="newPubProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content stepform">
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="steps-container d-none d-md-flex justify-content-md-center mb-5">
+          <div class="step active">
+            <div class="text">
+              <span class="number">1</span>
+              <span class="title">Product Setup</span>
+            </div>
+            <div class="arrow">
+              <i class="fa fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+          <div class="step">
+            <div class="text">
+              <span class="number">2</span>
+              <span class="title">Settings</span>
+            </div>
+            <div class="arrow">
+              <i class="fa fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+          <div class="step">
+            <div class="text">
+              <span class="number">3</span>
+              <span class="title">Deadlines</span>
+            </div>
+          </div>
+        </div>
+
+        <form action="">
+          <div class="tab">
+            <div class="tab-description text-center mb-5">
+              <p>Setup the product(s) and its schedule for<br />the publication</p>
+            </div>
+
+            <ul class="nav nav-pills mb-3 d-flex align-items-center justify-content-center" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link-custom active" id="pills-repeat-tab" data-bs-toggle="pill" data-bs-target="#pills-repeat" type="button" role="tab" aria-controls="pills-repeat" aria-selected="true">Repeat</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link-custom" id="pills-non-repeating-tab" data-bs-toggle="pill" data-bs-target="#pills-non-repeating" type="button" role="tab" aria-controls="pills-non-repeating" aria-selected="false">Non Repeating</button>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-repeat" role="tabpanel" aria-labelledby="pills-repeat-tab">
+                <div class="row">
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group mb-3">
+                      <label for="product-name">Product Name:</label>
+                      <input type="text" name="product-name" id="product-name" class="form-control" />
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="product-media-channel">Media Channel:</label>
+                      <select name="product-media-channel" id="product-media-channel" class="form-select">
+                        <option value="">Select</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label for="product-gl-location">GL Location</label>
+                      <input type="text" id="product-gl-location" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="product-start-date">Start Date:</label>
+                      <input type="date" name="product-start-date" id="product-start-date" class="form-control" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-lg-6">
+                    <div class="form-group text-left mb-4">
+                      <label class="form-label d-block mb-2">Select your schedule for publishing:</label>
+                      <div class="schedule-options">
+                        <div class="schedule-option">
+                          <input type="checkbox" id="schedule-daily" name="schedule[]" value="Daily" />
+                          <label for="schedule-daily" class="schedule-label">Daily</label>
+                        </div>
+
+                        <div class="schedule-option">
+                          <input type="checkbox" id="schedule-weekly" name="schedule[]" value="Weekly" />
+                          <label for="schedule-weekly" class="schedule-label">Weekly</label>
+                        </div>
+
+                        <div class="schedule-option">
+                          <input type="checkbox" id="schedule-monthly" name="schedule[]" value="Monthly" />
+                          <label for="schedule-monthly" class="schedule-label">Monthly</label>
+                        </div>
+
+                        <div class="schedule-option">
+                          <input type="checkbox" id="schedule-yearly" name="schedule[]" value="Yearly" />
+                          <label for="schedule-yearly" class="schedule-label">Yearly</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Days of the Week -->
+                    <div class="form-group text-left mb-4">
+                      <label class="form-label d-block mb-2">Select days of the week for publishing:</label>
+                      <div class="schedule-options">
+                        <div class="schedule-option">
+                          <input type="checkbox" id="sunday" name="days[]" value="Sunday" />
+                          <label for="sunday" class="schedule-label">Sun</label>
+                        </div>
+                        <div class="schedule-option">
+                          <input type="checkbox" id="monday" name="days[]" value="Monday" />
+                          <label for="monday" class="schedule-label">Mon</label>
+                        </div>
+                        <div class="schedule-option">
+                          <input type="checkbox" id="tuesday" name="days[]" value="Tuesday" />
+                          <label for="tuesday" class="schedule-label">Tues</label>
+                        </div>
+                        <div class="schedule-option">
+                          <input type="checkbox" id="wednesday" name="days[]" value="Wednesday" />
+                          <label for="wednesday" class="schedule-label">Wed</label>
+                        </div>
+                        <div class="schedule-option">
+                          <input type="checkbox" id="thursday" name="days[]" value="Thursday" />
+                          <label for="thursday" class="schedule-label">Thurs</label>
+                        </div>
+                        <div class="schedule-option">
+                          <input type="checkbox" id="friday" name="days[]" value="Friday" />
+                          <label for="friday" class="schedule-label">Fri</label>
+                        </div>
+                        <div class="schedule-option">
+                          <input type="checkbox" id="saturday" name="days[]" value="Saturday" />
+                          <label for="saturday" class="schedule-label">Sat</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                      <label for="publication-frequency" class="form-label">Repeat Frequency:</label>
+                      <div class="d-flex align-items-center gap-2">
+                        <span>Repeat every</span>
+                        <input type="number" name="publication-frequency" id="publication-frequency" class="form-control w-25 text-center" value="1" min="1" />
+                        <span>week(s)</span>
+                      </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                      <label class="form-label">Manage Days:</label>
+                      <input type="text" id="publishing-calendar" class="form-control" placeholder="Select schedule..." readonly />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Non Repeating -->
+
+              <div class="tab-pane fade" id="pills-non-repeating" role="tabpanel" aria-labelledby="pills-non-repeating-tab">Non Repeating</div>
+            </div>
+
+            <div class="btn-container d-flex justify-content-end mt-5">
+              <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <div class="tab">
+            <div class="tab-description text-center mb-5">
+              <p>
+                On this step, go through the list and assign the Rate<br />Groups, Ad Types/Criteria, Sections, and Adjustments to be<br />
+                associated with the publication
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .schedule-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  .schedule-option {
+    position: relative;
+  }
+
+  .schedule-option input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .schedule-label {
+    display: inline-block;
+    padding: 1px 15px;
+    border-radius: 25px;
+    color: #000;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .schedule-label:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .schedule-option input[type='checkbox']:checked + .schedule-label {
+    background-color: #f26722;
+    color: #fff;
+    border-color: #f26722;
+  }
+
+  .flatpickr-input {
+    display: none;
+  }
+
+  /* Selected day (the orange circle) */
+  .flatpickr-day.selected,
+  .flatpickr-day.startRange,
+  .flatpickr-day.endRange,
+  .flatpickr-day.selected:focus,
+  .flatpickr-day.selected:hover {
+    background: #f26722 !important;
+    border-color: #f26722 !important;
+    color: #fff !important;
+  }
+
+  /* Hover state */
+  .flatpickr-day:hover {
+    background: #ffe3d2 !important;
+    border-color: #f26722 !important;
+    color: #333 !important;
+  }
+
+  /* Today’s outline */
+  .flatpickr-day.today {
+    border-color: #f26722 !important;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const checkboxes = document.querySelectorAll('.schedule-option input[type="checkbox"]');
+    const calendarInput = document.getElementById('publishing-calendar');
+
+    const dayMap = {
+      Sunday: 0,
+      Monday: 1,
+      Tuesday: 2,
+      Wednesday: 3,
+      Thursday: 4,
+      Friday: 5,
+      Saturday: 6
+    };
+
+    // Initialize Flatpickr
+    const fp = flatpickr(calendarInput, {
+      inline: true,
+      mode: 'multiple',
+      dateFormat: 'Y-m-d',
+      defaultDate: []
+    });
+
+    function updateCalendar() {
+      const selectedDays = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => dayMap[cb.value]); // Convert names → numbers
+
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      const matchingDates = [];
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        if (selectedDays.includes(date.getDay())) {
+          matchingDates.push(date.toISOString().split('T')[0]);
+        }
+      }
+
+      fp.setDate(matchingDates, true);
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateCalendar));
+  });
+</script>

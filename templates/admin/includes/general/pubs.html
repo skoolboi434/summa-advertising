@@ -20,7 +20,7 @@
         <th scope="col">Run Days</th>
         <th scope="col">No. of Sections</th>
         <th scope="col">Status</th>
-        <th scope="col">Added By</th>
+        <th scope="col">Added</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -28,12 +28,12 @@
       {% for publication in publications %}
       <tr>
         <td>{{publication.id}}</td>
-        <td>{{publication.name}}</td>
+        <td><a href="{% url 'publication-dashboard' publication.id %}"> {{ publication.name }} </a></td>
         <td>{{publication.account}}</td>
         <td>{% if publication.run_days == '' %} No Selected {% else %} {{publication.run_days}} {% endif %}</td>
         <td>1</td>
-        <td>{{publication.active|yesno:"Active, Deactive"}}</td>
-        <td>{{publication.created_by}}</td>
+        <td>{{publication.status|yesno:"Active, Deactive"}}</td>
+        <td>{{publication.created_at|date:"M. j, Y"}}</td>
         <td>
           <a class="mr-1" href=""><i class="fa fa-solid fa-pencil"></i></a>
         </td>
