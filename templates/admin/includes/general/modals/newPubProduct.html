@@ -170,6 +170,30 @@
                 associated with the publication
               </p>
             </div>
+
+            <div class="btn-container d-flex justify-content-between mt-5">
+              <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+              <button class="btn btn-secondary step-next" type="button">Next <i class="fa fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <div class="tab">
+            <div class="tab-description text-center mb-5">
+              <p>Set the deadlines for each publish day for<br />your publication</p>
+            </div>
+
+            <!-- Tabs -->
+            <ul class="nav nav-pills mb-3 d-flex align-items-center justify-content-center" id="dayTabs" role="tablist"></ul>
+
+            <!-- Tab content -->
+            <div class="tab-content" id="dayTabContent"></div>
+
+            <div class="btn-container d-flex justify-content-between mt-5">
+              <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
+
+              <button id="create-pub-product-btn" data-step="final" class="btn btn-secondary step-next" type="button">Create <i class="fa fa-solid fa-arrow-right"></i></button>
+            </div>
           </div>
         </form>
       </div>
@@ -241,52 +265,15 @@
   .flatpickr-day.today {
     border-color: #f26722 !important;
   }
+
+  .list-group-item {
+    transition: background-color 0.2s ease-in-out;
+  }
+  .list-group-item:hover {
+    background-color: #f9f9f9;
+  }
+  .form-check-input:checked {
+    background-color: #f26722;
+    border-color: #f26722;
+  }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const checkboxes = document.querySelectorAll('.schedule-option input[type="checkbox"]');
-    const calendarInput = document.getElementById('publishing-calendar');
-
-    const dayMap = {
-      Sunday: 0,
-      Monday: 1,
-      Tuesday: 2,
-      Wednesday: 3,
-      Thursday: 4,
-      Friday: 5,
-      Saturday: 6
-    };
-
-    // Initialize Flatpickr
-    const fp = flatpickr(calendarInput, {
-      inline: true,
-      mode: 'multiple',
-      dateFormat: 'Y-m-d',
-      defaultDate: []
-    });
-
-    function updateCalendar() {
-      const selectedDays = Array.from(checkboxes)
-        .filter(cb => cb.checked)
-        .map(cb => dayMap[cb.value]); // Convert names → numbers
-
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = today.getMonth();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-      const matchingDates = [];
-      for (let day = 1; day <= daysInMonth; day++) {
-        const date = new Date(year, month, day);
-        if (selectedDays.includes(date.getDay())) {
-          matchingDates.push(date.toISOString().split('T')[0]);
-        }
-      }
-
-      fp.setDate(matchingDates, true);
-    }
-
-    checkboxes.forEach(cb => cb.addEventListener('change', updateCalendar));
-  });
-</script>

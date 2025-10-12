@@ -21,7 +21,6 @@
         <th scope="col">No. of Sections</th>
         <th scope="col">Status</th>
         <th scope="col">Added</th>
-        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -32,11 +31,8 @@
         <td>{{publication.account}}</td>
         <td>{% if publication.run_days == '' %} No Selected {% else %} {{publication.run_days}} {% endif %}</td>
         <td>1</td>
-        <td>{{publication.status|yesno:"Active, Deactive"}}</td>
+        <td>{{publication.status}}</td>
         <td>{{publication.created_at|date:"M. j, Y"}}</td>
-        <td>
-          <a class="mr-1" href=""><i class="fa fa-solid fa-pencil"></i></a>
-        </td>
       </tr>
       {% endfor %}
     </tbody>
