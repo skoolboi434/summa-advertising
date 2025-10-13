@@ -1,0 +1,74 @@
+.schedule-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.schedule-option {
+  position: relative;
+}
+
+.schedule-option input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.schedule-label {
+  display: inline-block;
+  padding: 1px 15px;
+  border-radius: 25px;
+  color: #000;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.schedule-label:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.schedule-option input[type='checkbox']:checked + .schedule-label {
+  background-color: #f26722;
+  color: #fff;
+  border-color: #f26722;
+}
+
+.flatpickr-input {
+  display: none;
+}
+
+/* Selected day (the orange circle) */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.selected:hover {
+  background: #f26722 !important;
+  border-color: #f26722 !important;
+  color: #fff !important;
+}
+
+/* Hover state */
+.flatpickr-day:hover {
+  background: #ffe3d2 !important;
+  border-color: #f26722 !important;
+  color: #333 !important;
+}
+
+/* Today’s outline */
+.flatpickr-day.today {
+  border-color: #f26722 !important;
+}
+
+.list-group-item {
+  transition: background-color 0.2s ease-in-out;
+}
+.list-group-item:hover {
+  background-color: #f9f9f9;
+}
+.form-check-input:checked {
+  background-color: #f26722;
+  border-color: #f26722;
+}

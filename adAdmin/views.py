@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Role, Region, Rate, AllStates, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, PublicationGLCode, RateGroup, AdminTax, FiscalYear, RateGroup, StandardSize, NewspaperProduct, MagazineProduct, DigitalProduct
+from .models import Role, Region, Rate, AllStates, Status, AccountType, Publication, Account, AdvPubsProduct, CompanyInfo, AdminAdType, MarketCode, AdCriteria, Section, AdminAdjustment, GLCode, PublicationGLCode, RateGroup, AdminTax, FiscalYear, StandardSize, NewspaperProduct, MagazineProduct, DigitalProduct
 from classifieds.models import Classification, ClassifiedUpsell, ClassifiedAddon, ClassifiedMeasurement
 from users.models import AdvertisingUser
 from django.core.paginator import Paginator
@@ -82,6 +82,7 @@ def adminGeneral(request):
     all_states = AllStates.objects.all()
     glCodes = GLCode.objects.all()
     
+    
     advertiser_list = Account.objects.all().order_by('-created_at')
     regions = Region.objects.all().order_by('-created_at')
     regions_paginator = Paginator(regions, 10)
@@ -120,7 +121,8 @@ def adminGeneral(request):
         'magazines_page_obj': magazines_page_obj,
         "digitals_page_obj": digitals_page_obj,
         'all_states': all_states,
-        'glCodes': glCodes
+        'glCodes': glCodes,
+        'adTypes': adTypes
     })
 
 def publication_dashboard(request, pk):
@@ -132,12 +134,22 @@ def publication_dashboard(request, pk):
     
     company_code = gl_codes.filter(code_type="Company").first()
     location_code = gl_codes.filter(code_type="Location").first()
+    adTypes = AdminAdType.objects.all()
+    adCriterias = AdCriteria.objects.all()
+    sections = Section.objects.all()
+    adjustments = AdminAdjustment.objects.all()
+    rateGroups = RateGroup.objects.all()
     
     return render(request, 'admin/includes/general/publication_dashboard.html', {
         'publication': publication,
         'gl_codes': gl_codes,
         'company_code': company_code,
         'location_code': location_code,
+        'adTypes': adTypes,
+        'adCriterias': adCriterias,
+        'sections': sections,
+        'adjustments': adjustments,
+        'rateGroups': rateGroups,
     })
 
 # Admin Products

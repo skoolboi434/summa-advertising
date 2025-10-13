@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <form action="">
+        <form id="pub-product-form" action="">
           <div class="tab">
             <div class="tab-description text-center mb-5">
               <p>Setup the product(s) and its schedule for<br />the publication</p>
@@ -171,6 +171,149 @@
               </p>
             </div>
 
+            <div class="border border-dark rounded d-flex">
+              <!-- Lists -->
+              <div class="assignment-list w-25 border-dark border-end shadow">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                  <button class="btn-light text-start border-0 p-2 active" id="v-pills-rate-groups-tab" data-bs-toggle="pill" data-bs-target="#v-pills-rate-groups" type="button" role="tab" aria-controls="v-pills-rate-groups" aria-selected="true">Rate Groups</button>
+                  <button class="btn-light text-start border-0 p-2" id="v-pills-ad-criteria-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ad-criteria" type="button" role="tab" aria-controls="v-pills-ad-criteria" aria-selected="false">Ad Criteria</button>
+                  <button class="btn-light text-start border-0 p-2" id="v-pills-ad-types-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ad-types" type="button" role="tab" aria-controls="v-pills-ad-types" aria-selected="false">Ad Types</button>
+                  <button class="btn-light text-start border-0 p-2" id="v-pills-adjustments-tab" data-bs-toggle="pill" data-bs-target="#v-pills-adjustments" type="button" role="tab" aria-controls="v-pills-adjustments" aria-selected="false">Adjustments</button>
+                  <button class="btn-light text-start border-0 p-2" id="v-pills-sections-tab" data-bs-toggle="pill" data-bs-target="#v-pills-sections" type="button" role="tab" aria-controls="v-pills-sections" aria-selected="false">Sections</button>
+                </div>
+              </div>
+
+              <!-- Selects -->
+              <div class="select-container w-75 p-2">
+                <div class="tab-content" id="v-pills-tabContent">
+                  <div class="tab-pane fade show active" id="v-pills-rate-groups" role="tabpanel" aria-labelledby="v-pills-rate-groups-tab">
+                    <div class="item-select-container mb-4">
+                      <div class="available-pubs">
+                        Available Rate Groups:<br />
+                        <select multiple="multiple" id="lstBox1" class="form-select">
+                          {% for rateGroup in rateGroups %}
+                          <option value="{{ rateGroup.id }}">{{ rateGroup.name }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="transferBtns d-flex flex-column align-items-center mx-3">
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnAllRight">&gt;&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnRight">&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnLeft">&lt;</button>
+
+                        <button type="button" class="btn btn-sm btn-secondary" id="btnAllLeft">&lt;&lt;</button>
+                      </div>
+
+                      <div class="selected-pubs">
+                        Selected Rate Groups:<br />
+                        <select multiple="multiple" id="lstBox2" name="rateGroups" class="form-select"></select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="v-pills-ad-criteria" role="tabpanel" aria-labelledby="v-pills-ad-criteria-tab">
+                    <div class="item-select-container mb-4">
+                      <div class="available-pubs">
+                        Available Ad Criterias:<br />
+                        <select multiple="multiple" id="lstBox1" class="form-select">
+                          {% for adCriteria in adCriterias %}
+                          <option value="{{ adCriteria.id }}">{{ adCriteria.name }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="transferBtns d-flex flex-column align-items-center mx-3">
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnAllRight">&gt;&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnRight">&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnLeft">&lt;</button>
+
+                        <button type="button" class="btn btn-sm btn-secondary" id="btnAllLeft">&lt;&lt;</button>
+                      </div>
+
+                      <div class="selected-pubs">
+                        Selected Ad Criterias:<br />
+                        <select multiple="multiple" id="lstBox2" name="adCriterias" class="form-select"></select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="v-pills-ad-types" role="tabpanel" aria-labelledby="v-pills-ad-types-tab">
+                    <div class="item-select-container mb-4">
+                      <div class="available-pubs">
+                        Available Ad Types:<br />
+                        <select multiple="multiple" id="lstBox1" class="form-select">
+                          {% for adType in adTypes %}
+                          <option value="{{ adType.id }}">{{ adType.name }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="transferBtns d-flex flex-column align-items-center mx-3">
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnAllRight">&gt;&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnRight">&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnLeft">&lt;</button>
+
+                        <button type="button" class="btn btn-sm btn-secondary" id="btnAllLeft">&lt;&lt;</button>
+                      </div>
+
+                      <div class="selected-pubs">
+                        Selected Ad Types:<br />
+                        <select multiple="multiple" id="lstBox2" name="adTypes" class="form-select"></select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="v-pills-adjustments" role="tabpanel" aria-labelledby="v-pills-adjustments-tab">
+                    <div class="item-select-container mb-4">
+                      <div class="available-pubs">
+                        Available Adjustments:<br />
+                        <select multiple="multiple" id="lstBox1" class="form-select">
+                          {% for adjustment in adjustments %}
+                          <option value="{{ adjustment.id }}">{{ adjustment.name }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="transferBtns d-flex flex-column align-items-center mx-3">
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnAllRight">&gt;&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnRight">&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnLeft">&lt;</button>
+
+                        <button type="button" class="btn btn-sm btn-secondary" id="btnAllLeft">&lt;&lt;</button>
+                      </div>
+
+                      <div class="selected-pubs">
+                        Selected Adjustments:<br />
+                        <select multiple="multiple" id="lstBox2" name="adjustments" class="form-select"></select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="v-pills-sections" role="tabpanel" aria-labelledby="v-pills-sections-tab">
+                    <div class="item-select-container mb-4">
+                      <div class="available-pubs">
+                        Available Sections:<br />
+                        <select multiple="multiple" id="lstBox1" class="form-select">
+                          {% for section in sections %}
+                          <option value="{{ section.id }}">{{ section.name }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="transferBtns d-flex flex-column align-items-center mx-3">
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnAllRight">&gt;&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnRight">&gt;</button>
+                        <button type="button" class="btn btn-sm btn-secondary mb-2" id="btnLeft">&lt;</button>
+
+                        <button type="button" class="btn btn-sm btn-secondary" id="btnAllLeft">&lt;&lt;</button>
+                      </div>
+
+                      <div class="selected-pubs">
+                        Selected Sections:<br />
+                        <select multiple="multiple" id="lstBox2" name="sections" class="form-select"></select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="btn-container d-flex justify-content-between mt-5">
               <button class="btn btn-secondary step-prev" type="button"><i class="fa fa-solid fa-arrow-left"></i> Previous</button>
 
@@ -200,80 +343,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  .schedule-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 8px;
-  }
-
-  .schedule-option {
-    position: relative;
-  }
-
-  .schedule-option input[type='checkbox'] {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-  }
-
-  .schedule-label {
-    display: inline-block;
-    padding: 1px 15px;
-    border-radius: 25px;
-    color: #000;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .schedule-label:hover {
-    background-color: rgba(0, 123, 255, 0.1);
-  }
-
-  .schedule-option input[type='checkbox']:checked + .schedule-label {
-    background-color: #f26722;
-    color: #fff;
-    border-color: #f26722;
-  }
-
-  .flatpickr-input {
-    display: none;
-  }
-
-  /* Selected day (the orange circle) */
-  .flatpickr-day.selected,
-  .flatpickr-day.startRange,
-  .flatpickr-day.endRange,
-  .flatpickr-day.selected:focus,
-  .flatpickr-day.selected:hover {
-    background: #f26722 !important;
-    border-color: #f26722 !important;
-    color: #fff !important;
-  }
-
-  /* Hover state */
-  .flatpickr-day:hover {
-    background: #ffe3d2 !important;
-    border-color: #f26722 !important;
-    color: #333 !important;
-  }
-
-  /* Today’s outline */
-  .flatpickr-day.today {
-    border-color: #f26722 !important;
-  }
-
-  .list-group-item {
-    transition: background-color 0.2s ease-in-out;
-  }
-  .list-group-item:hover {
-    background-color: #f9f9f9;
-  }
-  .form-check-input:checked {
-    background-color: #f26722;
-    border-color: #f26722;
-  }
-</style>

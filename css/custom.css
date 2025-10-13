@@ -1659,7 +1659,7 @@
   border: none;
   box-shadow: none;
   color: #000;
-  min-width: 60px !important;
+  min-width: 50px !important;
 }
 
 .transferBtns {
